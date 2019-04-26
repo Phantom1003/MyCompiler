@@ -47,7 +47,7 @@ read        "read"
 digit       [0-9]
 integer     {digit}+
 real        {digit}+(\.{digit}+)?(([E|e])[+\-]?{digit}+)?
-char        {"'"[a-zA-Z]"'"}
+char        '[a-zA-Z]'
 
 and         "and"
 array       "array"
@@ -105,9 +105,16 @@ whitespace  {delim}+
 {dotdot}        {return DOTDOT;}
 {semi}          {return SEMI;}
 
-{integer}       {return INTEGER;}
-{real}          {return REAL;}
-{char}          {return CHAR;}
+{integer}       {
+//yylval.num_integer = atoi(yytext); 
+return INTEGER;
+}
+{real}          {
+//yylval.num_real = atof(yytext);
+printf("%lf\n", atof(yytext)); return REAL;}
+{char}          {
+//strcpy(yylval.ch, yytext);
+printf("%s\n", yytext); return CHAR;}
 
 {sys_con}       {return SYS_CON;}
 {sys_funct}     {return SYS_FUNCT;}   
@@ -129,7 +136,6 @@ whitespace  {delim}+
 {goto}          {return GOTO;}
 {if}            {return IF;}
 {in}            {return IN;}
-{mod}           {return MOD;}
 {of}            {return OF;}
 {or}            {return OR;}
 {packed}        {return PACKED;}
@@ -155,5 +161,6 @@ int yywrap(void){return 1;}
 
 int main(int argc, char* argv[]) {
     yylex();
+    printf("no error\n");
     return 0;
 }

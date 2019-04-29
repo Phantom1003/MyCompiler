@@ -1,0 +1,8 @@
+PWD /Users/miolanemoe/Documents/GitHub/MyCompiler
+INPUT /usr/local/texlive/2017/texmf.cnf
+INPUT /usr/local/texlive/2017/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT token.l
+OUTPUT token.log
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/omlcmr.fd
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/omlcmr.fd

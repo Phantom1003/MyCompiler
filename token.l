@@ -88,166 +88,123 @@ delim       [ \t]
 whitespace  {delim}+
 %%
 
-
-{lp}            {return makeToken(DELIMITER, LP);}
-{rp}            {return makeToken(DELIMITER, RP);}
-{lb}            {return makeToken(DELIMITER, LB);}
-{rb}            {return makeToken(DELIMITER, RB);}
-{dotdot}        {return makeToken(DELIMITER, DOTDOT);}
-{comma}         {return makeToken(DELIMITER, COMMA);}
-{colon}         {return makeToken(DELIMITER, COLON);}
-{semi}          {return makeToken(DELIMITER, SEMI);}
-
-
-{plus}          {return makeToken(OPERATOR, PLUS);}
-{minus}         {return makeToken(OPERATOR, MINUS);}
-{mul}           {return makeToken(OPERATOR, MUL);}
-{div}           {return makeToken(OPERATOR, DIV);}
-{mod}           {return makeToken(OPERATOR, MOD);}
-{ge}            {return makeToken(OPERATOR, GE);}
-{gt}            {return makeToken(OPERATOR, GT);}
-{le}            {return makeToken(OPERATOR, LE);}
-{lt}            {return makeToken(OPERATOR, LT);}
-{equal}         {return makeToken(OPERATOR, EQUAL);}
-{unequal}       {return makeToken(OPERATOR, UNEQUAL);}
-{assign}        {return makeToken(OPERATOR, ASSIGN);}
-{dot}        	{return makeToken(OPERATOR, DOT);}
-{and}           {return makeToken(OPERATOR, AND);}
-{or}            {return makeToken(OPERATOR, OR);}
-{not}           {return makeToken(OPERATOR, NOT);}
+"
+{lp}            {return makeToken(yytext, LP);}
+{rp}            {return makeToken(yytext, RP);}
+{lb}            {return makeToken(yytext, LB);}
+{rb}            {return makeToken(yytext, RB);}
+{dotdot}        {return makeToken(yytext, DOTDOT);}
+{comma}         {return makeToken(yytext, COMMA);}
+{colon}         {return makeToken(yytext, COLON);}
+{semi}          {return makeToken(yytext, SEMI);}
 
 
-{sys_con}       {return makeToken(RESERVED, SYS_CON);}
-{sys_funct}     {return makeToken(RESERVED, SYS_FUNCT);}   
-{sys_proc}      {return makeToken(RESERVED, SYS_PROC);}
-{sys_type}      {return makeToken(RESERVED, SYS_TYPE);}
-{read}          {return makeToken(RESERVED, READ);}
-
-{array}         {return makeToken(RESERVED, ARRAY);}
-{begin}         {return makeToken(RESERVED, BEGIN_TOKEN);}
-{case}          {return makeToken(RESERVED, CASE);}
-{const}         {return makeToken(RESERVED, CONST);}
-{do}            {return makeToken(RESERVED, DO);}
-{downto}        {return makeToken(RESERVED, DOWNTO);}
-{else}          {return makeToken(RESERVED, ELSE);}
-{end}           {return makeToken(RESERVED, END);}
-{for}           {return makeToken(RESERVED, FOR);}
-{function}      {return makeToken(RESERVED, FUNCTION);}
-{goto}          {return makeToken(RESERVED, GOTO);}
-{if}            {return makeToken(RESERVED, IF);}
-{in}            {return makeToken(RESERVED, IN);}
-{of}            {return makeToken(RESERVED, OF);}
-{packed}        {return makeToken(RESERVED, PACKED);}
-{procedure}     {return makeToken(RESERVED, PROCEDURE);}
-{program}       {return makeToken(RESERVED, PROGRAM);}
-{record}        {return makeToken(RESERVED, RECORD);}
-{repeat}        {return makeToken(RESERVED, REPEAT);}
-{set}           {return makeToken(RESERVED, SET);}
-{then}          {return makeToken(RESERVED, THEN);}
-{to}            {return makeToken(RESERVED, TO);}
-{type}          {return makeToken(RESERVED, TYPE);}
-{until}         {return makeToken(RESERVED, UNTIL);}
-{var}           {return makeToken(RESERVED, VAR);}
-{while}         {return makeToken(RESERVED, WHILE);}
-{with}          {return makeToken(RESERVED, WITH);}
+{plus}          {return makeToken(yytext, PLUS);}
+{minus}         {return makeToken(yytext, MINUS);}
+{mul}           {return makeToken(yytext, MUL);}
+{div}           {return makeToken(yytext, DIV);}
+{mod}           {return makeToken(yytext, MOD);}
+{ge}            {return makeToken(yytext, GE);}
+{gt}            {return makeToken(yytext, GT);}
+{le}            {return makeToken(yytext, LE);}
+{lt}            {return makeToken(yytext, LT);}
+{equal}         {return makeToken(yytext, EQUAL);}
+{unequal}       {return makeToken(yytext, UNEQUAL);}
+{assign}        {return makeToken(yytext, ASSIGN);}
+{dot}        	{return makeToken(yytext, DOT);}
+{and}           {return makeToken(yytext, AND);}
+{or}            {return makeToken(yytext, OR);}
+{not}           {return makeToken(yytext, NOT);}
 
 
-{name}          {return makeNameToken();}
-{integer}       {return makeIntToken();}
-{real}          {return makeRealToken();}
-{char}          {return makeCharToken();}
-{str}			{return makeStrToken();}
+{sys_con}       {return makeToken(yytext, SYS_CON);}
+{sys_funct}     {return makeToken(yytext, SYS_FUNCT);}   
+{sys_proc}      {return makeToken(yytext, SYS_PROC);}
+{sys_type}      {return makeToken(yytext, SYS_TYPE);}
+{read}          {return makeToken(yytext, READ);}
+
+{array}         {return makeToken(yytext, ARRAY);}
+{begin}         {return makeToken(yytext, BEGIN_TOKEN);}
+{case}          {return makeToken(yytext, CASE);}
+{const}         {return makeToken(yytext, CONST);}
+{do}            {return makeToken(yytext, DO);}
+{downto}        {return makeToken(yytext, DOWNTO);}
+{else}          {return makeToken(yytext, ELSE);}
+{end}           {return makeToken(yytext, END);}
+{for}           {return makeToken(yytext, FOR);}
+{function}      {return makeToken(yytext, FUNCTION);}
+{goto}          {return makeToken(yytext, GOTO);}
+{if}            {return makeToken(yytext, IF);}
+{in}            {return makeToken(yytext, IN);}
+{of}            {return makeToken(yytext, OF);}
+{packed}        {return makeToken(yytext, PACKED);}
+{procedure}     {return makeToken(yytext, PROCEDURE);}
+{program}       {return makeToken(yytext, PROGRAM);}
+{record}        {return makeToken(yytext, RECORD);}
+{repeat}        {return makeToken(yytext, REPEAT);}
+{set}           {return makeToken(yytext, SET);}
+{then}          {return makeToken(yytext, THEN);}
+{to}            {return makeToken(yytext, TO);}
+{type}          {return makeToken(yytext, TYPE);}
+{until}         {return makeToken(yytext, UNTIL);}
+{var}           {return makeToken(yytext, VAR);}
+{while}         {return makeToken(yytext, WHILE);}
+{with}          {return makeToken(yytext, WITH);}
+
+
+{name}          {return makeToken(yytext, NAME);}
+{integer}       {return makeToken(yytext, INTEGER);}
+{real}          {return makeToken(yytext, REAL);}
+{char}          {return makeToken(yytext, CHAR);}
+{str}			{return makeToken(yytext, STR);}
 
 [\n]            {line_num++;}
 {whitespace}    {/*do nothing*/}
 %%
 
 
-int makeToken(tokenType tok_t, int t) {
-	yylval = (TOKEN) malloc(TOKENSIZE);
-	yylval->token_t = tok_t;
+int makeToken(char * str, int t) {
+	yylval.content = new std::string(str);
+	yylval.type = t;
 	return t;
 }
 
-int makeNameToken() {
-	yylval = (TOKEN) malloc(TOKENSIZE);
-	yylval->token_t = TOKEN_NAME;
-	yylval->name = (char *)malloc(strlen(yytext)+1);
-	strcpy(yylval->name, yytext);
-	return NAME;
-}
-
-int makeStrToken() {
-	yylval = (TOKEN) malloc(TOKENSIZE);
-	yylval->data_t = DATA_STR;
-	yylval->tokenval.strval = (char *) malloc(strlen(yytext)-2+1);
-	memcpy(yylval->tokenval.strval, yytext+1, strlen(yytext)-2);
-	*(yylval->tokenval.strval+strlen(yytext)-2) = '\0';
-	return STR;
-}
-
-int makeIntToken() {
-	yylval = (TOKEN) malloc(TOKENSIZE);
-	yylval->data_t = DATA_INT;
-	yylval->tokenval.intval = atoi(yytext);
-	return INTEGER;
-}
-
-int makeRealToken() {
-	yylval = (TOKEN) malloc(TOKENSIZE);
-	yylval->data_t = DATA_REAL;
-	yylval->tokenval.realval = atof(yytext);
-	return REAL;
-}
-
-int makeCharToken() {
-	yylval = (TOKEN) malloc(TOKENSIZE);
-	yylval->data_t = DATA_CHAR;
-	yylval->tokenval.charval = yytext[1];
-	return CHAR;
-}
-
-// int makeToken(tokenType tok_t, dataType dat_t, int t) {
+// int makeNameToken() {
 // 	yylval = (TOKEN) malloc(TOKENSIZE);
-// 	yylval->token_t = tok_t;
-// 	switch(tok_t) {
-// 		case OPERATOR:
-// 			break;
-// 		case DELIMITER:
-// 			break;
-// 		case RESERVED:
-// 			break;
-// 		case TOKEN_NAME:
-// 			yylval->tokenval.strval = (char *) malloc(strlen(yytext));
-// 			strcpy(yylval->tokenval.strval, yytext);
-// 			return NAME;
-// 			break;
-// 		case TOKEN_STR:
+// 	yylval->token_t = TOKEN_NAME;
+// 	yylval->name = (char *)malloc(strlen(yytext)+1);
+// 	strcpy(yylval->name, yytext);
+// 	return NAME;
+// }
 
-// 			yylval->tokenval.strval = (char *) malloc(strlen(yytext)+1-2);
-// 			memcpy(yylval->tokenval.strval, yytext+1, strlen(yytext)-2);
-// 			*(yylval->tokenval.strval+strlen(yytext))
-// 			return STR;
-// 			break;
-// 		case TOKEN_NUM:
-// 			yylval->data_t = dat_t;
-// 			if(dat_t == DATA_INT){
-// 				yylval->tokenval.intval = atoi(yytext);
-// 				return INTEGER;
-// 			}
-// 			else if(dat_t == DATA_REAL){
-// 				yylval->tokenval.realval = atof(yytext);
-// 				return REAL;
-// 			}
-// 			else
-// 				return 0;
-// 			break;
-// 		case TOKEN_CHAR:
-// 			yylval->tokenval.charval = yytext[1];
-// 			break;
-// 	}
+// int makeStrToken() {
+// 	yylval = (TOKEN) malloc(TOKENSIZE);
+// 	yylval->data_t = DATA_STR;
+// 	yylval->tokenval.strval = (char *) malloc(strlen(yytext)-2+1);
+// 	memcpy(yylval->tokenval.strval, yytext+1, strlen(yytext)-2);
+// 	*(yylval->tokenval.strval+strlen(yytext)-2) = '\0';
+// 	return STR;
+// }
 
-// 	return t;
+// int makeIntToken() {
+// 	yylval = (TOKEN) malloc(TOKENSIZE);
+// 	yylval->data_t = DATA_INT;
+// 	yylval->tokenval.intval = atoi(yytext);
+// 	return INTEGER;
+// }
+
+// int makeRealToken() {
+// 	yylval = (TOKEN) malloc(TOKENSIZE);
+// 	yylval->data_t = DATA_REAL;
+// 	yylval->tokenval.realval = atof(yytext);
+// 	return REAL;
+// }
+
+// int makeCharToken() {
+// 	yylval = (TOKEN) malloc(TOKENSIZE);
+// 	yylval->data_t = DATA_CHAR;
+// 	yylval->tokenval.charval = yytext[1];
+// 	return CHAR;
 // }
 
 int yywrap(void){return 1;} 

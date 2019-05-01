@@ -1,6 +1,5 @@
 %{  
 #include <stdio.h>
-#include "token.h"
 
 enum TokenType {
     NAME = 258, 

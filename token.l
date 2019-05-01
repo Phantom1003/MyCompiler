@@ -53,7 +53,6 @@ real        {digit}+(\.{digit}+)?(([E|e])[+\-]?{digit}+)?
 char        '.'
 str 		\".+?\"
 
-" // for highlight
 
 and         "and"
 array       "array"
@@ -89,7 +88,7 @@ delim       [ \t]
 whitespace  {delim}+
 %%
 
-/* Delimiter */
+
 {lp}            {return makeToken(DELIMITER, LP);}
 {rp}            {return makeToken(DELIMITER, RP);}
 {lb}            {return makeToken(DELIMITER, LB);}
@@ -99,7 +98,7 @@ whitespace  {delim}+
 {colon}         {return makeToken(DELIMITER, COLON);}
 {semi}          {return makeToken(DELIMITER, SEMI);}
 
-/* Operator */
+
 {plus}          {return makeToken(OPERATOR, PLUS);}
 {minus}         {return makeToken(OPERATOR, MINUS);}
 {mul}           {return makeToken(OPERATOR, MUL);}

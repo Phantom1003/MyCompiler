@@ -46,8 +46,8 @@ const_part:
   | epsilon {}
 ;
 const_expr_list: 
-	const_expr_list  NAME  EQUAL  const_value  SEMI { }
-  | NAME  EQUAL  const_value  SEMI {}
+	const_expr_list NAME EQUAL const_value SEMI { }
+  | NAME EQUAL const_value SEMI {}
 ;
 const_value: 
 	INTEGER {}
@@ -61,11 +61,11 @@ type_part:
   | epsilon{}
 ;
 type_decl_list: 
-	type_decl_list  type_definition {}
+	type_decl_list type_definition {}
   | type_definition {}
 ;
 type_definition: 
-	NAME  EQUAL  type_decl  SEMI {}
+	NAME EQUAL type_decl SEMI {}
 ;
 type_decl:
     simple_type_decl {}
@@ -73,212 +73,150 @@ type_decl:
   | record_type_decl {}
 ;
 simple_type_decl: 
-    SYS_TYPE { 
-    }
-    |  NAME {
-    }
-    |  LP  name_list  RP
-    |  const_value  DOTDOT  const_value {  
-    }
-    |  MINUS  const_value  DOTDOT  const_value
-    |  MINUS  const_value  DOTDOT  MINUS  const_value
-    |  NAME  DOTDOT  NAME
+    SYS_TYPE {}
+  | NAME {}
+  | LP  name_list  RP {}
+  | const_value  DOTDOT  const_value {}
+  | MINUS  const_value  DOTDOT  const_value {}
+  | MINUS  const_value  DOTDOT  MINUS  const_value {}
+  | NAME  DOTDOT  NAME {}
 ;
 array_type_decl:
-    ARRAY  LB  simple_type_decl  RB  OF  type_decl {
-    }
+    ARRAY  LB  simple_type_decl  RB  OF  type_decl {}
 ;
 record_type_decl:
-    RECORD  field_decl_list  END {    }
+    RECORD  field_decl_list  END {}
 ;
 field_decl_list:
-    field_decl_list  field_decl {
-    }
-    | field_decl {
-    }
+    field_decl_list  field_decl {}
+  | field_decl {}
 ;
 field_decl:
-    name_list  COLON  type_decl  SEMI {
-    }
+    name_list  COLON  type_decl  SEMI {}
 ;
 name_list:
-    name_list  COMMA  NAME {
-    }
-    | NAME {
-        $$ = $1;
-    };
-var_part: VAR  var_decl_list {
-    }
-    | {
-    }
+    name_list  COMMA  NAME { }
+  | NAME {}
+;
+var_part: 
+	VAR  var_decl_list {}
+  | epsilon {}
 ;
 var_decl_list :
-    var_decl_list  var_decl {
-    }
-    | var_decl {;
-    };
+    var_decl_list  var_decl {}
+  | var_decl {}
+;
 var_decl:
-    name_list  COLON  type_decl  SEMI {
-    };
-routine_part: /* empty */
-            | routine_decl_list
+    name_list  COLON  type_decl  SEMI {}
 ;
-routine_decl_list: function_decl
-            | procedure_decl
-            | function_decl routine_decl_list
-            | procedure_decl routine_decl_list
+routine_part: 
+	routine_part  function_decl  {}
+  | routine_part  procedure_decl {}
+  | function_decl  {}
+  | procedure_decl {}  
+  | epsilon {}
 ;
-
 function_decl :
-    function_head  SEMI  sub_routine  SEMI {
-
-    };
+    function_head  SEMI  sub_routine  SEMI {}
+;
 function_head :
-    FUNCTION  NAME  parameters  COLON  simple_type_decl {
-
-    };
+    FUNCTION  NAME  parameters  COLON  simple_type_decl {}
+;
 procedure_decl :
-    procedure_head  SEMI  sub_routine  SEMI {
-
-    };
+    procedure_head  SEMI  sub_routine  SEMI {}
+;
 procedure_head :
-    PROCEDURE NAME parameters {
-
-    };
+    PROCEDURE NAME parameters {}
+;
 parameters:
-    LP  para_decl_list  RP {
-
-    }
-    |;
+    LP  para_decl_list  RP {}
+  | epsilon {}
+;
 para_decl_list:
-    para_decl_list  SEMI  para_type_list {
-
-    }
-    | para_type_list {
+    para_decl_list  SEMI  para_type_list {}
+  | para_type_list {}
 ;
-    };
 para_type_list:
-    var_para_list COLON  simple_type_decl {
-        
-    };
-var_para_list:
-    VAR name_list { 
-    };
-    | name_list {
-    };
-routine_body: compound_stmt {
-
-            }
+    var_para_list COLON simple_type_decl {}
 ;
-compound_stmt: BEGIN_TOKEN  stmt_list  END {
-
-                }
+var_para_list:
+    VAR name_list {}
+  | name_list {}
+;
+routine_body: 
+	compound_stmt {}
+;
+compound_stmt: 
+	BEGIN stmt_list END {}
 ;
 stmt_list:
-    stmt_list  stmt  SEMI {
-
-    }
-    |;
+    stmt_list  stmt  SEMI {}
+  | epsilon {}
+;
 stmt:
-    INTEGER  COLON non_label_stmt {
-
-    }
-    |  non_label_stmt {
-
-    };
+    INTEGER COLON non_label_stmt {}
+  | non_label_stmt {}
+;
 non_label_stmt:
-    assign_stmt {
-
-    }
-    | proc_stmt {
-
-    }
-    | compound_stmt {
-    }
-    | if_stmt {
-
-    }
-    | repeat_stmt {
-
-    }
-    | while_stmt {
-
-    }
-    | for_stmt {
-
-    }
-    | case_stmt {
-
-    }
-    | goto_stmt {
-
-    };
-assign_stmt: NAME  ASSIGN  expression {
-
-            }
-           | NAME LB expression RB ASSIGN expression {
- 
-            }
-           | NAME  DOT  NAME  ASSIGN  expression {
-
-           }
+    assign_stmt {}
+  | proc_stmt {}
+  | compound_stmt {}
+  | if_stmt {}
+  | repeat_stmt {}
+  | while_stmt {}
+  | for_stmt {}
+  | case_stmt {}
+  | goto_stmt {}
 ;
-proc_stmt:     NAME {
-            }
-              |  NAME  LP  args_list  RP {
-
-            }
-             |  SYS_PROC { 
-            }
-              |  SYS_PROC  LP  expression_list  RP {
-
-            }
-              |  READ  LP  factor  RP {
-            }
+assign_stmt: 
+	NAME  ASSIGN  expression {}
+  | NAME LB expression RB ASSIGN expression {}
+  | NAME DOT NAME ASSIGN expression {}
 ;
-if_stmt: IF  expression  THEN  stmt 
-        | IF  expression THEN  stmt ELSE stmt            
+proc_stmt:     
+	NAME {}
+  | NAME LP args_list RP {}
+  | SYS_PROC {}
+  | SYS_PROC LP expression_list RP {}
+  | READ LP factor RP {}
 ;
-repeat_stmt: REPEAT  stmt_list  UNTIL  expression {
-
-            };
-while_stmt: WHILE  expression  DO stmt {
-
-            };
-for_stmt:     FOR  NAME  ASSIGN  expression  direction  expression  DO stmt {
-      
-            };
-direction:     TO {
-            }
-              | DOWNTO {
-              }
+if_stmt: 
+	IF expression THEN  stmt else_clause {}
 ;
-case_stmt:     CASE expression OF case_expr_list  END {
-
-            };
-case_expr_list: case_expr_list  case_expr {
-
-                }
-                | case_expr {
-
-                }
+else_clause:
+    ELSE stmt  {}
+  | epsilon {}
 ;
-case_expr:     const_value  COLON  stmt  SEMI {
-
-            }
-              |  NAME  COLON  stmt  SEMI {
-
-              }
+repeat_stmt: 
+	REPEAT stmt_list UNTIL expression {}
 ;
-goto_stmt: GOTO  INTEGER 
+while_stmt: 
+	WHILE expression DO stmt {}
 ;
-
-expression_list: expression_list  COMMA  expression {
-
-                }
-                | expression {
-
-                }
+for_stmt:     
+	FOR NAME ASSIGN expression direction expression DO stmt {}
+;
+direction:     
+	TO {}
+  | DOWNTO {}
+;
+case_stmt:     
+	CASE expression OF case_expr_list END {}
+;
+case_expr_list: 
+	case_expr_list  case_expr {}
+  | case_expr {}
+;
+case_expr:     
+	const_value  COLON  stmt  SEMI {}
+  | NAME COLON stmt SEMI {}
+;
+goto_stmt: 
+	GOTO  INTEGER {} 
+;
+expression_list: 
+	expression_list COMMA expression {}
+  | expression { }
 ;
 expression: expression  GE  expr {
 

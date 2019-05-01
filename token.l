@@ -6,7 +6,7 @@ enum TokenType {
     LP, RP, LB, RB, DOT, COMMA, COLON, MUL, DIV, UNEQUAL, NOT, PLUS, MINUS, GE, GT, LE, LT, EQUAL, ASSIGN, MOD, DOTDOT, SEMI, 
     SYS_CON, SYS_FUNCT, SYS_PROC, SYS_TYPE, READ,
     INTEGER, REAL, CHAR, STRING, 
-    AND, ARRAY, BEGIN_TOKEN, CASE, CONST, DO, DOWNTO, ELSE, END, FOR, FUNCTION, GOTO, IF, IN, OF, OR, PACKED, PROCEDURE, 
+    AND, ARRAY, BEGIN, CASE, CONST, DO, DOWNTO, ELSE, END, FOR, FUNCTION, GOTO, IF, IN, OF, OR, PACKED, PROCEDURE, 
     PROGRAM, RECORD, REPEAT, SET, THEN, TO, TYPE, UNTIL, VAR, WHILE, WITH    
 };
 
@@ -123,7 +123,7 @@ whitespace  {delim}+
 {read}          {return makeToken(yytext, READ);}
 
 {array}         {return makeToken(yytext, ARRAY);}
-{begin}         {return makeToken(yytext, BEGIN_TOKEN);}
+{begin}         {return makeToken(yytext, BEGIN);}
 {case}          {return makeToken(yytext, CASE);}
 {const}         {return makeToken(yytext, CONST);}
 {do}            {return makeToken(yytext, DO);}

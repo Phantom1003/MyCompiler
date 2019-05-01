@@ -28,127 +28,127 @@ program:
 	program_head routine DOT {$$ = new Program($1, $2);}
 ;
 program_head: 
-	PROGRAM NAME SEMI {}
+	PROGRAM NAME SEMI { $$ = new programHead($2, $1);}
 ;
 routine: 
-	routine_head routine_body {}
+	routine_head routine_body {$$ = new Routine($1, $2);}
 ;
 sub_routine: 
-	routine_head routine_body {}
+	routine_head routine_body {$$ = new subRoutine($1, $2);}
 ;
 routine_head: 
-	label_part const_part type_part  var_part  routine_part {}
+	label_part const_part type_part var_part routine_part {$$ = new routineHead($1, $2, $3, $4, $5);}
 ;
 label_part: 
-	epsilon {}
+	epsilon {$$ = new labelPart(?);}
 ;
 const_part: 
-	CONST const_expr_list {}
+	CONST const_expr_list {$$ = new constPart($1, $2);}
   | epsilon {}
 ;
 const_expr_list: 
-	const_expr_list NAME EQUAL const_value SEMI { }
-  | NAME EQUAL const_value SEMI {}
+	const_expr_list NAME EQUAL const_value SEMI {$$ = new constExprList(?);}
+  | NAME EQUAL const_value SEMI {$$ = new constExprList(?);}
 ;
 const_value: 
-	INTEGER {}
-  | REAL {}
-  | CHAR {}
-  | STRING {}
-  | SYS_CON {}
+	INTEGER {$$ = new constValue(?);}
+  | REAL {$$ = new constValue(?);}
+  | CHAR {$$ = new constValue(?);}
+  | STRING {$$ = new constValue(?);}
+  | SYS_CON {$$ = new constValue(?);}
 ;
 type_part: 
-	TYPE type_decl_list {}
-  | epsilon{}
+	TYPE type_decl_list {$$ = new typePart(?);}
+  | epsilon{$$ = new typePart(?);}
 ;
 type_decl_list: 
-	type_decl_list type_definition {}
-  | type_definition {}
+	type_decl_list type_definition {$$ = new typeDeclList(?);}
+  | type_definition {$$ = new typeDeclList(?);}
 ;
 type_definition: 
-	NAME EQUAL type_decl SEMI {}
+	NAME EQUAL type_decl SEMI {$$ = new typeDefinition(?);}
 ;
 type_decl:
-    simple_type_decl {}
-  | array_type_decl {}
-  | record_type_decl {}
+    simple_type_decl {$$ = new typeDecl(?);}
+  | array_type_decl {$$ = new typeDecl(?);}
+  | record_type_decl {$$ = new typeDecl(?);}
 ;
 simple_type_decl: 
-    SYS_TYPE {}
-  | NAME {}
-  | LP name_list RP {}
-  | const_value DOTDOT const_value {}
-  | MINUS const_value DOTDOT const_value {}
-  | MINUS const_value DOTDOT MINUS const_value {}
-  | NAME  DOTDOT  NAME {}
+    SYS_TYPE {$$ = new simpleTypeDecl(?);}
+  | NAME {$$ = new simpleTypeDecl(?);}
+  | LP name_list RP {$$ = new simpleTypeDecl(?);}
+  | const_value DOTDOT const_value {$$ = new simpleTypeDecl(?);}
+  | MINUS const_value DOTDOT const_value {$$ = new simpleTypeDecl(?);}
+  | MINUS const_value DOTDOT MINUS const_value {$$ = new simpleTypeDecl(?);}
+  | NAME  DOTDOT  NAME {$$ = new simpleTypeDecl(?);}
 ;
 array_type_decl:
-    ARRAY LB simple_type_decl RB OF type_decl {}
+    ARRAY LB simple_type_decl RB OF type_decl {$$ = new arrayTypeDecl(?);}
 ;
 record_type_decl:
-    RECORD field_decl_list END {}
+    RECORD field_decl_list END {$$ = new recordTypeDecl(?);}
 ;
 field_decl_list:
-    field_decl_list field_decl {}
-  | field_decl {}
+    field_decl_list field_decl {$$ = new fieldDeclList(?);}
+  | field_decl {$$ = new fieldDeclList(?);}
 ;
 field_decl:
-    name_list COLON type_decl SEMI {}
+    name_list COLON type_decl SEMI {$$ = new fieldDecl(?);}
 ;
 name_list:
-    name_list COMMA NAME { }
-  | NAME {}
+    name_list COMMA NAME {$$ = new nameList(?);}
+  | NAME {$$ = new nameList(?);}
 ;
 var_part: 
-	VAR var_decl_list {}
+	VAR var_decl_list {$$ = new varPart(?);}
   | epsilon {}
 ;
 var_decl_list :
-    var_decl_list var_decl {}
-  | var_decl {}
+    var_decl_list var_decl {$$ = new varDeclList(?);}
+  | var_decl {$$ = new varDeclList(?);}
 ;
 var_decl:
-    name_list COLON type_decl  SEMI {}
+    name_list COLON type_decl  SEMI {$$ = new varDecl(?);}
 ;
 routine_part: 
-	routine_part function_decl  {}
-  | routine_part procedure_decl {}
-  | function_decl {}
-  | procedure_decl {}  
-  | epsilon {}
+	routine_part function_decl  {$$ = new routinePart(?);}
+  | routine_part procedure_decl {$$ = new routinePart(?);}
+  | function_decl {$$ = new routinePart(?);}
+  | procedure_decl {$$ = new routinePart(?);}  
+  | epsilon {$$ = new routinePart(?);}
 ;
 function_decl :
-    function_head SEMI sub_routine SEMI {}
+    function_head SEMI sub_routine SEMI {$$ = new functionDecl(?);}
 ;
 function_head :
-    FUNCTION NAME parameters COLON simple_type_decl {}
+    FUNCTION NAME parameters COLON simple_type_decl {$$ = new functionHead(?);}
 ;
 procedure_decl :
-    procedure_head SEMI sub_routine SEMI {}
+    procedure_head SEMI sub_routine SEMI {$$ = new procedureDecl(?);}
 ;
 procedure_head :
-    PROCEDURE NAME parameters {}
+    PROCEDURE NAME parameters {$$ = new procedureHead(?);}
 ;
 parameters:
-    LP para_decl_list RP {}
+    LP para_decl_list RP {$$ = new Parameters(?);}
   | epsilon {}
 ;
 para_decl_list:
-    para_decl_list SEMI para_type_list {}
-  | para_type_list {}
+    para_decl_list SEMI para_type_list {$$ = new paraDeclList(?);}
+  | para_type_list {$$ = new paraDeclList(?);}
 ;
 para_type_list:
-    var_para_list COLON simple_type_decl {}
+    var_para_list COLON simple_type_decl {$$ = new paraTypeList(?);}
 ;
 var_para_list:
-    VAR name_list {}
-  | name_list {}
+    VAR name_list {$$ = new varParaList(?);}
+  | name_list {$$ = new varParaList(?);}
 ;
 routine_body: 
-	compound_stmt {}
+	compound_stmt {$$ = new routineBody(?);}
 ;
 compound_stmt: 
-	BEGIN stmt_list END {}
+	BEGIN stmt_list END {$$ = new compoundStmt(?);}
 ;
 stmt_list:
     stmt_list stmt SEMI {}

@@ -24,7 +24,7 @@ void yyerror(const char *s) {
 
 %%
 program: 
-	program_head routine DOT {}
+	program_head routine DOT {$$ = new Program($1, $2);}
 ;
 program_head: 
 	PROGRAM NAME SEMI {}
@@ -50,36 +50,28 @@ const_expr_list:
   | NAME  EQUAL  const_value  SEMI {}
 ;
 const_value: 
-	INTEGER {
-            }
-            |  REAL {
-            }
-            |  CHAR {
-            }
-            |  STRING {
-            }
-            |  SYS_CON {
-            };
-
-type_part: TYPE type_decl_list {
-            }
-            | {
-            };
-type_decl_list: type_decl_list  type_definition {
-                }
-                | type_definition {
-                }
+	INTEGER {}
+  | REAL {}
+  | CHAR {}
+  | STRING {}
+  | SYS_CON {}
 ;
-type_definition: NAME  EQUAL  type_decl  SEMI {
-                }
+type_part: 
+	TYPE type_decl_list {}
+  | epsilon{}
+;
+type_decl_list: 
+	type_decl_list  type_definition {}
+  | type_definition {}
+;
+type_definition: 
+	NAME  EQUAL  type_decl  SEMI {}
 ;
 type_decl:
-    simple_type_decl {
-    }
-    |  array_type_decl { 
-    }
-    |  record_type_decl { 
-    };
+    simple_type_decl {}
+  | array_type_decl {}
+  | record_type_decl {}
+;
 simple_type_decl: 
     SYS_TYPE { 
     }

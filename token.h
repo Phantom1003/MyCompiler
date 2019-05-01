@@ -9,7 +9,7 @@ typedef enum datatypes {
 	DATA_INT,
 	DATA_REAL,
 	DATA_CHAR,
-	// DATA_STR,
+	DATA_STR,
 } dataType;
 
 typedef struct token {

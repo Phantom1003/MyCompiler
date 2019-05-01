@@ -16,6 +16,7 @@ public:
 		return 0;
 	}
 	virtual std::vector<ASTNode *> getChildren() = 0;
+	virtual std::string getName() = 0;
 
 	ASTNode(){
 		id = ++idCnt;
@@ -23,6 +24,29 @@ public:
 };
 
 class Program : public ASTNode {
-	ProgramHead * programhead = 0;
+	ProgramHead * programHead = 0;
 	Routine * routine = 0;
+
+	Program(ProgramHead *programHead, Routine *routine) : programHead(programHead), routine(routine) {}
+	
+	std:vector<ASTNode *> getChildren() {
+		auto ch = std:vector<ASTNode *>();
+		ch.push_back(programHead);
+		ch.push_back(routine);
+		return ch;
+	}
+
+
+class ProgramHead : public ASTNode {
+	std:string name;
+
+	ProgramHead(std::string name) : name(std::move(name)) {}
+
+	std:vector<ASTNode *> getChildren() {
+		return std:vector<ASTNode *> ();
+	}
+
+	std::string getName() {
+		return name;
+	}
 }

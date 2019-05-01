@@ -6,7 +6,8 @@
 using namespace std;
 
 void yyerror(const char *s) { 
-	printf("[ERROR]: At line: %d, %s\n ", yylineno, s); 
+	printf("[ERROR]: At line: %d\n 
+			         %s\n ", yylineno, s); 
 }
 
 %}

@@ -75,65 +75,65 @@ type_decl:
 simple_type_decl: 
     SYS_TYPE {}
   | NAME {}
-  | LP  name_list  RP {}
-  | const_value  DOTDOT  const_value {}
-  | MINUS  const_value  DOTDOT  const_value {}
-  | MINUS  const_value  DOTDOT  MINUS  const_value {}
+  | LP name_list RP {}
+  | const_value DOTDOT const_value {}
+  | MINUS const_value DOTDOT const_value {}
+  | MINUS const_value DOTDOT MINUS const_value {}
   | NAME  DOTDOT  NAME {}
 ;
 array_type_decl:
-    ARRAY  LB  simple_type_decl  RB  OF  type_decl {}
+    ARRAY LB simple_type_decl RB OF type_decl {}
 ;
 record_type_decl:
-    RECORD  field_decl_list  END {}
+    RECORD field_decl_list END {}
 ;
 field_decl_list:
-    field_decl_list  field_decl {}
+    field_decl_list field_decl {}
   | field_decl {}
 ;
 field_decl:
-    name_list  COLON  type_decl  SEMI {}
+    name_list COLON type_decl SEMI {}
 ;
 name_list:
-    name_list  COMMA  NAME { }
+    name_list COMMA NAME { }
   | NAME {}
 ;
 var_part: 
-	VAR  var_decl_list {}
+	VAR var_decl_list {}
   | epsilon {}
 ;
 var_decl_list :
-    var_decl_list  var_decl {}
+    var_decl_list var_decl {}
   | var_decl {}
 ;
 var_decl:
-    name_list  COLON  type_decl  SEMI {}
+    name_list COLON type_decl  SEMI {}
 ;
 routine_part: 
-	routine_part  function_decl  {}
-  | routine_part  procedure_decl {}
-  | function_decl  {}
+	routine_part function_decl  {}
+  | routine_part procedure_decl {}
+  | function_decl {}
   | procedure_decl {}  
   | epsilon {}
 ;
 function_decl :
-    function_head  SEMI  sub_routine  SEMI {}
+    function_head SEMI sub_routine SEMI {}
 ;
 function_head :
-    FUNCTION  NAME  parameters  COLON  simple_type_decl {}
+    FUNCTION NAME parameters COLON simple_type_decl {}
 ;
 procedure_decl :
-    procedure_head  SEMI  sub_routine  SEMI {}
+    procedure_head SEMI sub_routine SEMI {}
 ;
 procedure_head :
     PROCEDURE NAME parameters {}
 ;
 parameters:
-    LP  para_decl_list  RP {}
+    LP para_decl_list RP {}
   | epsilon {}
 ;
 para_decl_list:
-    para_decl_list  SEMI  para_type_list {}
+    para_decl_list SEMI para_type_list {}
   | para_type_list {}
 ;
 para_type_list:
@@ -150,7 +150,7 @@ compound_stmt:
 	BEGIN stmt_list END {}
 ;
 stmt_list:
-    stmt_list  stmt  SEMI {}
+    stmt_list stmt SEMI {}
   | epsilon {}
 ;
 stmt:
@@ -169,7 +169,7 @@ non_label_stmt:
   | goto_stmt {}
 ;
 assign_stmt: 
-	NAME  ASSIGN  expression {}
+	NAME ASSIGN expression {}
   | NAME LB expression RB ASSIGN expression {}
   | NAME DOT NAME ASSIGN expression {}
 ;
@@ -181,7 +181,7 @@ proc_stmt:
   | READ LP factor RP {}
 ;
 if_stmt: 
-	IF expression THEN  stmt else_clause {}
+	IF expression THEN stmt else_clause {}
 ;
 else_clause:
     ELSE stmt  {}
@@ -204,11 +204,11 @@ case_stmt:
 	CASE expression OF case_expr_list END {}
 ;
 case_expr_list: 
-	case_expr_list  case_expr {}
+	case_expr_list case_expr {}
   | case_expr {}
 ;
 case_expr:     
-	const_value  COLON  stmt  SEMI {}
+	const_value COLON stmt SEMI {}
   | NAME COLON stmt SEMI {}
 ;
 goto_stmt: 
@@ -218,92 +218,43 @@ expression_list:
 	expression_list COMMA expression {}
   | expression { }
 ;
-expression: expression  GE  expr {
-
-            }
-            |  expression  GT  expr {
-
-            }
-            |  expression  LE  expr {
-
-            }
-            |  expression  LT  expr {
-
-            }
-            |  expression  EQUAL  expr {
-
-            }
-            |  expression  UNEQUAL  expr {
-
-            }
-            |  expr {
-
-            }
+expression: 
+	expression GE expr {}
+  | expression GT expr {}
+  | expression LE expr {}
+  | expression LT expr {}
+  | expression EQUAL expr {}
+  | expression UNEQUAL expr {}
+  | expr {}
 ;
-expr: expr  PLUS  term {
-
-    }
-    |  expr  MINUS  term {
-
-    }
-    |  expr  OR  term {
-
-    }
-    |  term {
-
-    }
+expr: 
+	expr PLUS term {}
+  | expr MINUS term {}
+  | expr OR term {}
+  | term {}
 ;
-term: term  MUL  factor {
-
-    }
-    |  term  DIV  factor {
-
-    }
-    |  term  MOD  factor {
- 
-    }
-    |  term  AND  factor {
-
-    }
-    |  factor {
-
-    }
+term: 
+	term MUL factor {}
+  | term DIV factor {}
+  | term MOD factor {}
+  | term AND factor {}
+  | factor {}
 ;
-factor: NAME {
-
-    }
-    |  NAME  LP  args_list  RP {
-
-    }
-    |  SYS_FUNCT { 
-    }
-    |  SYS_FUNCT  LP  args_list  RP {
-
-    }
-    |  const_value {
-
-    }
-    |  LP  expression  RP {
-
-    }
-    |  NOT  factor {
-
-    }
-    |  MINUS  factor {
-
-    }
-    |  NAME  LB  expression  RB {
-    }
-    |  NAME  DOT  NAME {
-
-    }
+factor:
+	NAME {}
+  | NAME LP args_list RP {}
+  | SYS_FUNCT {}
+  | SYS_FUNCT  LP  args_list  RP {}
+  | const_value {}
+  | LP expression RP {}
+  | NOT factor {}
+  | MINUS factor {}
+  | NAME LB expression RB {}
+  | NAME DOT NAME {}
 ;
-args_list:     args_list  COMMA  expression {
-
-            }
-            |  expression {
-
-            }
+args_list:
+	args_list COMMA expression {}
+  | expression {}
 
 epsilon: {}
 

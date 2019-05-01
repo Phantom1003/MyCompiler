@@ -2,7 +2,7 @@
 #include <stdio.h>  
 
 enum TokenType {
-    NAME, 
+    NAME = 258, 
     LP, RP, LB, RB, DOT, COMMA, COLON, MUL, DIV, UNEQUAL, NOT, PLUS, MINUS, GE, GT, LE, LT, EQUAL, ASSIGN, MOD, DOTDOT, SEMI, 
     SYS_CON, SYS_FUNCT, SYS_PROC, SYS_TYPE, READ,
     INTEGER, REAL, CHAR,

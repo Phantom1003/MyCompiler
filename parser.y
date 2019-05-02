@@ -28,236 +28,236 @@ program:
 	program_head routine DOT {$$ = new Program($1, $2);}
 ;
 program_head: 
-	PROGRAM NAME SEMI { $$ = new programHead($2, $1);}
+	PROGRAM NAME SEMI { $$ = new ProgramHead($2.content);}
 ;
 routine: 
 	routine_head routine_body {$$ = new Routine($1, $2);}
 ;
 sub_routine: 
-	routine_head routine_body {$$ = new subRoutine($1, $2);}
+	routine_head routine_body {$$ = new SubRoutine($1, $2);}
 ;
 routine_head: 
-	label_part const_part type_part var_part routine_part {$$ = new routineHead($1, $2, $3, $4, $5);}
+	label_part const_part type_part var_part routine_part {$$ = new RoutineHead($1, $2, $3, $4, $5);}
 ;
 label_part: 
-	epsilon {$$ = new labelPart(?);}
+	epsilon {$$ = new LabelPart();}
 ;
 const_part: 
-	CONST const_expr_list {$$ = new constPart($1, $2);}
-  | epsilon {}
+	CONST const_expr_list {$$ = new ConstPart($2);}
+  | epsilon {$$ = new ConstPart();}
 ;
 const_expr_list: 
-	const_expr_list NAME EQUAL const_value SEMI {$$ = new constExprList(?);}
-  | NAME EQUAL const_value SEMI {$$ = new constExprList(?);}
+	const_expr_list NAME EQUAL const_value SEMI {$$ = new ConstExprList($2.content, $1, $4);}
+  | NAME EQUAL const_value SEMI {$$ = new ConstExprList($1.content, $3);}
 ;
 const_value: 
-	INTEGER {$$ = new constValue(?);}
-  | REAL {$$ = new constValue(?);}
-  | CHAR {$$ = new constValue(?);}
-  | STRING {$$ = new constValue(?);}
-  | SYS_CON {$$ = new constValue(?);}
+	INTEGER {$$ = new ConstValue($1.type, $1.content);}
+  | REAL    {$$ = new ConstValue($1.type, $1.content);}
+  | CHAR    {$$ = new ConstValue($1.type, $1.content);}
+  | STRING  {$$ = new ConstValue($1.type, $1.content);}
+  | SYS_CON {$$ = new ConstValue($1.type, $1.content);}
 ;
 type_part: 
-	TYPE type_decl_list {$$ = new typePart(?);}
-  | epsilon{$$ = new typePart(?);}
+	TYPE type_decl_list {$$ = new TypePart($1);}
+  | epsilon{$$ = new TypePart();}
 ;
 type_decl_list: 
-	type_decl_list type_definition {$$ = new typeDeclList(?);}
-  | type_definition {$$ = new typeDeclList(?);}
+	type_decl_list type_definition {$$ = new TypeDeclList($1, $2);}
+  | type_definition {$$ = new TypeDeclList($1);}
 ;
 type_definition: 
-	NAME EQUAL type_decl SEMI {$$ = new typeDefinition(?);}
+	NAME EQUAL type_decl SEMI {$$ = new TypeDefinition($1.content, $3);}
 ;
 type_decl:
-    simple_type_decl {$$ = new typeDecl(?);}
-  | array_type_decl {$$ = new typeDecl(?);}
-  | record_type_decl {$$ = new typeDecl(?);}
+    simple_type_decl {$$ = new TypeDecl($1);}
+  | array_type_decl  {$$ = new TypeDecl($1);}
+  | record_type_decl {$$ = new TypeDecl($1);}
 ;
 simple_type_decl: 
-    SYS_TYPE {$$ = new simpleTypeDecl(?);}
-  | NAME {$$ = new simpleTypeDecl(?);}
-  | LP name_list RP {$$ = new simpleTypeDecl(?);}
-  | const_value DOTDOT const_value {$$ = new simpleTypeDecl(?);}
-  | MINUS const_value DOTDOT const_value {$$ = new simpleTypeDecl(?);}
-  | MINUS const_value DOTDOT MINUS const_value {$$ = new simpleTypeDecl(?);}
-  | NAME  DOTDOT  NAME {$$ = new simpleTypeDecl(?);}
+    SYS_TYPE {$$ = new SimpleTypeDecl($1.type, $1.content);}
+  | NAME {$$ = new SimpleTypeDecl($1.type, $1.content);}
+  | LP name_list RP {$$ = new SimpleTypeDecl($2);}
+  | const_value DOTDOT const_value {$$ = new SimpleTypeDecl($1, $3);}
+  | MINUS const_value DOTDOT const_value {$$ = new SimpleTypeDecl($2->neg(), $4);}
+  | MINUS const_value DOTDOT MINUS const_value {$$ = new SimpleTypeDecl($2->neg(), $4->neg());}
+  | NAME  DOTDOT  NAME {$$ = new SimpleTypeDecl($1.content, $3.content);}
 ;
 array_type_decl:
-    ARRAY LB simple_type_decl RB OF type_decl {$$ = new arrayTypeDecl(?);}
+    ARRAY LB simple_type_decl RB OF type_decl {$$ = new ArrayTypeDecl($3, $6);}
 ;
 record_type_decl:
-    RECORD field_decl_list END {$$ = new recordTypeDecl(?);}
+    RECORD field_decl_list END {$$ = new RecordTypeDecl($2);}
 ;
 field_decl_list:
-    field_decl_list field_decl {$$ = new fieldDeclList(?);}
-  | field_decl {$$ = new fieldDeclList(?);}
+    field_decl_list field_decl {$$ = new FieldDeclList($1, $2);}
+  | field_decl {$$ = new FieldDeclList($1);}
 ;
 field_decl:
-    name_list COLON type_decl SEMI {$$ = new fieldDecl(?);}
+    name_list COLON type_decl SEMI {$$ = new FieldDecl($1, $3);}
 ;
 name_list:
-    name_list COMMA NAME {$$ = new nameList(?);}
-  | NAME {$$ = new nameList(?);}
+    name_list COMMA NAME {$$ = new NameList($3.content, $1);}
+  | NAME {$$ = new NameList($1.content);}
 ;
 var_part: 
-	VAR var_decl_list {$$ = new varPart(?);}
-  | epsilon {}
+	VAR var_decl_list {$$ = new VarPart($2);}
+  | epsilon {$$ = new VarPart();}
 ;
 var_decl_list :
-    var_decl_list var_decl {$$ = new varDeclList(?);}
-  | var_decl {$$ = new varDeclList(?);}
+    var_decl_list var_decl {$$ = new VarDeclList($1, $2);}
+  | var_decl {$$ = new VarDeclList($1);}
 ;
 var_decl:
-    name_list COLON type_decl  SEMI {$$ = new varDecl(?);}
+    name_list COLON type_decl  SEMI {$$ = new VarDecl($1, $3);}
 ;
 routine_part: 
-	routine_part function_decl  {$$ = new routinePart(?);}
-  | routine_part procedure_decl {$$ = new routinePart(?);}
-  | function_decl {$$ = new routinePart(?);}
-  | procedure_decl {$$ = new routinePart(?);}  
-  | epsilon {$$ = new routinePart(?);}
+	routine_part function_decl  {$$ = new RoutinePart($1, $2);}
+  | routine_part procedure_decl {$$ = new RoutinePart($1, $2);}
+  | function_decl {$$ = new RoutinePart($1);}
+  | procedure_decl {$$ = new RoutinePart($1);}  
+  | epsilon {$$ = new RoutinePart();}
 ;
 function_decl :
-    function_head SEMI sub_routine SEMI {$$ = new functionDecl(?);}
+    function_head SEMI sub_routine SEMI {$$ = new FunctionDecl($1, $3);}
 ;
 function_head :
-    FUNCTION NAME parameters COLON simple_type_decl {$$ = new functionHead(?);}
+    FUNCTION NAME parameters COLON simple_type_decl {$$ = new FunctionHead($2.content, $3, $5);}
 ;
 procedure_decl :
-    procedure_head SEMI sub_routine SEMI {$$ = new procedureDecl(?);}
+    procedure_head SEMI sub_routine SEMI {$$ = new ProcedureDecl($1, $3);}
 ;
 procedure_head :
-    PROCEDURE NAME parameters {$$ = new procedureHead(?);}
+    PROCEDURE NAME parameters {$$ = new ProcedureHead($2.content, $3);}
 ;
 parameters:
-    LP para_decl_list RP {$$ = new Parameters(?);}
-  | epsilon {}
+    LP para_decl_list RP {$$ = new Parameters($2);}
+  | epsilon {$$ = new Parameters( );}
 ;
 para_decl_list:
-    para_decl_list SEMI para_type_list {$$ = new paraDeclList(?);}
-  | para_type_list {$$ = new paraDeclList(?);}
+    para_decl_list SEMI para_type_list {$$ = new ParaDeclList($1, $3);}
+  | para_type_list {$$ = new ParaDeclList($1);}
 ;
 para_type_list:
-    var_para_list COLON simple_type_decl {$$ = new paraTypeList(?);}
+    var_para_list COLON simple_type_decl {$$ = new ParaTypeList($1, $3);}
 ;
 var_para_list:
-    VAR name_list {$$ = new varParaList(?);}
-  | name_list {$$ = new varParaList(?);}
+    VAR name_list {$$ = new VarParaList($2);}
+  | name_list {$$ = new VarParaList($1);}
 ;
 routine_body: 
-	compound_stmt {$$ = new routineBody(?);}
+	compound_stmt {$$ = new RoutineBody($1);}
 ;
 compound_stmt: 
-	BEGIN stmt_list END {$$ = new compoundStmt(?);}
+	BEGIN stmt_list END {$$ = new CompoundStmt($2);}
 ;
 stmt_list:
-    stmt_list stmt SEMI {}
-  | epsilon {}
+    stmt_list stmt SEMI {$$ = new StmtList($1, $2);}
+  | epsilon {$$ = new StmtList();}
 ;
 stmt:
-    INTEGER COLON non_label_stmt {}
-  | non_label_stmt {}
+    INTEGER COLON non_label_stmt {$$ = new ();}
+  | non_label_stmt {$$ = new ();}
 ;
 non_label_stmt:
-    assign_stmt {}
-  | proc_stmt {}
-  | compound_stmt {}
-  | if_stmt {}
-  | repeat_stmt {}
-  | while_stmt {}
-  | for_stmt {}
-  | case_stmt {}
-  | goto_stmt {}
+    assign_stmt {$$ = new ();}
+  | proc_stmt {$$ = new ();}
+  | compound_stmt {$$ = new ();}
+  | if_stmt {$$ = new ();}
+  | repeat_stmt {$$ = new ();}
+  | while_stmt {$$ = new ();}
+  | for_stmt {$$ = new ();}
+  | case_stmt {$$ = new ();}
+  | goto_stmt {$$ = new ();}
 ;
 assign_stmt: 
-	NAME ASSIGN expression {}
-  | NAME LB expression RB ASSIGN expression {}
-  | NAME DOT NAME ASSIGN expression {}
+	NAME ASSIGN expression {$$ = new ();}
+  | NAME LB expression RB ASSIGN expression {$$ = new ();}
+  | NAME DOT NAME ASSIGN expression {$$ = new ();}
 ;
 proc_stmt:     
-	NAME {}
-  | NAME LP args_list RP {}
-  | SYS_PROC {}
-  | SYS_PROC LP expression_list RP {}
-  | READ LP factor RP {}
+	NAME {$$ = new ();}
+  | NAME LP args_list RP {$$ = new ();}
+  | SYS_PROC {$$ = new ();}
+  | SYS_PROC LP expression_list RP {$$ = new ();}
+  | READ LP factor RP {$$ = new ();}
 ;
 if_stmt: 
-	IF expression THEN stmt else_clause {}
+	IF expression THEN stmt else_clause {$$ = new ();}
 ;
 else_clause:
-    ELSE stmt  {}
-  | epsilon {}
+    ELSE stmt  {$$ = new ();}
+  | epsilon {$$ = new ();}
 ;
 repeat_stmt: 
-	REPEAT stmt_list UNTIL expression {}
+	REPEAT stmt_list UNTIL expression {$$ = new ();}
 ;
 while_stmt: 
-	WHILE expression DO stmt {}
+	WHILE expression DO stmt {$$ = new ();}
 ;
 for_stmt:     
-	FOR NAME ASSIGN expression direction expression DO stmt {}
+	FOR NAME ASSIGN expression direction expression DO stmt {$$ = new ();}
 ;
 direction:     
-	TO {}
-  | DOWNTO {}
+	TO {$$ = new ();}
+  | DOWNTO {$$ = new ();}
 ;
 case_stmt:     
-	CASE expression OF case_expr_list END {}
+	CASE expression OF case_expr_list END {$$ = new ();}
 ;
 case_expr_list: 
-	case_expr_list case_expr {}
-  | case_expr {}
+	case_expr_list case_expr {$$ = new ();}
+  | case_expr {$$ = new ();}
 ;
 case_expr:     
-	const_value COLON stmt SEMI {}
-  | NAME COLON stmt SEMI {}
+	const_value COLON stmt SEMI {$$ = new ();}
+  | NAME COLON stmt SEMI {$$ = new ();}
 ;
 goto_stmt: 
-	GOTO  INTEGER {} 
+	GOTO  INTEGER {$$ = new ();} 
 ;
 expression_list: 
-	expression_list COMMA expression {}
+	expression_list COMMA expression {$$ = new ();}
   | expression { }
 ;
 expression: 
-	expression GE expr {}
-  | expression GT expr {}
-  | expression LE expr {}
-  | expression LT expr {}
-  | expression EQUAL expr {}
-  | expression UNEQUAL expr {}
-  | expr {}
+	expression GE expr {$$ = new ();}
+  | expression GT expr {$$ = new ();}
+  | expression LE expr {$$ = new ();}
+  | expression LT expr {$$ = new ();}
+  | expression EQUAL expr {$$ = new ();}
+  | expression UNEQUAL expr {$$ = new ();}
+  | expr {$$ = new ();}
 ;
 expr: 
-	expr PLUS term {}
-  | expr MINUS term {}
-  | expr OR term {}
-  | term {}
+	expr PLUS term {$$ = new ();}
+  | expr MINUS term {$$ = new ();}
+  | expr OR term {$$ = new ();}
+  | term {$$ = new ();}
 ;
 term: 
-	term MUL factor {}
-  | term DIV factor {}
-  | term MOD factor {}
-  | term AND factor {}
-  | factor {}
+	term MUL factor {$$ = new ();}
+  | term DIV factor {$$ = new ();}
+  | term MOD factor {$$ = new ();}
+  | term AND factor {$$ = new ();}
+  | factor {$$ = new ();}
 ;
 factor:
-	NAME {}
-  | NAME LP args_list RP {}
-  | SYS_FUNCT {}
-  | SYS_FUNCT  LP  args_list  RP {}
-  | const_value {}
-  | LP expression RP {}
-  | NOT factor {}
-  | MINUS factor {}
-  | NAME LB expression RB {}
-  | NAME DOT NAME {}
+	NAME {$$ = new ();}
+  | NAME LP args_list RP {$$ = new ();}
+  | SYS_FUNCT {$$ = new ();}
+  | SYS_FUNCT  LP  args_list  RP {$$ = new ();}
+  | const_value {$$ = new ();}
+  | LP expression RP {$$ = new ();}
+  | NOT factor {$$ = new ();}
+  | MINUS factor {$$ = new ();}
+  | NAME LB expression RB {$$ = new ();}
+  | NAME DOT NAME {$$ = new ();}
 ;
 args_list:
-	args_list COMMA expression {}
-  | expression {}
+	args_list COMMA expression {$$ = new ();}
+  | expression {$$ = new ();}
 
-epsilon: {}
+epsilon: {$$ = new ();}
 
 %%
 

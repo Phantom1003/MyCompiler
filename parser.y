@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void yyerror(const char *s) { 
+void yyerror(const char* s) { 
 	printf("[ERROR]: At line: %d\n 
 			         %s\n ", yylineno, s); 
 }
@@ -14,14 +14,127 @@ void yyerror(const char *s) {
 
 %union {
 	int type;
-    string content;
-
+  string content;
+   
+  Program*     program;
+  ProgramHead* programHead;
+  Routine*     routine;
+  RoutineHead* routineHead;
+  SubRoutine*  subRoutine;
+  LabelPart*   labelPart;
+  ConstPart*   constPart;
+  ConstExprList*  constExprList;
+  ConstValue*     constValue;
+  TypePart*       typePart;
+  TypeDeclList*   typeDeclList;
+  TypeDefinition* typeDefinition;
+  TypeDecl*       typeDecl;
+  SimpleTypeDecl* simpleTypeDecl;
+  ArrayTypeDecl*  arrayTypeDecl;
+  RecordTypeDecl* recordTypeDecl;
+  FieldDeclList*  fieldDeclList;
+  FieldDecl*   fieldDecl;
+  NameList*    nameList;
+  VarPart*     varPart;
+  VarDeclList* varDeclList;
+  VarDecl*     varDecl;
+  RoutinePart* routinePart;
+  FunctionDecl*  functionDecl;
+  FunctionHead*  functionHead;
+  ProcedureDecl* procedureDecl;
+  ProcedureHead* procedureHead;
+  Parameters*    parameters;
+  ParaDeclList*  paraDeclList;
+  ParaTypeList*  paraTypeList;
+  VarParaList*   varParaList;
+  ValParaList*   valParaList;
+  RoutineBody*   routineBody;
+  CompoundStmt*  compoundStmt;
+  StmtList*      stmtList;
+  Stmt*          stmt;
+  NonLabelStmt*  nonLabelStmt;
+  AssignStmt*    assignStmt;
+  ProcStmt*      procStmt;
+  IfStmt*        ifStmt;
+  ElseClause* elseClause;
+  RepeatStmt* repeatStmt;
+  WhileStmt*  whileStmt;
+  ForStmt*    forStmt;
+  Direction*  direction;
+  CaseStmt*   caseStmt;
+  CaseExprList* caseExprList;
+  CaseExpr*     caseExpr;
+  GotoStmt*       gotoStmt;
+  ExpressionList* expressionList;
+  Expression*     expression;
+  Expr*     expr;
+  Term*     term;
+  Factor*   factor;
+  ArgsList* argsList;
 }
 %token NAME LP RP LB RB DOT COMMA COLON MUL DIV UNEQUAL NOT PLUS MINUS
 %token GE GT LE LT EQUAL ASSIGN MOD DOTDOT SEMI SYS_CON SYS_FUNCT 
 %token SYS_PROC SYS_TYPE READ INTEGER REAL CHAR STRING AND ARRAY BEGIN_TOKEN
 %token CASE CONST DO DOWNTO ELSE END FOR FUNCTION GOTO IF IN OF OR PACKED
 %token PROCEDURE PROGRAM RECORD REPEAT SET THEN TO TYPE UNTIL VAR WHILE WITH
+
+%type <program>     program
+%type <programHead> program_head
+%type <routine>     routine
+%type <routineHead> routine_head
+%type <subRoutine>  sub_routine
+%type <labelPart>   label_part
+%type <constPart>   const_part
+%type <constExprList>  const_expr_list
+%type <constValue>     const_value
+%type <typePart>       type_part
+%type <typeDeclList>   type_decl_list
+%type <typeDefinition> type_definition
+%type <typeDecl>       type_decl
+%type <simpleTypeDecl> simple_type_decl
+%type <arrayTypeDecl>  array_type_decl
+%type <recordTypeDecl> record_type_decl
+%type <fieldDeclList>  field_decl_list
+%type <fieldDecl>   field_decl
+%type <nameList>    name_list
+%type <varPart>     var_part
+%type <varDeclList> var_decl_list
+%type <varDecl>     var_decl
+%type <routinePart> routine_part
+%type <functionDecl>  function_decl
+%type <functionHead>  function_head
+%type <procedureDecl> procedure_decl
+%type <procedureHead> procedure_head
+%type <parameters>    parameters
+%type <paraDeclList> para_decl_list
+%type <paraTypeList> para_type_list
+%type <varParaList>  var_para_list
+%type <valParaList>  val_para_list
+%type <routineBody>  routine_body
+%type <compoundStmt> compound_stmt
+%type <stmtList>     stmt_list
+%type <stmt>         stmt
+%type <nonLabelStmt> non_label_stmt
+%type <assignStmt>   assign_stmt
+%type <procStmt>   proc_stmt
+%type <ifStmt>     if_stmt
+%type <elseClause> else_clause
+%type <repeatStmt> repeat_stmt
+%type <whileStmt>  while_stmt
+%type <forStmt>    for_stmt
+%type <direction>  direction
+%type <caseStmt>   case_stmt
+%type <caseExprList> case_expr_list
+%type <caseExpr>     case_expr
+%type <gotoStmt>     goto_stmt
+%type <expressionList> expression_list
+%type <expression>     expression
+%type <expr>     expr
+%type <term>     term
+%type <factor>   factor
+%type <argsList> args_list
+
+
 
 %%
 program: 

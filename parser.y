@@ -139,10 +139,13 @@ para_decl_list:
 ;
 para_type_list:
     var_para_list COLON simple_type_decl {$$ = new ParaTypeList($1, $3);}
+  | val_para_list COLON simple_type_decl {$$ = new ParaTypeList($1, $3);}
 ;
 var_para_list:
     VAR name_list {$$ = new VarParaList($2);}
-  | name_list {$$ = new VarParaList($1);}
+;
+val_para_list:
+   name_list {$$ = new ValParaList($1);}
 ;
 routine_body: 
 	compound_stmt {$$ = new RoutineBody($1);}
@@ -155,41 +158,41 @@ stmt_list:
   | epsilon {$$ = new StmtList();}
 ;
 stmt:
-    INTEGER COLON non_label_stmt {$$ = new ();}
-  | non_label_stmt {$$ = new ();}
+    INTEGER COLON non_label_stmt {$$ = new Stmt($3);}
+  | non_label_stmt {$$ = new Stmt($1);}
 ;
 non_label_stmt:
-    assign_stmt {$$ = new ();}
-  | proc_stmt {$$ = new ();}
-  | compound_stmt {$$ = new ();}
-  | if_stmt {$$ = new ();}
-  | repeat_stmt {$$ = new ();}
-  | while_stmt {$$ = new ();}
-  | for_stmt {$$ = new ();}
-  | case_stmt {$$ = new ();}
-  | goto_stmt {$$ = new ();}
+    assign_stmt   {$$ = new NonLabelStmt($1);}
+  | proc_stmt     {$$ = new NonLabelStmt($1);}
+  | compound_stmt {$$ = new NonLabelStmt($1);}
+  | if_stmt       {$$ = new NonLabelStmt($1);}
+  | repeat_stmt   {$$ = new NonLabelStmt($1);}
+  | while_stmt    {$$ = new NonLabelStmt($1);}
+  | for_stmt      {$$ = new NonLabelStmt($1);}
+  | case_stmt     {$$ = new NonLabelStmt($1);}
+  | goto_stmt     {$$ = new NonLabelStmt($1);}
 ;
 assign_stmt: 
-	NAME ASSIGN expression {$$ = new ();}
-  | NAME LB expression RB ASSIGN expression {$$ = new ();}
-  | NAME DOT NAME ASSIGN expression {$$ = new ();}
+	NAME ASSIGN expression                  {$$ = new AssignStmt($1.content, $3);}
+  | NAME LB expression RB ASSIGN expression {$$ = new AssignStmt($1.content, $3, $6);}
+  | NAME DOT NAME ASSIGN expression         {$$ = new AssignStmt($1.content, $3.content, $5);}
 ;
 proc_stmt:     
-	NAME {$$ = new ();}
-  | NAME LP args_list RP {$$ = new ();}
-  | SYS_PROC {$$ = new ();}
-  | SYS_PROC LP expression_list RP {$$ = new ();}
-  | READ LP factor RP {$$ = new ();}
+	NAME                           {$$ = new ProcStmt($1.content);}
+  | NAME LP args_list RP           {$$ = new ProcStmt($1.content, $3);}
+  | SYS_PROC                       {$$ = new ProcStmt($1.content);}
+  | SYS_PROC LP expression_list RP {$$ = new ProcStmt($1.content, $3);}
+  | READ LP factor RP              {$$ = new ProcStmt($3);}
 ;
 if_stmt: 
-	IF expression THEN stmt else_clause {$$ = new ();}
+	IF expression THEN stmt else_clause {$$ = new IfStmt($2, $4, $5);}
 ;
 else_clause:
-    ELSE stmt  {$$ = new ();}
-  | epsilon {$$ = new ();}
+    ELSE stmt  {$$ = new ElseClause($2);}
+  | epsilon    {$$ = new ElseClause();}
 ;
 repeat_stmt: 
-	REPEAT stmt_list UNTIL expression {$$ = new ();}
+	REPEAT stmt_list UNTIL expression {$$ = new RepeatStmt();}
 ;
 while_stmt: 
 	WHILE expression DO stmt {$$ = new ();}

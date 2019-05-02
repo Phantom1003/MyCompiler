@@ -192,35 +192,35 @@ else_clause:
   | epsilon    {$$ = new ElseClause();}
 ;
 repeat_stmt: 
-	REPEAT stmt_list UNTIL expression {$$ = new RepeatStmt();}
+	REPEAT stmt_list UNTIL expression {$$ = new RepeatStmt($2, $4);}
 ;
 while_stmt: 
-	WHILE expression DO stmt {$$ = new ();}
+	WHILE expression DO stmt {$$ = new WhileStmt($2, $4);}
 ;
 for_stmt:     
-	FOR NAME ASSIGN expression direction expression DO stmt {$$ = new ();}
+	FOR NAME ASSIGN expression direction expression DO stmt {$$ = new ForStmt($2.content, $4, $5, $6, $8);}
 ;
 direction:     
-	TO {$$ = new ();}
-  | DOWNTO {$$ = new ();}
+	TO {$$ = new Direction($1.type);}
+  | DOWNTO {$$ = new Direction($1.type);}
 ;
 case_stmt:     
-	CASE expression OF case_expr_list END {$$ = new ();}
+	CASE expression OF case_expr_list END {$$ = new CaseStmt($2, $4);}
 ;
 case_expr_list: 
-	case_expr_list case_expr {$$ = new ();}
-  | case_expr {$$ = new ();}
+	case_expr_list case_expr {$$ = new CaseExprList($1, $2);}
+  | case_expr {$$ = new CaseExprList($1);}
 ;
 case_expr:     
-	const_value COLON stmt SEMI {$$ = new ();}
-  | NAME COLON stmt SEMI {$$ = new ();}
+	const_value COLON stmt SEMI {$$ = new CaseExpr($1, $3);}
+  | NAME COLON stmt SEMI {$$ = new CaseExpr($1.content, $3);}
 ;
 goto_stmt: 
-	GOTO  INTEGER {$$ = new ();} 
+	GOTO INTEGER {$$ = new GotoStmt($2.content);} 
 ;
 expression_list: 
-	expression_list COMMA expression {$$ = new ();}
-  | expression { }
+	expression_list COMMA expression {$$ = new ExpressionList($1, $3);}
+  | expression {$$ = new ExpressionList($1);}
 ;
 expression: 
 	expression GE expr {$$ = new ();}

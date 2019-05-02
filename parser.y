@@ -364,8 +364,8 @@ factor:
   | SYS_FUNCT  LP  args_list  RP {$$ = new Factor($1.type, $1.content, $3);}
   | const_value                  {$$ = new Factor($1);}
   | LP expression RP             {$$ = new Factor($2);}
-  | NOT factor                   {$$ = new Factor($1->not());}
-  | MINUS factor                 {$$ = new Factor($1->neg());}
+  | NOT factor                   {$$ = new Factor($1->not(), $2);}
+  | MINUS factor                 {$$ = new Factor($1->neg(), $2);}
   | NAME LB expression RB        {$$ = new Factor($1.type, $1.content, $3);}
   | NAME DOT NAME                {$$ = new Factor($1.type, $1.content, $3.type, $3.content);}
 ;

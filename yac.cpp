@@ -200,11 +200,14 @@
 
 #include "AST.hpp"
 extern int yylex();
+extern int yylineno;
 Program * astRoot;
 
+
 void yyerror(const char* s) { 
-  printf("[ERROR]: At line: %d\n\t\t%s\n ", /*yylineno*/1, s); 
+  printf("[ERROR]: At line: %d\n\t\t%s\n ", yylineno, s); 
 }
+
 
 
 /* Enabling traces.  */
@@ -227,7 +230,7 @@ void yyerror(const char* s) {
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 11 "parser.y"
+#line 14 "parser.y"
 {
   int type;
   std::string * content;
@@ -289,7 +292,7 @@ typedef union YYSTYPE
   ArgsList* argsList;
 }
 /* Line 193 of yacc.c.  */
-#line 293 "yac.cpp"
+#line 296 "yac.cpp"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -302,7 +305,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 306 "yac.cpp"
+#line 309 "yac.cpp"
 
 #ifdef short
 # undef short
@@ -644,19 +647,19 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   138,   138,   141,   144,   147,   150,   153,   156,   157,
-     160,   161,   164,   165,   166,   167,   168,   171,   172,   175,
-     176,   179,   182,   183,   184,   187,   188,   189,   190,   191,
-     192,   193,   196,   199,   202,   203,   206,   209,   210,   213,
-     214,   217,   218,   221,   224,   225,   226,   227,   228,   231,
-     234,   237,   240,   243,   244,   247,   248,   251,   252,   255,
-     258,   261,   264,   267,   268,   271,   272,   275,   276,   277,
-     278,   279,   280,   281,   282,   283,   286,   287,   288,   291,
-     292,   293,   294,   295,   298,   301,   302,   305,   308,   311,
-     314,   315,   318,   321,   322,   325,   326,   329,   332,   333,
-     336,   337,   338,   339,   340,   341,   342,   345,   346,   347,
-     348,   351,   352,   353,   354,   355,   358,   359,   360,   361,
-     362,   363,   364,   365,   366,   367,   370,   371,   373
+       0,   141,   141,   144,   147,   150,   153,   156,   159,   160,
+     163,   164,   167,   168,   169,   170,   171,   174,   175,   178,
+     179,   182,   185,   186,   187,   190,   191,   192,   193,   194,
+     195,   196,   199,   202,   205,   206,   209,   212,   213,   216,
+     217,   220,   221,   224,   227,   228,   229,   230,   231,   234,
+     237,   240,   243,   246,   247,   250,   251,   254,   255,   258,
+     261,   264,   267,   270,   271,   274,   275,   278,   279,   280,
+     281,   282,   283,   284,   285,   286,   289,   290,   291,   294,
+     295,   296,   297,   298,   301,   304,   305,   308,   311,   314,
+     317,   318,   321,   324,   325,   328,   329,   332,   335,   336,
+     339,   340,   341,   342,   343,   344,   345,   348,   349,   350,
+     351,   354,   355,   356,   357,   358,   361,   362,   363,   364,
+     365,   366,   367,   368,   369,   370,   373,   374,   376
 };
 #endif
 
@@ -1767,643 +1770,643 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 138 "parser.y"
-    {(yyval.program) = new Program((yyvsp[(1) - (3)].programHead), (yyvsp[(2) - (3)].routine));}
+#line 141 "parser.y"
+    {astRoot = new Program((yyvsp[(1) - (3)].programHead), (yyvsp[(2) - (3)].routine));}
     break;
 
   case 3:
-#line 141 "parser.y"
+#line 144 "parser.y"
     {(yyval.programHead) = new ProgramHead(*(yyvsp[(2) - (3)].content));}
     break;
 
   case 4:
-#line 144 "parser.y"
+#line 147 "parser.y"
     {(yyval.routine) = new Routine((yyvsp[(1) - (2)].routineHead), (yyvsp[(2) - (2)].routineBody));}
     break;
 
   case 5:
-#line 147 "parser.y"
+#line 150 "parser.y"
     {(yyval.subRoutine) = new SubRoutine((yyvsp[(1) - (2)].routineHead), (yyvsp[(2) - (2)].routineBody));}
     break;
 
   case 6:
-#line 150 "parser.y"
+#line 153 "parser.y"
     {(yyval.routineHead) = new RoutineHead((yyvsp[(1) - (5)].labelPart), (yyvsp[(2) - (5)].constPart), (yyvsp[(3) - (5)].typePart), (yyvsp[(4) - (5)].varPart), (yyvsp[(5) - (5)].routinePart));}
     break;
 
   case 7:
-#line 153 "parser.y"
+#line 156 "parser.y"
     {(yyval.labelPart) = new LabelPart();}
     break;
 
   case 8:
-#line 156 "parser.y"
+#line 159 "parser.y"
     {(yyval.constPart) = new ConstPart((yyvsp[(2) - (2)].constExprList));}
     break;
 
   case 9:
-#line 157 "parser.y"
+#line 160 "parser.y"
     {(yyval.constPart) = new ConstPart();}
     break;
 
   case 10:
-#line 160 "parser.y"
+#line 163 "parser.y"
     {(yyval.constExprList) = new ConstExprList(*(yyvsp[(2) - (5)].content), (yyvsp[(1) - (5)].constExprList), (yyvsp[(4) - (5)].constValue));}
     break;
 
   case 11:
-#line 161 "parser.y"
+#line 164 "parser.y"
     {(yyval.constExprList) = new ConstExprList(*(yyvsp[(1) - (4)].content), (yyvsp[(3) - (4)].constValue));}
     break;
 
   case 12:
-#line 164 "parser.y"
-    {(yyval.constValue) = new ConstValue((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
-    break;
-
-  case 13:
-#line 165 "parser.y"
-    {(yyval.constValue) = new ConstValue((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
-    break;
-
-  case 14:
-#line 166 "parser.y"
-    {(yyval.constValue) = new ConstValue((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
-    break;
-
-  case 15:
 #line 167 "parser.y"
     {(yyval.constValue) = new ConstValue((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
     break;
 
-  case 16:
+  case 13:
 #line 168 "parser.y"
     {(yyval.constValue) = new ConstValue((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
     break;
 
-  case 17:
+  case 14:
+#line 169 "parser.y"
+    {(yyval.constValue) = new ConstValue((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
+    break;
+
+  case 15:
+#line 170 "parser.y"
+    {(yyval.constValue) = new ConstValue((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
+    break;
+
+  case 16:
 #line 171 "parser.y"
+    {(yyval.constValue) = new ConstValue((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
+    break;
+
+  case 17:
+#line 174 "parser.y"
     {(yyval.typePart) = new TypePart((yyvsp[(2) - (2)].typeDeclList));}
     break;
 
   case 18:
-#line 172 "parser.y"
+#line 175 "parser.y"
     {(yyval.typePart) = new TypePart();}
     break;
 
   case 19:
-#line 175 "parser.y"
+#line 178 "parser.y"
     {(yyval.typeDeclList) = new TypeDeclList((yyvsp[(1) - (2)].typeDeclList), (yyvsp[(2) - (2)].typeDefinition));}
     break;
 
   case 20:
-#line 176 "parser.y"
+#line 179 "parser.y"
     {(yyval.typeDeclList) = new TypeDeclList((yyvsp[(1) - (1)].typeDefinition));}
     break;
 
   case 21:
-#line 179 "parser.y"
+#line 182 "parser.y"
     {(yyval.typeDefinition) = new TypeDefinition(*(yyvsp[(1) - (4)].content), (yyvsp[(3) - (4)].typeDecl));}
     break;
 
   case 22:
-#line 182 "parser.y"
+#line 185 "parser.y"
     {(yyval.typeDecl) = new TypeDecl((yyvsp[(1) - (1)].simpleTypeDecl));}
     break;
 
   case 23:
-#line 183 "parser.y"
+#line 186 "parser.y"
     {(yyval.typeDecl) = new TypeDecl((yyvsp[(1) - (1)].arrayTypeDecl));}
     break;
 
   case 24:
-#line 184 "parser.y"
+#line 187 "parser.y"
     {(yyval.typeDecl) = new TypeDecl((yyvsp[(1) - (1)].recordTypeDecl));}
     break;
 
   case 25:
-#line 187 "parser.y"
+#line 190 "parser.y"
     {(yyval.simpleTypeDecl) = new SimpleTypeDecl((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
     break;
 
   case 26:
-#line 188 "parser.y"
+#line 191 "parser.y"
     {(yyval.simpleTypeDecl) = new SimpleTypeDecl((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
     break;
 
   case 27:
-#line 189 "parser.y"
+#line 192 "parser.y"
     {(yyval.simpleTypeDecl) = new SimpleTypeDecl((yyvsp[(2) - (3)].nameList));}
     break;
 
   case 28:
-#line 190 "parser.y"
+#line 193 "parser.y"
     {(yyval.simpleTypeDecl) = new SimpleTypeDecl((yyvsp[(1) - (3)].constValue), (yyvsp[(3) - (3)].constValue));}
     break;
 
   case 29:
-#line 191 "parser.y"
+#line 194 "parser.y"
     {(yyval.simpleTypeDecl) = new SimpleTypeDecl((yyvsp[(2) - (4)].constValue)->neg(), (yyvsp[(4) - (4)].constValue));}
     break;
 
   case 30:
-#line 192 "parser.y"
+#line 195 "parser.y"
     {(yyval.simpleTypeDecl) = new SimpleTypeDecl((yyvsp[(2) - (5)].constValue)->neg(), (yyvsp[(5) - (5)].constValue)->neg());}
     break;
 
   case 31:
-#line 193 "parser.y"
+#line 196 "parser.y"
     {(yyval.simpleTypeDecl) = new SimpleTypeDecl(*(yyvsp[(1) - (3)].content), *(yyvsp[(3) - (3)].content));}
     break;
 
   case 32:
-#line 196 "parser.y"
+#line 199 "parser.y"
     {(yyval.arrayTypeDecl) = new ArrayTypeDecl((yyvsp[(3) - (6)].simpleTypeDecl), (yyvsp[(6) - (6)].typeDecl));}
     break;
 
   case 33:
-#line 199 "parser.y"
+#line 202 "parser.y"
     {(yyval.recordTypeDecl) = new RecordTypeDecl((yyvsp[(2) - (3)].fieldDeclList));}
     break;
 
   case 34:
-#line 202 "parser.y"
+#line 205 "parser.y"
     {(yyval.fieldDeclList) = new FieldDeclList((yyvsp[(1) - (2)].fieldDeclList), (yyvsp[(2) - (2)].fieldDecl));}
     break;
 
   case 35:
-#line 203 "parser.y"
+#line 206 "parser.y"
     {(yyval.fieldDeclList) = new FieldDeclList((yyvsp[(1) - (1)].fieldDecl));}
     break;
 
   case 36:
-#line 206 "parser.y"
+#line 209 "parser.y"
     {(yyval.fieldDecl) = new FieldDecl((yyvsp[(1) - (4)].nameList), (yyvsp[(3) - (4)].typeDecl));}
     break;
 
   case 37:
-#line 209 "parser.y"
+#line 212 "parser.y"
     {(yyval.nameList) = new NameList(*(yyvsp[(3) - (3)].content), (yyvsp[(1) - (3)].nameList));}
     break;
 
   case 38:
-#line 210 "parser.y"
+#line 213 "parser.y"
     {(yyval.nameList) = new NameList(*(yyvsp[(1) - (1)].content));}
     break;
 
   case 39:
-#line 213 "parser.y"
+#line 216 "parser.y"
     {(yyval.varPart) = new VarPart((yyvsp[(2) - (2)].varDeclList));}
     break;
 
   case 40:
-#line 214 "parser.y"
+#line 217 "parser.y"
     {(yyval.varPart) = new VarPart();}
     break;
 
   case 41:
-#line 217 "parser.y"
+#line 220 "parser.y"
     {(yyval.varDeclList) = new VarDeclList((yyvsp[(1) - (2)].varDeclList), (yyvsp[(2) - (2)].varDecl));}
     break;
 
   case 42:
-#line 218 "parser.y"
+#line 221 "parser.y"
     {(yyval.varDeclList) = new VarDeclList((yyvsp[(1) - (1)].varDecl));}
     break;
 
   case 43:
-#line 221 "parser.y"
+#line 224 "parser.y"
     {(yyval.varDecl) = new VarDecl((yyvsp[(1) - (4)].nameList), (yyvsp[(3) - (4)].typeDecl));}
     break;
 
   case 44:
-#line 224 "parser.y"
+#line 227 "parser.y"
     {(yyval.routinePart) = new RoutinePart((yyvsp[(1) - (2)].routinePart), (yyvsp[(2) - (2)].functionDecl));}
     break;
 
   case 45:
-#line 225 "parser.y"
+#line 228 "parser.y"
     {(yyval.routinePart) = new RoutinePart((yyvsp[(1) - (2)].routinePart), (yyvsp[(2) - (2)].procedureDecl));}
     break;
 
   case 46:
-#line 226 "parser.y"
+#line 229 "parser.y"
     {(yyval.routinePart) = new RoutinePart((yyvsp[(1) - (1)].functionDecl));}
     break;
 
   case 47:
-#line 227 "parser.y"
+#line 230 "parser.y"
     {(yyval.routinePart) = new RoutinePart((yyvsp[(1) - (1)].procedureDecl));}
     break;
 
   case 48:
-#line 228 "parser.y"
+#line 231 "parser.y"
     {(yyval.routinePart) = new RoutinePart();}
     break;
 
   case 49:
-#line 231 "parser.y"
+#line 234 "parser.y"
     {(yyval.functionDecl) = new FunctionDecl((yyvsp[(1) - (4)].functionHead), (yyvsp[(3) - (4)].subRoutine));}
     break;
 
   case 50:
-#line 234 "parser.y"
+#line 237 "parser.y"
     {(yyval.functionHead) = new FunctionHead(*(yyvsp[(2) - (5)].content), (yyvsp[(3) - (5)].parameters), (yyvsp[(5) - (5)].simpleTypeDecl));}
     break;
 
   case 51:
-#line 237 "parser.y"
+#line 240 "parser.y"
     {(yyval.procedureDecl) = new ProcedureDecl((yyvsp[(1) - (4)].procedureHead), (yyvsp[(3) - (4)].subRoutine));}
     break;
 
   case 52:
-#line 240 "parser.y"
+#line 243 "parser.y"
     {(yyval.procedureHead) = new ProcedureHead(*(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].parameters));}
     break;
 
   case 53:
-#line 243 "parser.y"
+#line 246 "parser.y"
     {(yyval.parameters) = new Parameters((yyvsp[(2) - (3)].paraDeclList));}
     break;
 
   case 54:
-#line 244 "parser.y"
+#line 247 "parser.y"
     {(yyval.parameters) = new Parameters( );}
     break;
 
   case 55:
-#line 247 "parser.y"
+#line 250 "parser.y"
     {(yyval.paraDeclList) = new ParaDeclList((yyvsp[(1) - (3)].paraDeclList), (yyvsp[(3) - (3)].paraTypeList));}
     break;
 
   case 56:
-#line 248 "parser.y"
+#line 251 "parser.y"
     {(yyval.paraDeclList) = new ParaDeclList((yyvsp[(1) - (1)].paraTypeList));}
     break;
 
   case 57:
-#line 251 "parser.y"
+#line 254 "parser.y"
     {(yyval.paraTypeList) = new ParaTypeList((yyvsp[(1) - (3)].varParaList), (yyvsp[(3) - (3)].simpleTypeDecl));}
     break;
 
   case 58:
-#line 252 "parser.y"
+#line 255 "parser.y"
     {(yyval.paraTypeList) = new ParaTypeList((yyvsp[(1) - (3)].valParaList), (yyvsp[(3) - (3)].simpleTypeDecl));}
     break;
 
   case 59:
-#line 255 "parser.y"
+#line 258 "parser.y"
     {(yyval.varParaList) = new VarParaList((yyvsp[(2) - (2)].nameList));}
     break;
 
   case 60:
-#line 258 "parser.y"
+#line 261 "parser.y"
     {(yyval.valParaList) = new ValParaList((yyvsp[(1) - (1)].nameList));}
     break;
 
   case 61:
-#line 261 "parser.y"
+#line 264 "parser.y"
     {(yyval.routineBody) = new RoutineBody((yyvsp[(1) - (1)].compoundStmt));}
     break;
 
   case 62:
-#line 264 "parser.y"
+#line 267 "parser.y"
     {(yyval.compoundStmt) = new CompoundStmt((yyvsp[(2) - (3)].stmtList));}
     break;
 
   case 63:
-#line 267 "parser.y"
+#line 270 "parser.y"
     {(yyval.stmtList) = new StmtList((yyvsp[(1) - (3)].stmtList), (yyvsp[(2) - (3)].stmt));}
     break;
 
   case 64:
-#line 268 "parser.y"
+#line 271 "parser.y"
     {(yyval.stmtList) = new StmtList();}
     break;
 
   case 65:
-#line 271 "parser.y"
+#line 274 "parser.y"
     {(yyval.stmt) = new Stmt((yyvsp[(3) - (3)].nonLabelStmt));}
     break;
 
   case 66:
-#line 272 "parser.y"
+#line 275 "parser.y"
     {(yyval.stmt) = new Stmt((yyvsp[(1) - (1)].nonLabelStmt));}
     break;
 
   case 67:
-#line 275 "parser.y"
+#line 278 "parser.y"
     {(yyval.nonLabelStmt) = new NonLabelStmt((yyvsp[(1) - (1)].assignStmt));}
     break;
 
   case 68:
-#line 276 "parser.y"
+#line 279 "parser.y"
     {(yyval.nonLabelStmt) = new NonLabelStmt((yyvsp[(1) - (1)].procStmt));}
     break;
 
   case 69:
-#line 277 "parser.y"
+#line 280 "parser.y"
     {(yyval.nonLabelStmt) = new NonLabelStmt((yyvsp[(1) - (1)].compoundStmt));}
     break;
 
   case 70:
-#line 278 "parser.y"
+#line 281 "parser.y"
     {(yyval.nonLabelStmt) = new NonLabelStmt((yyvsp[(1) - (1)].ifStmt));}
     break;
 
   case 71:
-#line 279 "parser.y"
+#line 282 "parser.y"
     {(yyval.nonLabelStmt) = new NonLabelStmt((yyvsp[(1) - (1)].repeatStmt));}
     break;
 
   case 72:
-#line 280 "parser.y"
+#line 283 "parser.y"
     {(yyval.nonLabelStmt) = new NonLabelStmt((yyvsp[(1) - (1)].whileStmt));}
     break;
 
   case 73:
-#line 281 "parser.y"
+#line 284 "parser.y"
     {(yyval.nonLabelStmt) = new NonLabelStmt((yyvsp[(1) - (1)].forStmt));}
     break;
 
   case 74:
-#line 282 "parser.y"
+#line 285 "parser.y"
     {(yyval.nonLabelStmt) = new NonLabelStmt((yyvsp[(1) - (1)].caseStmt));}
     break;
 
   case 75:
-#line 283 "parser.y"
+#line 286 "parser.y"
     {(yyval.nonLabelStmt) = new NonLabelStmt((yyvsp[(1) - (1)].gotoStmt));}
     break;
 
   case 76:
-#line 286 "parser.y"
+#line 289 "parser.y"
     {(yyval.assignStmt) = new AssignStmt(*(yyvsp[(1) - (3)].content), (yyvsp[(3) - (3)].expression));}
     break;
 
   case 77:
-#line 287 "parser.y"
+#line 290 "parser.y"
     {(yyval.assignStmt) = new AssignStmt(*(yyvsp[(1) - (6)].content), (yyvsp[(3) - (6)].expression), (yyvsp[(6) - (6)].expression));}
     break;
 
   case 78:
-#line 288 "parser.y"
+#line 291 "parser.y"
     {(yyval.assignStmt) = new AssignStmt(*(yyvsp[(1) - (5)].content), *(yyvsp[(3) - (5)].content), (yyvsp[(5) - (5)].expression));}
     break;
 
   case 79:
-#line 291 "parser.y"
+#line 294 "parser.y"
     {(yyval.procStmt) = new ProcStmt((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
     break;
 
   case 80:
-#line 292 "parser.y"
+#line 295 "parser.y"
     {(yyval.procStmt) = new ProcStmt(*(yyvsp[(1) - (4)].content), (yyvsp[(3) - (4)].argsList));}
     break;
 
   case 81:
-#line 293 "parser.y"
+#line 296 "parser.y"
     {(yyval.procStmt) = new ProcStmt((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
     break;
 
   case 82:
-#line 294 "parser.y"
+#line 297 "parser.y"
     {(yyval.procStmt) = new ProcStmt(*(yyvsp[(1) - (4)].content), (yyvsp[(3) - (4)].expressionList));}
     break;
 
   case 83:
-#line 295 "parser.y"
+#line 298 "parser.y"
     {(yyval.procStmt) = new ProcStmt((yyvsp[(3) - (4)].factor));}
     break;
 
   case 84:
-#line 298 "parser.y"
+#line 301 "parser.y"
     {(yyval.ifStmt) = new IfStmt((yyvsp[(2) - (5)].expression), (yyvsp[(4) - (5)].stmt), (yyvsp[(5) - (5)].elseClause));}
     break;
 
   case 85:
-#line 301 "parser.y"
+#line 304 "parser.y"
     {(yyval.elseClause) = new ElseClause((yyvsp[(2) - (2)].stmt));}
     break;
 
   case 86:
-#line 302 "parser.y"
+#line 305 "parser.y"
     {(yyval.elseClause) = new ElseClause();}
     break;
 
   case 87:
-#line 305 "parser.y"
+#line 308 "parser.y"
     {(yyval.repeatStmt) = new RepeatStmt((yyvsp[(2) - (4)].stmtList), (yyvsp[(4) - (4)].expression));}
     break;
 
   case 88:
-#line 308 "parser.y"
+#line 311 "parser.y"
     {(yyval.whileStmt) = new WhileStmt((yyvsp[(2) - (4)].expression), (yyvsp[(4) - (4)].stmt));}
     break;
 
   case 89:
-#line 311 "parser.y"
+#line 314 "parser.y"
     {(yyval.forStmt) = new ForStmt(*(yyvsp[(2) - (8)].content), (yyvsp[(4) - (8)].expression), (yyvsp[(5) - (8)].direction), (yyvsp[(6) - (8)].expression), (yyvsp[(8) - (8)].stmt));}
     break;
 
   case 90:
-#line 314 "parser.y"
+#line 317 "parser.y"
     {(yyval.direction) = new Direction(*(yyvsp[(1) - (1)].content));}
     break;
 
   case 91:
-#line 315 "parser.y"
+#line 318 "parser.y"
     {(yyval.direction) = new Direction(*(yyvsp[(1) - (1)].content));}
     break;
 
   case 92:
-#line 318 "parser.y"
+#line 321 "parser.y"
     {(yyval.caseStmt) = new CaseStmt((yyvsp[(2) - (5)].expression), (yyvsp[(4) - (5)].caseExprList));}
     break;
 
   case 93:
-#line 321 "parser.y"
+#line 324 "parser.y"
     {(yyval.caseExprList) = new CaseExprList((yyvsp[(1) - (2)].caseExprList), (yyvsp[(2) - (2)].caseExpr));}
     break;
 
   case 94:
-#line 322 "parser.y"
+#line 325 "parser.y"
     {(yyval.caseExprList) = new CaseExprList((yyvsp[(1) - (1)].caseExpr));}
     break;
 
   case 95:
-#line 325 "parser.y"
+#line 328 "parser.y"
     {(yyval.caseExpr) = new CaseExpr((yyvsp[(1) - (4)].constValue), (yyvsp[(3) - (4)].stmt));}
     break;
 
   case 96:
-#line 326 "parser.y"
+#line 329 "parser.y"
     {(yyval.caseExpr) = new CaseExpr(*(yyvsp[(1) - (4)].content), (yyvsp[(3) - (4)].stmt));}
     break;
 
   case 97:
-#line 329 "parser.y"
+#line 332 "parser.y"
     {(yyval.gotoStmt) = new GotoStmt(*(yyvsp[(2) - (2)].content));}
     break;
 
   case 98:
-#line 332 "parser.y"
+#line 335 "parser.y"
     {(yyval.expressionList) = new ExpressionList((yyvsp[(1) - (3)].expressionList), (yyvsp[(3) - (3)].expression));}
     break;
 
   case 99:
-#line 333 "parser.y"
+#line 336 "parser.y"
     {(yyval.expressionList) = new ExpressionList((yyvsp[(1) - (1)].expression));}
     break;
 
   case 100:
-#line 336 "parser.y"
-    {(yyval.expression) = new Expression((yyvsp[(1) - (3)].expression), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].expr));}
-    break;
-
-  case 101:
-#line 337 "parser.y"
-    {(yyval.expression) = new Expression((yyvsp[(1) - (3)].expression), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].expr));}
-    break;
-
-  case 102:
-#line 338 "parser.y"
-    {(yyval.expression) = new Expression((yyvsp[(1) - (3)].expression), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].expr));}
-    break;
-
-  case 103:
 #line 339 "parser.y"
     {(yyval.expression) = new Expression((yyvsp[(1) - (3)].expression), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].expr));}
     break;
 
-  case 104:
+  case 101:
 #line 340 "parser.y"
     {(yyval.expression) = new Expression((yyvsp[(1) - (3)].expression), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].expr));}
     break;
 
-  case 105:
+  case 102:
 #line 341 "parser.y"
     {(yyval.expression) = new Expression((yyvsp[(1) - (3)].expression), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].expr));}
     break;
 
-  case 106:
+  case 103:
 #line 342 "parser.y"
+    {(yyval.expression) = new Expression((yyvsp[(1) - (3)].expression), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].expr));}
+    break;
+
+  case 104:
+#line 343 "parser.y"
+    {(yyval.expression) = new Expression((yyvsp[(1) - (3)].expression), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].expr));}
+    break;
+
+  case 105:
+#line 344 "parser.y"
+    {(yyval.expression) = new Expression((yyvsp[(1) - (3)].expression), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].expr));}
+    break;
+
+  case 106:
+#line 345 "parser.y"
     {(yyval.expression) = new Expression((yyvsp[(1) - (1)].expr));}
     break;
 
   case 107:
-#line 345 "parser.y"
+#line 348 "parser.y"
     {(yyval.expr) = new Expr((yyvsp[(1) - (3)].expr), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].term));}
     break;
 
   case 108:
-#line 346 "parser.y"
+#line 349 "parser.y"
     {(yyval.expr) = new Expr((yyvsp[(1) - (3)].expr), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].term));}
     break;
 
   case 109:
-#line 347 "parser.y"
+#line 350 "parser.y"
     {(yyval.expr) = new Expr((yyvsp[(1) - (3)].expr), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].term));}
     break;
 
   case 110:
-#line 348 "parser.y"
+#line 351 "parser.y"
     {(yyval.expr) = new Expr((yyvsp[(1) - (1)].term));}
     break;
 
   case 111:
-#line 351 "parser.y"
-    {(yyval.term) = new Term((yyvsp[(1) - (3)].term), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].factor));}
-    break;
-
-  case 112:
-#line 352 "parser.y"
-    {(yyval.term) = new Term((yyvsp[(1) - (3)].term), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].factor));}
-    break;
-
-  case 113:
-#line 353 "parser.y"
-    {(yyval.term) = new Term((yyvsp[(1) - (3)].term), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].factor));}
-    break;
-
-  case 114:
 #line 354 "parser.y"
     {(yyval.term) = new Term((yyvsp[(1) - (3)].term), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].factor));}
     break;
 
-  case 115:
+  case 112:
 #line 355 "parser.y"
+    {(yyval.term) = new Term((yyvsp[(1) - (3)].term), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].factor));}
+    break;
+
+  case 113:
+#line 356 "parser.y"
+    {(yyval.term) = new Term((yyvsp[(1) - (3)].term), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].factor));}
+    break;
+
+  case 114:
+#line 357 "parser.y"
+    {(yyval.term) = new Term((yyvsp[(1) - (3)].term), *(yyvsp[(2) - (3)].content), (yyvsp[(3) - (3)].factor));}
+    break;
+
+  case 115:
+#line 358 "parser.y"
     {(yyval.term) = new Term((yyvsp[(1) - (1)].factor));}
     break;
 
   case 116:
-#line 358 "parser.y"
+#line 361 "parser.y"
     {(yyval.factor) = new Factor((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
     break;
 
   case 117:
-#line 359 "parser.y"
+#line 362 "parser.y"
     {(yyval.factor) = new Factor((yyvsp[(1) - (4)].type), *(yyvsp[(1) - (4)].content), (yyvsp[(3) - (4)].argsList));}
     break;
 
   case 118:
-#line 360 "parser.y"
+#line 363 "parser.y"
     {(yyval.factor) = new Factor((yyvsp[(1) - (1)].type), *(yyvsp[(1) - (1)].content));}
     break;
 
   case 119:
-#line 361 "parser.y"
+#line 364 "parser.y"
     {(yyval.factor) = new Factor((yyvsp[(1) - (4)].type), *(yyvsp[(1) - (4)].content), (yyvsp[(3) - (4)].argsList));}
     break;
 
   case 120:
-#line 362 "parser.y"
+#line 365 "parser.y"
     {(yyval.factor) = new Factor((yyvsp[(1) - (1)].constValue));}
     break;
 
   case 121:
-#line 363 "parser.y"
+#line 366 "parser.y"
     {(yyval.factor) = new Factor((yyvsp[(2) - (3)].expression));}
     break;
 
   case 122:
-#line 364 "parser.y"
+#line 367 "parser.y"
     {(yyval.factor) = new Factor((yyvsp[(1) - (2)].type), (yyvsp[(2) - (2)].factor));}
     break;
 
   case 123:
-#line 365 "parser.y"
+#line 368 "parser.y"
     {(yyval.factor) = new Factor((yyvsp[(1) - (2)].type), (yyvsp[(2) - (2)].factor));}
     break;
 
   case 124:
-#line 366 "parser.y"
+#line 369 "parser.y"
     {(yyval.factor) = new Factor(*(yyvsp[(1) - (4)].content), (yyvsp[(3) - (4)].expression));}
     break;
 
   case 125:
-#line 367 "parser.y"
+#line 370 "parser.y"
     {(yyval.factor) = new Factor(*(yyvsp[(1) - (3)].content), *(yyvsp[(3) - (3)].content));}
     break;
 
   case 126:
-#line 370 "parser.y"
+#line 373 "parser.y"
     {(yyval.argsList) = new ArgsList((yyvsp[(1) - (3)].argsList), (yyvsp[(3) - (3)].expression));}
     break;
 
   case 127:
-#line 371 "parser.y"
+#line 374 "parser.y"
     {(yyval.argsList) = new ArgsList((yyvsp[(1) - (1)].expression));}
     break;
 
   case 128:
-#line 373 "parser.y"
+#line 376 "parser.y"
     { }
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2407 "yac.cpp"
+#line 2410 "yac.cpp"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2617,7 +2620,7 @@ yyreturn:
 }
 
 
-#line 375 "parser.y"
+#line 378 "parser.y"
 
 
 

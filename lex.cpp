@@ -361,8 +361,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 64
-#define YY_END_OF_BUFFER 65
+#define YY_NUM_RULES 65
+#define YY_END_OF_BUFFER 66
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -372,7 +372,7 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[196] =
     {   0,
-        0,    0,   65,   64,   63,   62,   64,   64,    1,    2,
+        0,    0,   66,   64,   63,   62,   64,   64,    1,    2,
        11,    9,    6,   10,   21,   12,   58,    7,    8,   17,
        18,   15,   57,   57,    3,    4,   57,   57,   57,   57,
        57,   57,   57,   57,   57,   57,   57,   57,   57,   57,
@@ -582,9 +582,7 @@ char *yytext;
 
 int makeToken(char * str, int t);
 
-int line_num = 1;
-
-#line 588 "lex.cpp"
+#line 586 "lex.cpp"
 
 #define INITIAL 0
 
@@ -766,11 +764,11 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 81 "token.l"
+#line 79 "token.l"
 
 
 
-#line 774 "lex.cpp"
+#line 772 "lex.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -855,326 +853,331 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 84 "token.l"
+#line 82 "token.l"
 {return makeToken(yytext, LP);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 85 "token.l"
+#line 83 "token.l"
 {return makeToken(yytext, RP);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 86 "token.l"
+#line 84 "token.l"
 {return makeToken(yytext, LB);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 87 "token.l"
+#line 85 "token.l"
 {return makeToken(yytext, RB);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 88 "token.l"
+#line 86 "token.l"
 {return makeToken(yytext, DOTDOT);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 89 "token.l"
+#line 87 "token.l"
 {return makeToken(yytext, COMMA);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 90 "token.l"
+#line 88 "token.l"
 {return makeToken(yytext, COLON);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 91 "token.l"
+#line 89 "token.l"
 {return makeToken(yytext, SEMI);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 94 "token.l"
+#line 92 "token.l"
 {return makeToken(yytext, PLUS);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 95 "token.l"
+#line 93 "token.l"
 {return makeToken(yytext, MINUS);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 96 "token.l"
+#line 94 "token.l"
 {return makeToken(yytext, MUL);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 97 "token.l"
+#line 95 "token.l"
 {return makeToken(yytext, DIV);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 98 "token.l"
+#line 96 "token.l"
 {return makeToken(yytext, MOD);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 99 "token.l"
+#line 97 "token.l"
 {return makeToken(yytext, GE);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 100 "token.l"
+#line 98 "token.l"
 {return makeToken(yytext, GT);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 101 "token.l"
+#line 99 "token.l"
 {return makeToken(yytext, LE);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 102 "token.l"
+#line 100 "token.l"
 {return makeToken(yytext, LT);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 103 "token.l"
+#line 101 "token.l"
 {return makeToken(yytext, EQUAL);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 104 "token.l"
+#line 102 "token.l"
 {return makeToken(yytext, UNEQUAL);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 105 "token.l"
+#line 103 "token.l"
 {return makeToken(yytext, ASSIGN);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 106 "token.l"
+#line 104 "token.l"
 {return makeToken(yytext, DOT);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 107 "token.l"
+#line 105 "token.l"
 {return makeToken(yytext, AND);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 108 "token.l"
+#line 106 "token.l"
 {return makeToken(yytext, OR);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 109 "token.l"
+#line 107 "token.l"
 {return makeToken(yytext, NOT);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 112 "token.l"
+#line 110 "token.l"
 {return makeToken(yytext, SYS_CON);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 113 "token.l"
+#line 111 "token.l"
 {return makeToken(yytext, SYS_FUNCT);}   
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 114 "token.l"
+#line 112 "token.l"
 {return makeToken(yytext, SYS_PROC);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 115 "token.l"
+#line 113 "token.l"
 {return makeToken(yytext, SYS_TYPE);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 116 "token.l"
+#line 114 "token.l"
 {return makeToken(yytext, READ);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 118 "token.l"
+#line 116 "token.l"
 {return makeToken(yytext, ARRAY);}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 119 "token.l"
+#line 117 "token.l"
 {return makeToken(yytext, BEGIN_T);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 120 "token.l"
+#line 118 "token.l"
 {return makeToken(yytext, CASE);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 121 "token.l"
+#line 119 "token.l"
 {return makeToken(yytext, CONST);}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 122 "token.l"
+#line 120 "token.l"
 {return makeToken(yytext, DO);}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 123 "token.l"
+#line 121 "token.l"
 {return makeToken(yytext, DOWNTO);}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 124 "token.l"
+#line 122 "token.l"
 {return makeToken(yytext, ELSE);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 125 "token.l"
+#line 123 "token.l"
 {return makeToken(yytext, END);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 126 "token.l"
+#line 124 "token.l"
 {return makeToken(yytext, FOR);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 127 "token.l"
+#line 125 "token.l"
 {return makeToken(yytext, FUNCTION);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 128 "token.l"
+#line 126 "token.l"
 {return makeToken(yytext, GOTO);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 129 "token.l"
+#line 127 "token.l"
 {return makeToken(yytext, IF);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 130 "token.l"
+#line 128 "token.l"
 {return makeToken(yytext, IN);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 131 "token.l"
+#line 129 "token.l"
 {return makeToken(yytext, OF);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 132 "token.l"
+#line 130 "token.l"
 {return makeToken(yytext, PACKED);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 133 "token.l"
+#line 131 "token.l"
 {return makeToken(yytext, PROCEDURE);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 134 "token.l"
-{return makeToken(yytext, PROGRAM);}
+#line 132 "token.l"
+{printf("???\n");return makeToken(yytext, PROGRAM);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 135 "token.l"
+#line 133 "token.l"
 {return makeToken(yytext, RECORD);}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 136 "token.l"
+#line 134 "token.l"
 {return makeToken(yytext, REPEAT);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 137 "token.l"
+#line 135 "token.l"
 {return makeToken(yytext, SET);}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 138 "token.l"
+#line 136 "token.l"
 {return makeToken(yytext, THEN);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 139 "token.l"
+#line 137 "token.l"
 {return makeToken(yytext, TO);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 140 "token.l"
+#line 138 "token.l"
 {return makeToken(yytext, TYPE);}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 141 "token.l"
+#line 139 "token.l"
 {return makeToken(yytext, UNTIL);}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 142 "token.l"
+#line 140 "token.l"
 {return makeToken(yytext, VAR);}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 143 "token.l"
+#line 141 "token.l"
 {return makeToken(yytext, WHILE);}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 144 "token.l"
+#line 142 "token.l"
 {return makeToken(yytext, WITH);}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 147 "token.l"
+#line 145 "token.l"
 {return makeToken(yytext, NAME);}
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 148 "token.l"
+#line 146 "token.l"
 {return makeToken(yytext, INTEGER);}
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 149 "token.l"
+#line 147 "token.l"
 {return makeToken(yytext, REAL);}
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 150 "token.l"
+#line 148 "token.l"
 {return makeToken(yytext, CHAR);}
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 151 "token.l"
+#line 149 "token.l"
 {return makeToken(yytext, STRING);}
 	YY_BREAK
 case 62:
 /* rule 62 can match eol */
 YY_RULE_SETUP
-#line 153 "token.l"
-{line_num++;}
+#line 151 "token.l"
+{printf("Line %d\n", yylineno);}
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 154 "token.l"
+#line 152 "token.l"
 {/*do nothing*/}
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
+#line 154 "token.l"
+std::cout << "invalid character: " + std::string(yytext, yyleng) << std::endl;
+	YY_BREAK
+case 65:
+YY_RULE_SETUP
 #line 155 "token.l"
 ECHO;
 	YY_BREAK
-#line 1178 "lex.cpp"
+#line 1181 "lex.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2179,6 +2182,7 @@ void yyfree (void * ptr )
 int makeToken(char * str, int t) {
 	yylval.content = new std::string(str);
 	yylval.type = t;
+    std::cout << "Token: " << std::endl;
 	return t;
 }
 int yywrap(void){return 1;} 

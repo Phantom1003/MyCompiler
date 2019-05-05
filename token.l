@@ -5,8 +5,6 @@
 
 int makeToken(char * str, int t);
 
-int line_num = 1;
-
 %}
 name    [a-zA-Z][_a-zA-Z0-9]*
 
@@ -131,7 +129,7 @@ whitespace  {delim}+
 {of}            {return makeToken(yytext, OF);}
 {packed}        {return makeToken(yytext, PACKED);}
 {procedure}     {return makeToken(yytext, PROCEDURE);}
-{program}       {return makeToken(yytext, PROGRAM);}
+{program}       {printf("???\n");return makeToken(yytext, PROGRAM);}
 {record}        {return makeToken(yytext, RECORD);}
 {repeat}        {return makeToken(yytext, REPEAT);}
 {set}           {return makeToken(yytext, SET);}
@@ -150,14 +148,17 @@ whitespace  {delim}+
 {char}          {return makeToken(yytext, CHAR);}
 {str}			{return makeToken(yytext, STRING);}
 
-[\n]            {line_num++;}
+[\n]            {printf("Line %d\n", yylineno);}
 {whitespace}    {/*do nothing*/}
+
+.   std::cout << "invalid character: " + std::string(yytext, yyleng) << std::endl;
 %%
 
 
 int makeToken(char * str, int t) {
 	yylval.content = new std::string(str);
 	yylval.type = t;
+    std::cout << "Token: " << std::endl;
 	return t;
 }
 int yywrap(void){return 1;} 

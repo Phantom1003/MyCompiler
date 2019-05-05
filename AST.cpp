@@ -2,20 +2,41 @@
 #include <map>
 #include <vector>
 #include <string>
-#include "utils.hpp"
 #include "AST.hpp"
+#include <sstream>
+
+int s2i(std::string s) {
+	return std::stoi(s);
+}
+
+double s2d(std::string s) {
+	return std::stod(s);
+}
+
+std::string i2s(int i) {
+	std::stringstream ss;
+	ss << i;
+	return ss.str();
+}
+
+std::string d2s(double d) {
+	std::stringstream ss;
+	ss << d;
+	return ss.str();
+}
 
 int ASTNode::idCnt = 0;
 
 ASTNode::ASTNode(){
 	id = idCnt ++;
+	std::cout << "Node Id:" << id << std::endl;
 };
 // virtual llvm::Value * codeGen(CodeGenContext &context) {
 // 	return 0;
 // }
-std::vector<ASTNode *> ASTNode::getChildren() {return std::vector<ASTNode *>();};
-std::string ASTNode::getName() { return "";};
-ASTNode::~ASTNode() {}
+// std::vector<ASTNode *> ASTNode::getChildren() {return std::vector<ASTNode *>();};
+// std::string ASTNode::getName() { return "";};
+// ASTNode::~ASTNode() {}
 
 
 Program::Program(ProgramHead *programHead, Routine *routine) : programHead(programHead), routine(routine) {}

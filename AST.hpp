@@ -2,7 +2,6 @@
 #include <map>
 #include <vector>
 #include <string>
-#include "utils.hpp"
 
 #ifndef AST_H
 #define AST_H
@@ -16,9 +15,9 @@ public:
 	// virtual llvm::Value * codeGen(CodeGenContext &context) {
 	// 	return 0;
 	// }
-	virtual std::vector<ASTNode *> getChildren();
-	virtual std::string getName();
-	virtual ~ASTNode();
+	virtual std::vector<ASTNode *> getChildren() = 0;
+	virtual std::string getName() {return "";}
+	virtual ~ASTNode(){}
 
 };
 

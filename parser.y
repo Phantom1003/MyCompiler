@@ -1,11 +1,14 @@
 %{
 #include "AST.hpp"
 extern int yylex();
+extern int yylineno;
 Program * astRoot;
 
+
 void yyerror(const char* s) { 
-  printf("[ERROR]: At line: %d\n\t\t%s\n ", /*yylineno*/1, s); 
+  printf("[ERROR]: At line: %d\n\t\t%s\n ", yylineno, s); 
 }
+
 %}
 
 %union {
@@ -135,7 +138,7 @@ void yyerror(const char* s) {
 
 %%
 program: 
-	program_head routine DOT  {$$ = new Program($1, $2);}
+	program_head routine DOT  {astRoot = new Program($1, $2);}
 ;
 program_head: 
 	PROGRAM NAME SEMI         {$$ = new ProgramHead(*$<content>2);}

@@ -1,20 +1,16 @@
 %{
-#include <iostream>
-#include <string>
-#include <math>
-
-using namespace std;
+#include "AST.hpp"
+extern int yylex();
+Program * astRoot;
 
 void yyerror(const char* s) { 
-	printf("[ERROR]: At line: %d\n 
-			             %s\n ", yylineno, s); 
+  printf("[ERROR]: At line: %d\n\t\t%s\n ", /*yylineno*/1, s); 
 }
-
 %}
 
 %union {
-	int type;
-  string content;
+  int type;
+  std::string * content;
    
   Program*     program;
   ProgramHead* programHead;
@@ -72,9 +68,10 @@ void yyerror(const char* s) {
   Factor*   factor;
   ArgsList* argsList;
 }
-%token NAME LP RP LB RB DOT COMMA COLON MUL DIV UNEQUAL NOT PLUS MINUS
+%token NAME
+%token LP RP LB RB DOT COMMA COLON MUL DIV UNEQUAL NOT PLUS MINUS
 %token GE GT LE LT EQUAL ASSIGN MOD DOTDOT SEMI SYS_CON SYS_FUNCT 
-%token SYS_PROC SYS_TYPE READ INTEGER REAL CHAR STRING AND ARRAY BEGIN_TOKEN
+%token SYS_PROC SYS_TYPE READ INTEGER REAL CHAR STRING AND ARRAY BEGIN_T
 %token CASE CONST DO DOWNTO ELSE END FOR FUNCTION GOTO IF IN OF OR PACKED
 %token PROCEDURE PROGRAM RECORD REPEAT SET THEN TO TYPE UNTIL VAR WHILE WITH
 
@@ -141,7 +138,7 @@ program:
 	program_head routine DOT  {$$ = new Program($1, $2);}
 ;
 program_head: 
-	PROGRAM NAME SEMI         {$$ = new ProgramHead($2.content);}
+	PROGRAM NAME SEMI         {$$ = new ProgramHead(*$<content>2);}
 ;
 routine: 
 	routine_head routine_body {$$ = new Routine($1, $2);}
@@ -160,26 +157,26 @@ const_part:
   | epsilon               {$$ = new ConstPart();}
 ;
 const_expr_list: 
-	  const_expr_list NAME EQUAL const_value SEMI {$$ = new ConstExprList($2.content, $1, $4);}
-  | NAME EQUAL const_value SEMI                 {$$ = new ConstExprList($1.content, $3);}
+	  const_expr_list NAME EQUAL const_value SEMI {$$ = new ConstExprList(*$<content>2, $1, $4);}
+  | NAME EQUAL const_value SEMI                 {$$ = new ConstExprList(*$<content>1, $3);}
 ;
 const_value: 
-	  INTEGER {$$ = new ConstValue($1.type, $1.content);}
-  | REAL    {$$ = new ConstValue($1.type, $1.content);}
-  | CHAR    {$$ = new ConstValue($1.type, $1.content);}
-  | STRING  {$$ = new ConstValue($1.type, $1.content);}
-  | SYS_CON {$$ = new ConstValue($1.type, $1.content);}
+	  INTEGER {$$ = new ConstValue($<type>1, *$<content>1);}
+  | REAL    {$$ = new ConstValue($<type>1, *$<content>1);}
+  | CHAR    {$$ = new ConstValue($<type>1, *$<content>1);}
+  | STRING  {$$ = new ConstValue($<type>1, *$<content>1);}
+  | SYS_CON {$$ = new ConstValue($<type>1, *$<content>1);}
 ;
 type_part: 
-	  TYPE type_decl_list {$$ = new TypePart($1);}
+    TYPE type_decl_list {$$ = new TypePart($2);}
   | epsilon             {$$ = new TypePart();}
 ;
 type_decl_list: 
-	  type_decl_list type_definition {$$ = new TypeDeclList($1, $2);}
+    type_decl_list type_definition {$$ = new TypeDeclList($1, $2);}
   | type_definition                {$$ = new TypeDeclList($1);}
 ;
 type_definition: 
-	NAME EQUAL type_decl SEMI {$$ = new TypeDefinition($1.content, $3);}
+	NAME EQUAL type_decl SEMI {$$ = new TypeDefinition(*$<content>1, $3);}
 ;
 type_decl:
     simple_type_decl {$$ = new TypeDecl($1);}
@@ -187,13 +184,13 @@ type_decl:
   | record_type_decl {$$ = new TypeDecl($1);}
 ;
 simple_type_decl: 
-    SYS_TYPE                       {$$ = new SimpleTypeDecl($1.type, $1.content);}
-  | NAME                           {$$ = new SimpleTypeDecl($1.type, $1.content);}
+    SYS_TYPE                       {$$ = new SimpleTypeDecl($<type>1, *$<content>1);}
+  | NAME                           {$$ = new SimpleTypeDecl($<type>1, *$<content>1);}
   | LP name_list RP                {$$ = new SimpleTypeDecl($2);}
   | const_value DOTDOT const_value {$$ = new SimpleTypeDecl($1, $3);}
   | MINUS const_value DOTDOT const_value       {$$ = new SimpleTypeDecl($2->neg(), $4);}
-  | MINUS const_value DOTDOT MINUS const_value {$$ = new SimpleTypeDecl($2->neg(), $4->neg());}
-  | NAME  DOTDOT  NAME                         {$$ = new SimpleTypeDecl($1.content, $3.content);}
+  | MINUS const_value DOTDOT MINUS const_value {$$ = new SimpleTypeDecl($2->neg(), $5->neg());}
+  | NAME  DOTDOT  NAME                         {$$ = new SimpleTypeDecl(*$<content>1, *$<content>3);}
 ;
 array_type_decl:
     ARRAY LB simple_type_decl RB OF type_decl {$$ = new ArrayTypeDecl($3, $6);}
@@ -209,8 +206,8 @@ field_decl:
     name_list COLON type_decl SEMI {$$ = new FieldDecl($1, $3);}
 ;
 name_list:
-    name_list COMMA NAME {$$ = new NameList($3.content, $1);}
-  | NAME                 {$$ = new NameList($1.content);}
+    name_list COMMA NAME {$$ = new NameList(*$<content>3, $1);}
+  | NAME                 {$$ = new NameList(*$<content>1);}
 ;
 var_part: 
 	  VAR var_decl_list {$$ = new VarPart($2);}
@@ -234,13 +231,13 @@ function_decl :
     function_head SEMI sub_routine SEMI {$$ = new FunctionDecl($1, $3);}
 ;
 function_head :
-    FUNCTION NAME parameters COLON simple_type_decl {$$ = new FunctionHead($2.content, $3, $5);}
+    FUNCTION NAME parameters COLON simple_type_decl {$$ = new FunctionHead(*$<content>2, $3, $5);}
 ;
 procedure_decl :
     procedure_head SEMI sub_routine SEMI {$$ = new ProcedureDecl($1, $3);}
 ;
 procedure_head :
-    PROCEDURE NAME parameters {$$ = new ProcedureHead($2.content, $3);}
+    PROCEDURE NAME parameters {$$ = new ProcedureHead(*$<content>2, $3);}
 ;
 parameters:
     LP para_decl_list RP {$$ = new Parameters($2);}
@@ -264,7 +261,7 @@ routine_body:
 	compound_stmt   {$$ = new RoutineBody($1);}
 ;
 compound_stmt: 
-	BEGIN stmt_list END {$$ = new CompoundStmt($2);}
+	BEGIN_T stmt_list END {$$ = new CompoundStmt($2);}
 ;
 stmt_list:
     stmt_list stmt SEMI {$$ = new StmtList($1, $2);}
@@ -286,15 +283,15 @@ non_label_stmt:
   | goto_stmt     {$$ = new NonLabelStmt($1);}
 ;
 assign_stmt: 
-	  NAME ASSIGN expression                  {$$ = new AssignStmt($1.content, $3);}
-  | NAME LB expression RB ASSIGN expression {$$ = new AssignStmt($1.content, $3, $6);}
-  | NAME DOT NAME ASSIGN expression         {$$ = new AssignStmt($1.content, $3.content, $5);}
+	  NAME ASSIGN expression                  {$$ = new AssignStmt(*$<content>1, $3);}
+  | NAME LB expression RB ASSIGN expression {$$ = new AssignStmt(*$<content>1, $3, $6);}
+  | NAME DOT NAME ASSIGN expression         {$$ = new AssignStmt(*$<content>1, *$<content>3, $5);}
 ;
 proc_stmt:     
-	  NAME                           {$$ = new ProcStmt($1.content);}
-  | NAME LP args_list RP           {$$ = new ProcStmt($1.content, $3);}
-  | SYS_PROC                       {$$ = new ProcStmt($1.content);}
-  | SYS_PROC LP expression_list RP {$$ = new ProcStmt($1.content, $3);}
+	  NAME                           {$$ = new ProcStmt($<type>1, *$<content>1);}
+  | NAME LP args_list RP           {$$ = new ProcStmt(*$<content>1, $3);}
+  | SYS_PROC                       {$$ = new ProcStmt($<type>1, *$<content>1);}
+  | SYS_PROC LP expression_list RP {$$ = new ProcStmt(*$<content>1, $3);}
   | READ LP factor RP              {$$ = new ProcStmt($3);}
 ;
 if_stmt: 
@@ -311,11 +308,11 @@ while_stmt:
 	WHILE expression DO stmt {$$ = new WhileStmt($2, $4);}
 ;
 for_stmt:     
-	FOR NAME ASSIGN expression direction expression DO stmt {$$ = new ForStmt($2.content, $4, $5, $6, $8);}
+	FOR NAME ASSIGN expression direction expression DO stmt {$$ = new ForStmt(*$<content>2, $4, $5, $6, $8);}
 ;
 direction:     
-	  TO     {$$ = new Direction($1.type);}
-  | DOWNTO {$$ = new Direction($1.type);}
+	  TO     {$$ = new Direction(*$<content>1);}
+  | DOWNTO {$$ = new Direction(*$<content>1);}
 ;
 case_stmt:     
 	CASE expression OF case_expr_list END {$$ = new CaseStmt($2, $4);}
@@ -326,48 +323,48 @@ case_expr_list:
 ;
 case_expr:     
 	  const_value COLON stmt SEMI {$$ = new CaseExpr($1, $3);}
-  | NAME COLON stmt SEMI        {$$ = new CaseExpr($1.content, $3);}
+  | NAME COLON stmt SEMI        {$$ = new CaseExpr(*$<content>1, $3);}
 ;
 goto_stmt: 
-	GOTO INTEGER {$$ = new GotoStmt($2.content);} 
+	GOTO INTEGER {$$ = new GotoStmt(*$<content>2);} 
 ;
 expression_list: 
 	expression_list COMMA expression {$$ = new ExpressionList($1, $3);}
   | expression                     {$$ = new ExpressionList($1);}
 ;
 expression: 
-	  expression GE expr      {$$ = new Expression($1, $2.type, $3);}
-  | expression GT expr      {$$ = new Expression($1, $2.type, $3);}
-  | expression LE expr      {$$ = new Expression($1, $2.type, $3);}
-  | expression LT expr      {$$ = new Expression($1, $2.type, $3);}
-  | expression EQUAL expr   {$$ = new Expression($1, $2.type, $3);}
-  | expression UNEQUAL expr {$$ = new Expression($1, $2.type, $3);}
+	  expression GE expr      {$$ = new Expression($1, *$<content>2, $3);}
+  | expression GT expr      {$$ = new Expression($1, *$<content>2, $3);}
+  | expression LE expr      {$$ = new Expression($1, *$<content>2, $3);}
+  | expression LT expr      {$$ = new Expression($1, *$<content>2, $3);}
+  | expression EQUAL expr   {$$ = new Expression($1, *$<content>2, $3);}
+  | expression UNEQUAL expr {$$ = new Expression($1, *$<content>2, $3);}
   | expr                    {$$ = new Expression($1);}
 ;
 expr: 
-	  expr PLUS term  {$$ = new Expr($1, $2.type, $3);}
-  | expr MINUS term {$$ = new Expr($1, $2.type, $3);}
-  | expr OR term    {$$ = new Expr($1, $2.type, $3);}
+	  expr PLUS term  {$$ = new Expr($1, *$<content>2, $3);}
+  | expr MINUS term {$$ = new Expr($1, *$<content>2, $3);}
+  | expr OR term    {$$ = new Expr($1, *$<content>2, $3);}
   | term            {$$ = new Expr($1);}
 ;
 term: 
-	  term MUL factor {$$ = new Term($1, $2.type, $3);}
-  | term DIV factor {$$ = new Term($1, $2.type, $3);}
-  | term MOD factor {$$ = new Term($1, $2.type, $3);}
-  | term AND factor {$$ = new Term($1, $2.type, $3);}
+	  term MUL factor {$$ = new Term($1, *$<content>2, $3);}
+  | term DIV factor {$$ = new Term($1, *$<content>2, $3);}
+  | term MOD factor {$$ = new Term($1, *$<content>2, $3);}
+  | term AND factor {$$ = new Term($1, *$<content>2, $3);}
   | factor          {$$ = new Term($1);}
 ;
 factor:
-	  NAME                         {$$ = new Factor($1.type, $1.content);}
-  | NAME LP args_list RP         {$$ = new Factor($1.type, $1.content, $3);}
-  | SYS_FUNCT                    {$$ = new Factor($1.type, $1.content);}
-  | SYS_FUNCT  LP  args_list  RP {$$ = new Factor($1.type, $1.content, $3);}
+	  NAME                         {$$ = new Factor($<type>1, *$<content>1);}
+  | NAME LP args_list RP         {$$ = new Factor($<type>1, *$<content>1, $3);}
+  | SYS_FUNCT                    {$$ = new Factor($<type>1, *$<content>1);}
+  | SYS_FUNCT  LP  args_list  RP {$$ = new Factor($<type>1, *$<content>1, $3);}
   | const_value                  {$$ = new Factor($1);}
   | LP expression RP             {$$ = new Factor($2);}
-  | NOT factor                   {$$ = new Factor($1->not(), $2);}
-  | MINUS factor                 {$$ = new Factor($1->neg(), $2);}
-  | NAME LB expression RB        {$$ = new Factor($1.type, $1.content, $3);}
-  | NAME DOT NAME                {$$ = new Factor($1.type, $1.content, $3.type, $3.content);}
+  | NOT factor                   {$$ = new Factor($<type>1, $2);}
+  | MINUS factor                 {$$ = new Factor($<type>1, $2);}
+  | NAME LB expression RB        {$$ = new Factor(*$<content>1, $3);}
+  | NAME DOT NAME                {$$ = new Factor(*$<content>1, *$<content>3);}
 ;
 args_list:
 	  args_list COMMA expression {$$ = new ArgsList($1, $3);}
@@ -376,7 +373,6 @@ args_list:
 epsilon: { }
 
 %%
-
 
 
 

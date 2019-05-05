@@ -1,13 +1,16 @@
 LEX=flex
 YACC=bison
-CC=gcc
+CC=g++
 Obj=test
 
-$(Obj): lex.yy.c 
-	$(CC) lex.yy.c  -o $(Obj)
+$(Obj): lex.cpp yac.cpp
+	$(CC) -w main.cpp lex.cpp yac.cpp -o $(Obj) -std=c++11
 
-lex.yy.c: token.l
-	$(LEX) token.l
+lex.cpp: token.l yac.cpp
+	$(LEX) -o lex.cpp token.l
+
+yac.cpp: parser.y
+	$(YACC) -dytv -o yac.cpp  parser.y
 
 clean:
-	@rm -rf $(Obj) *.o *.h *.c *.output
+	@rm -rf $(Obj) *.o *.output lex.cpp yac.cpp yac.hpp

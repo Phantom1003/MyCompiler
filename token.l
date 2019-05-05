@@ -1,16 +1,9 @@
 %{  
-#include <stdio.h>
+#include <string>
+#include "AST.hpp"
+#include "yac.hpp"
 
-enum TokenType {
-    NAME = 258, 
-    LP, RP, LB, RB, DOT, COMMA, COLON, MUL, DIV, UNEQUAL, NOT, PLUS, MINUS, GE, GT, LE, LT, EQUAL, ASSIGN, MOD, DOTDOT, SEMI, 
-    SYS_CON, SYS_FUNCT, SYS_PROC, SYS_TYPE, READ,
-    INTEGER, REAL, CHAR, STRING, 
-    AND, ARRAY, BEGIN, CASE, CONST, DO, DOWNTO, ELSE, END, FOR, FUNCTION, GOTO, IF, IN, OF, OR, PACKED, PROCEDURE, 
-    PROGRAM, RECORD, REPEAT, SET, THEN, TO, TYPE, UNTIL, VAR, WHILE, WITH    
-};
-
-TOKEN yylval;
+int makeToken(char * str, int t);
 
 int line_num = 1;
 
@@ -55,7 +48,7 @@ str 		\".+?\"
 
 and         "and"
 array       "array"
-begin       "begin"
+BEGIN_T     "BEGIN"
 case        "case"
 const       "const"
 do          "do"
@@ -87,7 +80,7 @@ delim       [ \t]
 whitespace  {delim}+
 %%
 
-"
+
 {lp}            {return makeToken(yytext, LP);}
 {rp}            {return makeToken(yytext, RP);}
 {lb}            {return makeToken(yytext, LB);}
@@ -123,7 +116,7 @@ whitespace  {delim}+
 {read}          {return makeToken(yytext, READ);}
 
 {array}         {return makeToken(yytext, ARRAY);}
-{begin}         {return makeToken(yytext, BEGIN);}
+{BEGIN_T}       {return makeToken(yytext, BEGIN_T);}
 {case}          {return makeToken(yytext, CASE);}
 {const}         {return makeToken(yytext, CONST);}
 {do}            {return makeToken(yytext, DO);}
@@ -167,49 +160,4 @@ int makeToken(char * str, int t) {
 	yylval.type = t;
 	return t;
 }
-
-// int makeNameToken() {
-// 	yylval = (TOKEN) malloc(TOKENSIZE);
-// 	yylval->token_t = TOKEN_NAME;
-// 	yylval->name = (char *)malloc(strlen(yytext)+1);
-// 	strcpy(yylval->name, yytext);
-// 	return NAME;
-// }
-
-// int makeStrToken() {
-// 	yylval = (TOKEN) malloc(TOKENSIZE);
-// 	yylval->data_t = DATA_STR;
-// 	yylval->tokenval.strval = (char *) malloc(strlen(yytext)-2+1);
-// 	memcpy(yylval->tokenval.strval, yytext+1, strlen(yytext)-2);
-// 	*(yylval->tokenval.strval+strlen(yytext)-2) = '\0';
-// 	return STR;
-// }
-
-// int makeIntToken() {
-// 	yylval = (TOKEN) malloc(TOKENSIZE);
-// 	yylval->data_t = DATA_INT;
-// 	yylval->tokenval.intval = atoi(yytext);
-// 	return INTEGER;
-// }
-
-// int makeRealToken() {
-// 	yylval = (TOKEN) malloc(TOKENSIZE);
-// 	yylval->data_t = DATA_REAL;
-// 	yylval->tokenval.realval = atof(yytext);
-// 	return REAL;
-// }
-
-// int makeCharToken() {
-// 	yylval = (TOKEN) malloc(TOKENSIZE);
-// 	yylval->data_t = DATA_CHAR;
-// 	yylval->tokenval.charval = yytext[1];
-// 	return CHAR;
-// }
-
 int yywrap(void){return 1;} 
-
-int main(int argc, char* argv[]) {
-    yylex();
-    printf("%d\n", line_num);
-    return 0;
-}

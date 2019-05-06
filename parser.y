@@ -1,12 +1,16 @@
 %{
 #include "AST.hpp"
+
+#define YYERROR_VERBOSE 1
+#define YYDEBUG 1
+
 extern int yylex();
 extern int yylineno;
 Program * astRoot;
+extern char * yytext;
 
-
-void yyerror(const char* s) { 
-  printf("[ERROR]: At line: %d\n\t\t%s\n ", yylineno, s); 
+void yyerror (char const *msg) {
+  std::cerr << "[yyerror]: " << std::string(msg) << " yytext: [" << std::string(yytext) << "] Line: " << yylineno << std::endl;
 }
 
 %}
@@ -71,11 +75,11 @@ void yyerror(const char* s) {
   Factor*   factor;
   ArgsList* argsList;
 }
-%token NAME
+%token NAME INTEGER REAL CHAR STRING
 %token LP RP LB RB DOT COMMA COLON MUL DIV UNEQUAL NOT PLUS MINUS
 %token GE GT LE LT EQUAL ASSIGN MOD DOTDOT SEMI SYS_CON SYS_FUNCT 
-%token SYS_PROC SYS_TYPE READ INTEGER REAL CHAR STRING AND ARRAY BEGIN_T
-%token CASE CONST DO DOWNTO ELSE END FOR FUNCTION GOTO IF IN OF OR PACKED
+%token SYS_PROC SYS_TYPE READ AND ARRAY BEGIN_T END
+%token CASE CONST DO DOWNTO ELSE FOR FUNCTION GOTO IF IN OF OR PACKED
 %token PROCEDURE PROGRAM RECORD REPEAT SET THEN TO TYPE UNTIL VAR WHILE WITH
 
 %type <program>     program
@@ -376,6 +380,3 @@ args_list:
 epsilon: { }
 
 %%
-
-
-

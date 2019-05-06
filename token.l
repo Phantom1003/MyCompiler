@@ -4,8 +4,10 @@
 #include "yac.hpp"
 
 int makeToken(char * str, int t);
-
 %}
+
+%option yylineno
+
 name    [a-zA-Z][_a-zA-Z0-9]*
 
 lp          "("
@@ -27,7 +29,7 @@ le          "<="
 lt          "<"
 equal       "="
 assign      ":="
-mod         "mod"
+mod         "mod"|"%"
 dotdot      ".."
 semi        ";"
 
@@ -40,7 +42,7 @@ read        "read"
 digit       [0-9]
 integer     {digit}+
 real        {digit}+(\.{digit}+)?(([E|e])[+\-]?{digit}+)?
-char        '.'
+char        '[.]'
 str 		\".+?\"
 
 
@@ -148,17 +150,15 @@ whitespace  {delim}+
 {char}          {return makeToken(yytext, CHAR);}
 {str}			{return makeToken(yytext, STRING);}
 
-[\n]            {printf("Line %d\n", yylineno);}
+\n              {std::cout << "<\\n>" << std::endl;}
 {whitespace}    {/*do nothing*/}
 
-.   std::cout << "invalid character: " + std::string(yytext, yyleng) << std::endl;
+.               {std::cout << "Syntax Error:" << std::string(yytext) << std::endl;}
 %%
-
 
 int makeToken(char * str, int t) {
 	yylval.content = new std::string(str);
 	yylval.type = t;
-    std::cout << "Token: " << std::endl;
 	return t;
 }
 int yywrap(void){return 1;} 

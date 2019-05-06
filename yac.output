@@ -204,46 +204,46 @@ $end (0) 0
 error (256)
 NAME (258) 2 9 10 20 25 30 36 37 49 51 75 76 77 78 79 88 95 115 116
     123 124
-LP (259) 26 52 79 81 82 116 118 120
-RP (260) 26 52 79 81 82 116 118 120
-LB (261) 31 76 123
-RB (262) 31 76 123
-DOT (263) 1 77 124
-COMMA (264) 36 97 125
-COLON (265) 35 42 49 56 57 64 94 95
-MUL (266) 110
-DIV (267) 111
-UNEQUAL (268) 104
-NOT (269) 121
-PLUS (270) 106
-MINUS (271) 28 29 107 122
-GE (272) 99
-GT (273) 100
-LE (274) 101
-LT (275) 102
-EQUAL (276) 9 10 20 103
-ASSIGN (277) 75 76 77 88
-MOD (278) 112
-DOTDOT (279) 27 28 29 30
-SEMI (280) 2 9 10 20 35 42 48 50 54 62 94 95
-SYS_CON (281) 15
-SYS_FUNCT (282) 117 118
-SYS_PROC (283) 80 81
-SYS_TYPE (284) 24
-READ (285) 82
-INTEGER (286) 11 64 96
-REAL (287) 12
-CHAR (288) 13
-STRING (289) 14
+INTEGER (259) 11 64 96
+REAL (260) 12
+CHAR (261) 13
+STRING (262) 14
+LP (263) 26 52 79 81 82 116 118 120
+RP (264) 26 52 79 81 82 116 118 120
+LB (265) 31 76 123
+RB (266) 31 76 123
+DOT (267) 1 77 124
+COMMA (268) 36 97 125
+COLON (269) 35 42 49 56 57 64 94 95
+MUL (270) 110
+DIV (271) 111
+UNEQUAL (272) 104
+NOT (273) 121
+PLUS (274) 106
+MINUS (275) 28 29 107 122
+GE (276) 99
+GT (277) 100
+LE (278) 101
+LT (279) 102
+EQUAL (280) 9 10 20 103
+ASSIGN (281) 75 76 77 88
+MOD (282) 112
+DOTDOT (283) 27 28 29 30
+SEMI (284) 2 9 10 20 35 42 48 50 54 62 94 95
+SYS_CON (285) 15
+SYS_FUNCT (286) 117 118
+SYS_PROC (287) 80 81
+SYS_TYPE (288) 24
+READ (289) 82
 AND (290) 113
 ARRAY (291) 31
 BEGIN_T (292) 61
-CASE (293) 91
-CONST (294) 7
-DO (295) 87 88
-DOWNTO (296) 90
-ELSE (297) 84
-END (298) 32 61 91
+END (293) 32 61 91
+CASE (294) 91
+CONST (295) 7
+DO (296) 87 88
+DOWNTO (297) 90
+ELSE (298) 84
 FOR (299) 88
 FUNCTION (300) 49
 GOTO (301) 96
@@ -546,12 +546,12 @@ state 18
    62 stmt_list: stmt_list . stmt SEMI
 
     NAME      shift, and go to state 25
-    SYS_PROC  shift, and go to state 26
-    READ      shift, and go to state 27
-    INTEGER   shift, and go to state 28
+    INTEGER   shift, and go to state 26
+    SYS_PROC  shift, and go to state 27
+    READ      shift, and go to state 28
     BEGIN_T   shift, and go to state 12
-    CASE      shift, and go to state 29
-    END       shift, and go to state 30
+    END       shift, and go to state 29
+    CASE      shift, and go to state 30
     FOR       shift, and go to state 31
     GOTO      shift, and go to state 32
     IF        shift, and go to state 33
@@ -642,55 +642,55 @@ state 25
 
 state 26
 
-   80 proc_stmt: SYS_PROC .
-   81          | SYS_PROC . LP expression_list RP
+   64 stmt: INTEGER . COLON non_label_stmt
 
-    LP  shift, and go to state 59
-
-    $default  reduce using rule 80 (proc_stmt)
+    COLON  shift, and go to state 59
 
 
 state 27
 
-   82 proc_stmt: READ . LP factor RP
+   80 proc_stmt: SYS_PROC .
+   81          | SYS_PROC . LP expression_list RP
 
     LP  shift, and go to state 60
+
+    $default  reduce using rule 80 (proc_stmt)
 
 
 state 28
 
-   64 stmt: INTEGER . COLON non_label_stmt
+   82 proc_stmt: READ . LP factor RP
 
-    COLON  shift, and go to state 61
+    LP  shift, and go to state 61
 
 
 state 29
 
+   61 compound_stmt: BEGIN_T stmt_list END .
+
+    $default  reduce using rule 61 (compound_stmt)
+
+
+state 30
+
    91 case_stmt: CASE . expression OF case_expr_list END
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 73
     expr         go to state 74
     term         go to state 75
     factor       go to state 76
-
-
-state 30
-
-   61 compound_stmt: BEGIN_T stmt_list END .
-
-    $default  reduce using rule 61 (compound_stmt)
 
 
 state 31
@@ -712,15 +712,15 @@ state 33
    83 if_stmt: IF . expression THEN stmt else_clause
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 79
@@ -744,15 +744,15 @@ state 35
    87 while_stmt: WHILE . expression DO stmt
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 81
@@ -842,11 +842,11 @@ state 47
 
    10 const_expr_list: NAME EQUAL . const_value SEMI
 
-    SYS_CON  shift, and go to state 66
-    INTEGER  shift, and go to state 68
-    REAL     shift, and go to state 69
-    CHAR     shift, and go to state 70
-    STRING   shift, and go to state 71
+    INTEGER  shift, and go to state 63
+    REAL     shift, and go to state 64
+    CHAR     shift, and go to state 65
+    STRING   shift, and go to state 66
+    SYS_CON  shift, and go to state 70
 
     const_value  go to state 83
 
@@ -926,15 +926,15 @@ state 55
    79 proc_stmt: NAME LP . args_list RP
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 99
@@ -949,15 +949,15 @@ state 56
    76 assign_stmt: NAME LB . expression RB ASSIGN expression
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 101
@@ -978,15 +978,15 @@ state 58
    75 assign_stmt: NAME ASSIGN . expression
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 103
@@ -997,55 +997,13 @@ state 58
 
 state 59
 
-   81 proc_stmt: SYS_PROC LP . expression_list RP
-
-    NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
-
-    const_value      go to state 72
-    expression_list  go to state 104
-    expression       go to state 105
-    expr             go to state 74
-    term             go to state 75
-    factor           go to state 76
-
-
-state 60
-
-   82 proc_stmt: READ LP . factor RP
-
-    NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
-
-    const_value  go to state 72
-    factor       go to state 106
-
-
-state 61
-
    64 stmt: INTEGER COLON . non_label_stmt
 
     NAME      shift, and go to state 25
-    SYS_PROC  shift, and go to state 26
-    READ      shift, and go to state 27
+    SYS_PROC  shift, and go to state 27
+    READ      shift, and go to state 28
     BEGIN_T   shift, and go to state 12
-    CASE      shift, and go to state 29
+    CASE      shift, and go to state 30
     FOR       shift, and go to state 31
     GOTO      shift, and go to state 32
     IF        shift, and go to state 33
@@ -1053,7 +1011,7 @@ state 61
     WHILE     shift, and go to state 35
 
     compound_stmt   go to state 36
-    non_label_stmt  go to state 107
+    non_label_stmt  go to state 104
     assign_stmt     go to state 39
     proc_stmt       go to state 40
     if_stmt         go to state 41
@@ -1062,6 +1020,48 @@ state 61
     for_stmt        go to state 44
     case_stmt       go to state 45
     goto_stmt       go to state 46
+
+
+state 60
+
+   81 proc_stmt: SYS_PROC LP . expression_list RP
+
+    NAME       shift, and go to state 62
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
+
+    const_value      go to state 72
+    expression_list  go to state 105
+    expression       go to state 106
+    expr             go to state 74
+    term             go to state 75
+    factor           go to state 76
+
+
+state 61
+
+   82 proc_stmt: READ LP . factor RP
+
+    NAME       shift, and go to state 62
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
+
+    const_value  go to state 72
+    factor       go to state 107
 
 
 state 62
@@ -1080,18 +1080,46 @@ state 62
 
 state 63
 
+   11 const_value: INTEGER .
+
+    $default  reduce using rule 11 (const_value)
+
+
+state 64
+
+   12 const_value: REAL .
+
+    $default  reduce using rule 12 (const_value)
+
+
+state 65
+
+   13 const_value: CHAR .
+
+    $default  reduce using rule 13 (const_value)
+
+
+state 66
+
+   14 const_value: STRING .
+
+    $default  reduce using rule 14 (const_value)
+
+
+state 67
+
   120 factor: LP . expression RP
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 111
@@ -1100,52 +1128,52 @@ state 63
     factor       go to state 76
 
 
-state 64
+state 68
 
   121 factor: NOT . factor
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     factor       go to state 112
 
 
-state 65
+state 69
 
   122 factor: MINUS . factor
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     factor       go to state 113
 
 
-state 66
+state 70
 
    15 const_value: SYS_CON .
 
     $default  reduce using rule 15 (const_value)
 
 
-state 67
+state 71
 
   117 factor: SYS_FUNCT .
   118       | SYS_FUNCT . LP args_list RP
@@ -1153,34 +1181,6 @@ state 67
     LP  shift, and go to state 114
 
     $default  reduce using rule 117 (factor)
-
-
-state 68
-
-   11 const_value: INTEGER .
-
-    $default  reduce using rule 11 (const_value)
-
-
-state 69
-
-   12 const_value: REAL .
-
-    $default  reduce using rule 12 (const_value)
-
-
-state 70
-
-   13 const_value: CHAR .
-
-    $default  reduce using rule 13 (const_value)
-
-
-state 71
-
-   14 const_value: STRING .
-
-    $default  reduce using rule 14 (const_value)
 
 
 state 72
@@ -1285,11 +1285,11 @@ state 80
    86 repeat_stmt: REPEAT stmt_list . UNTIL expression
 
     NAME      shift, and go to state 25
-    SYS_PROC  shift, and go to state 26
-    READ      shift, and go to state 27
-    INTEGER   shift, and go to state 28
+    INTEGER   shift, and go to state 26
+    SYS_PROC  shift, and go to state 27
+    READ      shift, and go to state 28
     BEGIN_T   shift, and go to state 12
-    CASE      shift, and go to state 29
+    CASE      shift, and go to state 30
     FOR       shift, and go to state 31
     GOTO      shift, and go to state 32
     IF        shift, and go to state 33
@@ -1347,11 +1347,11 @@ state 84
 
     9 const_expr_list: const_expr_list NAME EQUAL . const_value SEMI
 
-    SYS_CON  shift, and go to state 66
-    INTEGER  shift, and go to state 68
-    REAL     shift, and go to state 69
-    CHAR     shift, and go to state 70
-    STRING   shift, and go to state 71
+    INTEGER  shift, and go to state 63
+    REAL     shift, and go to state 64
+    CHAR     shift, and go to state 65
+    STRING   shift, and go to state 66
+    SYS_CON  shift, and go to state 70
 
     const_value  go to state 134
 
@@ -1361,14 +1361,14 @@ state 85
    20 type_definition: NAME EQUAL . type_decl SEMI
 
     NAME      shift, and go to state 135
+    INTEGER   shift, and go to state 63
+    REAL      shift, and go to state 64
+    CHAR      shift, and go to state 65
+    STRING    shift, and go to state 66
     LP        shift, and go to state 136
     MINUS     shift, and go to state 137
-    SYS_CON   shift, and go to state 66
+    SYS_CON   shift, and go to state 70
     SYS_TYPE  shift, and go to state 138
-    INTEGER   shift, and go to state 68
-    REAL      shift, and go to state 69
-    CHAR      shift, and go to state 70
-    STRING    shift, and go to state 71
     ARRAY     shift, and go to state 139
     RECORD    shift, and go to state 140
 
@@ -1565,6 +1565,13 @@ state 103
 
 state 104
 
+   64 stmt: INTEGER COLON non_label_stmt .
+
+    $default  reduce using rule 64 (stmt)
+
+
+state 105
+
    81 proc_stmt: SYS_PROC LP expression_list . RP
    97 expression_list: expression_list . COMMA expression
 
@@ -1572,7 +1579,7 @@ state 104
     COMMA  shift, and go to state 160
 
 
-state 105
+state 106
 
    98 expression_list: expression .
    99 expression: expression . GE expr
@@ -1592,18 +1599,11 @@ state 105
     $default  reduce using rule 98 (expression_list)
 
 
-state 106
+state 107
 
    82 proc_stmt: READ LP factor . RP
 
     RP  shift, and go to state 161
-
-
-state 107
-
-   64 stmt: INTEGER COLON non_label_stmt .
-
-    $default  reduce using rule 64 (stmt)
 
 
 state 108
@@ -1611,15 +1611,15 @@ state 108
   116 factor: NAME LP . args_list RP
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 99
@@ -1634,15 +1634,15 @@ state 109
   123 factor: NAME LB . expression RB
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 163
@@ -1696,15 +1696,15 @@ state 114
   118 factor: SYS_FUNCT LP . args_list RP
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 99
@@ -1719,15 +1719,15 @@ state 115
   104 expression: expression UNEQUAL . expr
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expr         go to state 167
@@ -1740,15 +1740,15 @@ state 116
    99 expression: expression GE . expr
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expr         go to state 168
@@ -1761,15 +1761,15 @@ state 117
   100 expression: expression GT . expr
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expr         go to state 169
@@ -1782,15 +1782,15 @@ state 118
   101 expression: expression LE . expr
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expr         go to state 170
@@ -1803,15 +1803,15 @@ state 119
   102 expression: expression LT . expr
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expr         go to state 171
@@ -1824,15 +1824,15 @@ state 120
   103 expression: expression EQUAL . expr
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expr         go to state 172
@@ -1845,11 +1845,11 @@ state 121
    91 case_stmt: CASE expression OF . case_expr_list END
 
     NAME     shift, and go to state 173
-    SYS_CON  shift, and go to state 66
-    INTEGER  shift, and go to state 68
-    REAL     shift, and go to state 69
-    CHAR     shift, and go to state 70
-    STRING   shift, and go to state 71
+    INTEGER  shift, and go to state 63
+    REAL     shift, and go to state 64
+    CHAR     shift, and go to state 65
+    STRING   shift, and go to state 66
+    SYS_CON  shift, and go to state 70
 
     const_value     go to state 174
     case_expr_list  go to state 175
@@ -1861,15 +1861,15 @@ state 122
   106 expr: expr PLUS . term
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     term         go to state 177
@@ -1881,15 +1881,15 @@ state 123
   107 expr: expr MINUS . term
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     term         go to state 178
@@ -1901,15 +1901,15 @@ state 124
   108 expr: expr OR . term
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     term         go to state 179
@@ -1921,15 +1921,15 @@ state 125
   110 term: term MUL . factor
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     factor       go to state 180
@@ -1940,15 +1940,15 @@ state 126
   111 term: term DIV . factor
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     factor       go to state 181
@@ -1959,15 +1959,15 @@ state 127
   112 term: term MOD . factor
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     factor       go to state 182
@@ -1978,15 +1978,15 @@ state 128
   113 term: term AND . factor
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     factor       go to state 183
@@ -1997,15 +1997,15 @@ state 129
    88 for_stmt: FOR NAME ASSIGN . expression direction expression DO stmt
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 184
@@ -2019,11 +2019,11 @@ state 130
    83 if_stmt: IF expression THEN . stmt else_clause
 
     NAME      shift, and go to state 25
-    SYS_PROC  shift, and go to state 26
-    READ      shift, and go to state 27
-    INTEGER   shift, and go to state 28
+    INTEGER   shift, and go to state 26
+    SYS_PROC  shift, and go to state 27
+    READ      shift, and go to state 28
     BEGIN_T   shift, and go to state 12
-    CASE      shift, and go to state 29
+    CASE      shift, and go to state 30
     FOR       shift, and go to state 31
     GOTO      shift, and go to state 32
     IF        shift, and go to state 33
@@ -2048,15 +2048,15 @@ state 131
    86 repeat_stmt: REPEAT stmt_list UNTIL . expression
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 186
@@ -2070,11 +2070,11 @@ state 132
    87 while_stmt: WHILE expression DO . stmt
 
     NAME      shift, and go to state 25
-    SYS_PROC  shift, and go to state 26
-    READ      shift, and go to state 27
-    INTEGER   shift, and go to state 28
+    INTEGER   shift, and go to state 26
+    SYS_PROC  shift, and go to state 27
+    READ      shift, and go to state 28
     BEGIN_T   shift, and go to state 12
-    CASE      shift, and go to state 29
+    CASE      shift, and go to state 30
     FOR       shift, and go to state 31
     GOTO      shift, and go to state 32
     IF        shift, and go to state 33
@@ -2132,11 +2132,11 @@ state 137
    28 simple_type_decl: MINUS . const_value DOTDOT const_value
    29                 | MINUS . const_value DOTDOT MINUS const_value
 
-    SYS_CON  shift, and go to state 66
-    INTEGER  shift, and go to state 68
-    REAL     shift, and go to state 69
-    CHAR     shift, and go to state 70
-    STRING   shift, and go to state 71
+    INTEGER  shift, and go to state 63
+    REAL     shift, and go to state 64
+    CHAR     shift, and go to state 65
+    STRING   shift, and go to state 66
+    SYS_CON  shift, and go to state 70
 
     const_value  go to state 191
 
@@ -2213,14 +2213,14 @@ state 147
    42 var_decl: name_list COLON . type_decl SEMI
 
     NAME      shift, and go to state 135
+    INTEGER   shift, and go to state 63
+    REAL      shift, and go to state 64
+    CHAR      shift, and go to state 65
+    STRING    shift, and go to state 66
     LP        shift, and go to state 136
     MINUS     shift, and go to state 137
-    SYS_CON   shift, and go to state 66
+    SYS_CON   shift, and go to state 70
     SYS_TYPE  shift, and go to state 138
-    INTEGER   shift, and go to state 68
-    REAL      shift, and go to state 69
-    CHAR      shift, and go to state 70
-    STRING    shift, and go to state 71
     ARRAY     shift, and go to state 139
     RECORD    shift, and go to state 140
 
@@ -2312,15 +2312,15 @@ state 156
   125 args_list: args_list COMMA . expression
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 207
@@ -2341,15 +2341,15 @@ state 158
    77 assign_stmt: NAME DOT NAME ASSIGN . expression
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 209
@@ -2370,15 +2370,15 @@ state 160
    97 expression_list: expression_list COMMA . expression
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 210
@@ -2549,11 +2549,11 @@ state 175
    92 case_expr_list: case_expr_list . case_expr
 
     NAME     shift, and go to state 173
-    SYS_CON  shift, and go to state 66
-    INTEGER  shift, and go to state 68
-    REAL     shift, and go to state 69
-    CHAR     shift, and go to state 70
-    STRING   shift, and go to state 71
+    INTEGER  shift, and go to state 63
+    REAL     shift, and go to state 64
+    CHAR     shift, and go to state 65
+    STRING   shift, and go to state 66
+    SYS_CON  shift, and go to state 70
     END      shift, and go to state 216
 
     const_value  go to state 174
@@ -2741,14 +2741,14 @@ state 192
    31 array_type_decl: ARRAY LB . simple_type_decl RB OF type_decl
 
     NAME      shift, and go to state 135
+    INTEGER   shift, and go to state 63
+    REAL      shift, and go to state 64
+    CHAR      shift, and go to state 65
+    STRING    shift, and go to state 66
     LP        shift, and go to state 136
     MINUS     shift, and go to state 137
-    SYS_CON   shift, and go to state 66
+    SYS_CON   shift, and go to state 70
     SYS_TYPE  shift, and go to state 138
-    INTEGER   shift, and go to state 68
-    REAL      shift, and go to state 69
-    CHAR      shift, and go to state 70
-    STRING    shift, and go to state 71
 
     const_value       go to state 141
     simple_type_decl  go to state 227
@@ -2786,11 +2786,11 @@ state 196
 
    27 simple_type_decl: const_value DOTDOT . const_value
 
-    SYS_CON  shift, and go to state 66
-    INTEGER  shift, and go to state 68
-    REAL     shift, and go to state 69
-    CHAR     shift, and go to state 70
-    STRING   shift, and go to state 71
+    INTEGER  shift, and go to state 63
+    REAL     shift, and go to state 64
+    CHAR     shift, and go to state 65
+    STRING   shift, and go to state 66
+    SYS_CON  shift, and go to state 70
 
     const_value  go to state 231
 
@@ -2900,15 +2900,15 @@ state 208
    76 assign_stmt: NAME LB expression RB ASSIGN . expression
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 243
@@ -2983,11 +2983,11 @@ state 214
    95 case_expr: NAME COLON . stmt SEMI
 
     NAME      shift, and go to state 25
-    SYS_PROC  shift, and go to state 26
-    READ      shift, and go to state 27
-    INTEGER   shift, and go to state 28
+    INTEGER   shift, and go to state 26
+    SYS_PROC  shift, and go to state 27
+    READ      shift, and go to state 28
     BEGIN_T   shift, and go to state 12
-    CASE      shift, and go to state 29
+    CASE      shift, and go to state 30
     FOR       shift, and go to state 31
     GOTO      shift, and go to state 32
     IF        shift, and go to state 33
@@ -3012,11 +3012,11 @@ state 215
    94 case_expr: const_value COLON . stmt SEMI
 
     NAME      shift, and go to state 25
-    SYS_PROC  shift, and go to state 26
-    READ      shift, and go to state 27
-    INTEGER   shift, and go to state 28
+    INTEGER   shift, and go to state 26
+    SYS_PROC  shift, and go to state 27
+    READ      shift, and go to state 28
     BEGIN_T   shift, and go to state 12
-    CASE      shift, and go to state 29
+    CASE      shift, and go to state 30
     FOR       shift, and go to state 31
     GOTO      shift, and go to state 32
     IF        shift, and go to state 33
@@ -3069,15 +3069,15 @@ state 220
    88 for_stmt: FOR NAME ASSIGN expression direction . expression DO stmt
 
     NAME       shift, and go to state 62
-    LP         shift, and go to state 63
-    NOT        shift, and go to state 64
-    MINUS      shift, and go to state 65
-    SYS_CON    shift, and go to state 66
-    SYS_FUNCT  shift, and go to state 67
-    INTEGER    shift, and go to state 68
-    REAL       shift, and go to state 69
-    CHAR       shift, and go to state 70
-    STRING     shift, and go to state 71
+    INTEGER    shift, and go to state 63
+    REAL       shift, and go to state 64
+    CHAR       shift, and go to state 65
+    STRING     shift, and go to state 66
+    LP         shift, and go to state 67
+    NOT        shift, and go to state 68
+    MINUS      shift, and go to state 69
+    SYS_CON    shift, and go to state 70
+    SYS_FUNCT  shift, and go to state 71
 
     const_value  go to state 72
     expression   go to state 246
@@ -3091,11 +3091,11 @@ state 221
    84 else_clause: ELSE . stmt
 
     NAME      shift, and go to state 25
-    SYS_PROC  shift, and go to state 26
-    READ      shift, and go to state 27
-    INTEGER   shift, and go to state 28
+    INTEGER   shift, and go to state 26
+    SYS_PROC  shift, and go to state 27
+    READ      shift, and go to state 28
     BEGIN_T   shift, and go to state 12
-    CASE      shift, and go to state 29
+    CASE      shift, and go to state 30
     FOR       shift, and go to state 31
     GOTO      shift, and go to state 32
     IF        shift, and go to state 33
@@ -3148,12 +3148,12 @@ state 226
    28 simple_type_decl: MINUS const_value DOTDOT . const_value
    29                 | MINUS const_value DOTDOT . MINUS const_value
 
+    INTEGER  shift, and go to state 63
+    REAL     shift, and go to state 64
+    CHAR     shift, and go to state 65
+    STRING   shift, and go to state 66
     MINUS    shift, and go to state 248
-    SYS_CON  shift, and go to state 66
-    INTEGER  shift, and go to state 68
-    REAL     shift, and go to state 69
-    CHAR     shift, and go to state 70
-    STRING   shift, and go to state 71
+    SYS_CON  shift, and go to state 70
 
     const_value  go to state 249
 
@@ -3184,14 +3184,14 @@ state 230
    35 field_decl: name_list COLON . type_decl SEMI
 
     NAME      shift, and go to state 135
+    INTEGER   shift, and go to state 63
+    REAL      shift, and go to state 64
+    CHAR      shift, and go to state 65
+    STRING    shift, and go to state 66
     LP        shift, and go to state 136
     MINUS     shift, and go to state 137
-    SYS_CON   shift, and go to state 66
+    SYS_CON   shift, and go to state 70
     SYS_TYPE  shift, and go to state 138
-    INTEGER   shift, and go to state 68
-    REAL      shift, and go to state 69
-    CHAR      shift, and go to state 70
-    STRING    shift, and go to state 71
     ARRAY     shift, and go to state 139
     RECORD    shift, and go to state 140
 
@@ -3270,14 +3270,14 @@ state 239
    49 function_head: FUNCTION NAME parameters COLON . simple_type_decl
 
     NAME      shift, and go to state 135
+    INTEGER   shift, and go to state 63
+    REAL      shift, and go to state 64
+    CHAR      shift, and go to state 65
+    STRING    shift, and go to state 66
     LP        shift, and go to state 136
     MINUS     shift, and go to state 137
-    SYS_CON   shift, and go to state 66
+    SYS_CON   shift, and go to state 70
     SYS_TYPE  shift, and go to state 138
-    INTEGER   shift, and go to state 68
-    REAL      shift, and go to state 69
-    CHAR      shift, and go to state 70
-    STRING    shift, and go to state 71
 
     const_value       go to state 141
     simple_type_decl  go to state 257
@@ -3368,11 +3368,11 @@ state 248
 
    29 simple_type_decl: MINUS const_value DOTDOT MINUS . const_value
 
-    SYS_CON  shift, and go to state 66
-    INTEGER  shift, and go to state 68
-    REAL     shift, and go to state 69
-    CHAR     shift, and go to state 70
-    STRING   shift, and go to state 71
+    INTEGER  shift, and go to state 63
+    REAL     shift, and go to state 64
+    CHAR     shift, and go to state 65
+    STRING   shift, and go to state 66
+    SYS_CON  shift, and go to state 70
 
     const_value  go to state 261
 
@@ -3433,14 +3433,14 @@ state 255
    56 para_type_list: var_para_list COLON . simple_type_decl
 
     NAME      shift, and go to state 135
+    INTEGER   shift, and go to state 63
+    REAL      shift, and go to state 64
+    CHAR      shift, and go to state 65
+    STRING    shift, and go to state 66
     LP        shift, and go to state 136
     MINUS     shift, and go to state 137
-    SYS_CON   shift, and go to state 66
+    SYS_CON   shift, and go to state 70
     SYS_TYPE  shift, and go to state 138
-    INTEGER   shift, and go to state 68
-    REAL      shift, and go to state 69
-    CHAR      shift, and go to state 70
-    STRING    shift, and go to state 71
 
     const_value       go to state 141
     simple_type_decl  go to state 265
@@ -3451,14 +3451,14 @@ state 256
    57 para_type_list: val_para_list COLON . simple_type_decl
 
     NAME      shift, and go to state 135
+    INTEGER   shift, and go to state 63
+    REAL      shift, and go to state 64
+    CHAR      shift, and go to state 65
+    STRING    shift, and go to state 66
     LP        shift, and go to state 136
     MINUS     shift, and go to state 137
-    SYS_CON   shift, and go to state 66
+    SYS_CON   shift, and go to state 70
     SYS_TYPE  shift, and go to state 138
-    INTEGER   shift, and go to state 68
-    REAL      shift, and go to state 69
-    CHAR      shift, and go to state 70
-    STRING    shift, and go to state 71
 
     const_value       go to state 141
     simple_type_decl  go to state 266
@@ -3490,11 +3490,11 @@ state 260
    88 for_stmt: FOR NAME ASSIGN expression direction expression DO . stmt
 
     NAME      shift, and go to state 25
-    SYS_PROC  shift, and go to state 26
-    READ      shift, and go to state 27
-    INTEGER   shift, and go to state 28
+    INTEGER   shift, and go to state 26
+    SYS_PROC  shift, and go to state 27
+    READ      shift, and go to state 28
     BEGIN_T   shift, and go to state 12
-    CASE      shift, and go to state 29
+    CASE      shift, and go to state 30
     FOR       shift, and go to state 31
     GOTO      shift, and go to state 32
     IF        shift, and go to state 33
@@ -3526,14 +3526,14 @@ state 262
    31 array_type_decl: ARRAY LB simple_type_decl RB OF . type_decl
 
     NAME      shift, and go to state 135
+    INTEGER   shift, and go to state 63
+    REAL      shift, and go to state 64
+    CHAR      shift, and go to state 65
+    STRING    shift, and go to state 66
     LP        shift, and go to state 136
     MINUS     shift, and go to state 137
-    SYS_CON   shift, and go to state 66
+    SYS_CON   shift, and go to state 70
     SYS_TYPE  shift, and go to state 138
-    INTEGER   shift, and go to state 68
-    REAL      shift, and go to state 69
-    CHAR      shift, and go to state 70
-    STRING    shift, and go to state 71
     ARRAY     shift, and go to state 139
     RECORD    shift, and go to state 140
 

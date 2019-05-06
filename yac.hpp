@@ -40,46 +40,46 @@
       know about them.  */
    enum yytokentype {
      NAME = 258,
-     LP = 259,
-     RP = 260,
-     LB = 261,
-     RB = 262,
-     DOT = 263,
-     COMMA = 264,
-     COLON = 265,
-     MUL = 266,
-     DIV = 267,
-     UNEQUAL = 268,
-     NOT = 269,
-     PLUS = 270,
-     MINUS = 271,
-     GE = 272,
-     GT = 273,
-     LE = 274,
-     LT = 275,
-     EQUAL = 276,
-     ASSIGN = 277,
-     MOD = 278,
-     DOTDOT = 279,
-     SEMI = 280,
-     SYS_CON = 281,
-     SYS_FUNCT = 282,
-     SYS_PROC = 283,
-     SYS_TYPE = 284,
-     READ = 285,
-     INTEGER = 286,
-     REAL = 287,
-     CHAR = 288,
-     STRING = 289,
+     INTEGER = 259,
+     REAL = 260,
+     CHAR = 261,
+     STRING = 262,
+     LP = 263,
+     RP = 264,
+     LB = 265,
+     RB = 266,
+     DOT = 267,
+     COMMA = 268,
+     COLON = 269,
+     MUL = 270,
+     DIV = 271,
+     UNEQUAL = 272,
+     NOT = 273,
+     PLUS = 274,
+     MINUS = 275,
+     GE = 276,
+     GT = 277,
+     LE = 278,
+     LT = 279,
+     EQUAL = 280,
+     ASSIGN = 281,
+     MOD = 282,
+     DOTDOT = 283,
+     SEMI = 284,
+     SYS_CON = 285,
+     SYS_FUNCT = 286,
+     SYS_PROC = 287,
+     SYS_TYPE = 288,
+     READ = 289,
      AND = 290,
      ARRAY = 291,
      BEGIN_T = 292,
-     CASE = 293,
-     CONST = 294,
-     DO = 295,
-     DOWNTO = 296,
-     ELSE = 297,
-     END = 298,
+     END = 293,
+     CASE = 294,
+     CONST = 295,
+     DO = 296,
+     DOWNTO = 297,
+     ELSE = 298,
      FOR = 299,
      FUNCTION = 300,
      GOTO = 301,
@@ -104,46 +104,46 @@
 #endif
 /* Tokens.  */
 #define NAME 258
-#define LP 259
-#define RP 260
-#define LB 261
-#define RB 262
-#define DOT 263
-#define COMMA 264
-#define COLON 265
-#define MUL 266
-#define DIV 267
-#define UNEQUAL 268
-#define NOT 269
-#define PLUS 270
-#define MINUS 271
-#define GE 272
-#define GT 273
-#define LE 274
-#define LT 275
-#define EQUAL 276
-#define ASSIGN 277
-#define MOD 278
-#define DOTDOT 279
-#define SEMI 280
-#define SYS_CON 281
-#define SYS_FUNCT 282
-#define SYS_PROC 283
-#define SYS_TYPE 284
-#define READ 285
-#define INTEGER 286
-#define REAL 287
-#define CHAR 288
-#define STRING 289
+#define INTEGER 259
+#define REAL 260
+#define CHAR 261
+#define STRING 262
+#define LP 263
+#define RP 264
+#define LB 265
+#define RB 266
+#define DOT 267
+#define COMMA 268
+#define COLON 269
+#define MUL 270
+#define DIV 271
+#define UNEQUAL 272
+#define NOT 273
+#define PLUS 274
+#define MINUS 275
+#define GE 276
+#define GT 277
+#define LE 278
+#define LT 279
+#define EQUAL 280
+#define ASSIGN 281
+#define MOD 282
+#define DOTDOT 283
+#define SEMI 284
+#define SYS_CON 285
+#define SYS_FUNCT 286
+#define SYS_PROC 287
+#define SYS_TYPE 288
+#define READ 289
 #define AND 290
 #define ARRAY 291
 #define BEGIN_T 292
-#define CASE 293
-#define CONST 294
-#define DO 295
-#define DOWNTO 296
-#define ELSE 297
-#define END 298
+#define END 293
+#define CASE 294
+#define CONST 295
+#define DO 296
+#define DOWNTO 297
+#define ELSE 298
 #define FOR 299
 #define FUNCTION 300
 #define GOTO 301
@@ -170,7 +170,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 14 "parser.y"
+#line 18 "parser.y"
 {
   int type;
   std::string * content;

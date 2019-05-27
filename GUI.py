@@ -23,8 +23,6 @@ def printass():
         dst.delete(0.0, END)
         global root
         root = parser.parse(src.get(0.0, END))
-
-
         ircodegen = Codegen(root)
         dst.insert(END, ircodegen.codegen())
         # raise SplTypeError(["mmm"])
@@ -32,7 +30,17 @@ def printass():
         messagebox.showerror("Error", error.args)
 
 def showtree():
-    Viz(root).png()
+    # Viz(root).png()
+    try:
+        dst.delete(0.0, END)
+        global root
+        root = parser.parse(src.get(0.0, END))
+        # ircodegen = Codegen(root)
+        # dst.insert(END, ircodegen.codegen())
+        Viz(root).png()
+        # raise SplTypeError(["mmm"])
+    except SplTypeError as error:
+        messagebox.showerror("Error", error.args)
 
 
 root= Tk()

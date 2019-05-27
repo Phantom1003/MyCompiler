@@ -356,7 +356,7 @@ digraph AST {
 	172 -> 177
 	178 [label=assign_stmt]
 	174 -> 178
-	179 [label="INTEGER : 1"]
+	179 [label="INTEGER : 999"]
 	175 -> 179
 	180 [label=if_stmt]
 	177 -> 180

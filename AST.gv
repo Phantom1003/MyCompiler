@@ -1,0 +1,473 @@
+digraph AST {
+	0 [label=program]
+	1 [label=program_head]
+	0 -> 1
+	2 [label=routine]
+	0 -> 2
+	3 [label=DOT]
+	0 -> 3
+	4 [label=PROGRAM]
+	1 -> 4
+	5 [label="NAME : test"]
+	1 -> 5
+	6 [label=SEMI]
+	1 -> 6
+	7 [label=routine_head]
+	2 -> 7
+	8 [label=routine_body]
+	2 -> 8
+	9 [label=label_part]
+	7 -> 9
+	10 [label=const_part]
+	7 -> 10
+	11 [label=type_part]
+	7 -> 11
+	12 [label=var_part]
+	7 -> 12
+	13 [label=routine_part]
+	7 -> 13
+	14 [label=compound_stmt]
+	8 -> 14
+	15 [label=epsilon]
+	9 -> 15
+	16 [label=CONST]
+	10 -> 16
+	17 [label=const_expr_list]
+	10 -> 17
+	18 [label=epsilon]
+	11 -> 18
+	19 [label=VAR]
+	12 -> 19
+	20 [label=var_decl_list]
+	12 -> 20
+	21 [label=function_decl]
+	13 -> 21
+	22 [label=BEGIN]
+	14 -> 22
+	23 [label=stmt_list]
+	14 -> 23
+	24 [label=END]
+	14 -> 24
+	25 [label="NAME : y"]
+	17 -> 25
+	26 [label=EQUAL]
+	17 -> 26
+	27 [label=const_value]
+	17 -> 27
+	28 [label=SEMI]
+	17 -> 28
+	29 [label=var_decl]
+	20 -> 29
+	30 [label=function_head]
+	21 -> 30
+	31 [label=SEMI]
+	21 -> 31
+	32 [label=subroutine]
+	21 -> 32
+	33 [label=SEMI]
+	21 -> 33
+	34 [label=stmt_list]
+	23 -> 34
+	35 [label=stmt]
+	23 -> 35
+	36 [label=SEMI]
+	23 -> 36
+	37 [label="INTEGER : 1"]
+	27 -> 37
+	38 [label=name_list]
+	29 -> 38
+	39 [label=COLON]
+	29 -> 39
+	40 [label=type_decl]
+	29 -> 40
+	41 [label=SEMI]
+	29 -> 41
+	42 [label=FUNCTION]
+	30 -> 42
+	43 [label="NAME : f"]
+	30 -> 43
+	44 [label=parameters]
+	30 -> 44
+	45 [label=COLON]
+	30 -> 45
+	46 [label=simple_type_decl]
+	30 -> 46
+	47 [label=routine_head]
+	32 -> 47
+	48 [label=routine_body]
+	32 -> 48
+	49 [label=epsilon]
+	34 -> 49
+	50 [label=non_label_stmt]
+	35 -> 50
+	51 [label="NAME : x"]
+	38 -> 51
+	52 [label=simple_type_decl]
+	40 -> 52
+	53 [label=LP]
+	44 -> 53
+	54 [label=para_decl_list]
+	44 -> 54
+	55 [label=RP]
+	44 -> 55
+	56 [label="SYS_TYPE : integer"]
+	46 -> 56
+	57 [label=label_part]
+	47 -> 57
+	58 [label=const_part]
+	47 -> 58
+	59 [label=type_part]
+	47 -> 59
+	60 [label=var_part]
+	47 -> 60
+	61 [label=routine_part]
+	47 -> 61
+	62 [label=compound_stmt]
+	48 -> 62
+	63 [label=assign_stmt]
+	50 -> 63
+	64 [label="SYS_TYPE : integer"]
+	52 -> 64
+	65 [label=para_type_list]
+	54 -> 65
+	66 [label=epsilon]
+	57 -> 66
+	67 [label=epsilon]
+	58 -> 67
+	68 [label=epsilon]
+	59 -> 68
+	69 [label=VAR]
+	60 -> 69
+	70 [label=var_decl_list]
+	60 -> 70
+	71 [label=epsilon]
+	61 -> 71
+	72 [label=BEGIN]
+	62 -> 72
+	73 [label=stmt_list]
+	62 -> 73
+	74 [label=END]
+	62 -> 74
+	75 [label="NAME : x"]
+	63 -> 75
+	76 [label=ASSIGN]
+	63 -> 76
+	77 [label=expression]
+	63 -> 77
+	78 [label=val_para_list]
+	65 -> 78
+	79 [label=COLON]
+	65 -> 79
+	80 [label=simple_type_decl]
+	65 -> 80
+	81 [label=var_decl]
+	70 -> 81
+	82 [label=stmt_list]
+	73 -> 82
+	83 [label=stmt]
+	73 -> 83
+	84 [label=SEMI]
+	73 -> 84
+	85 [label=expr]
+	77 -> 85
+	86 [label=name_list]
+	78 -> 86
+	87 [label="SYS_TYPE : integer"]
+	80 -> 87
+	88 [label=name_list]
+	81 -> 88
+	89 [label=COLON]
+	81 -> 89
+	90 [label=type_decl]
+	81 -> 90
+	91 [label=SEMI]
+	81 -> 91
+	92 [label=stmt_list]
+	82 -> 92
+	93 [label=stmt]
+	82 -> 93
+	94 [label=SEMI]
+	82 -> 94
+	95 [label=non_label_stmt]
+	83 -> 95
+	96 [label=term]
+	85 -> 96
+	97 [label="NAME : a"]
+	86 -> 97
+	98 [label="NAME : sum"]
+	88 -> 98
+	99 [label=simple_type_decl]
+	90 -> 99
+	100 [label=stmt_list]
+	92 -> 100
+	101 [label=stmt]
+	92 -> 101
+	102 [label=SEMI]
+	92 -> 102
+	103 [label=non_label_stmt]
+	93 -> 103
+	104 [label=assign_stmt]
+	95 -> 104
+	105 [label=factor]
+	96 -> 105
+	106 [label="SYS_TYPE : integer"]
+	99 -> 106
+	107 [label=epsilon]
+	100 -> 107
+	108 [label=non_label_stmt]
+	101 -> 108
+	109 [label=if_stmt]
+	103 -> 109
+	110 [label="NAME : f"]
+	104 -> 110
+	111 [label=ASSIGN]
+	104 -> 111
+	112 [label=expression]
+	104 -> 112
+	113 [label="NAME : f"]
+	105 -> 113
+	114 [label=LP]
+	105 -> 114
+	115 [label=args_list]
+	105 -> 115
+	116 [label=RP]
+	105 -> 116
+	117 [label=assign_stmt]
+	108 -> 117
+	118 [label=IF]
+	109 -> 118
+	119 [label=expression]
+	109 -> 119
+	120 [label=THEN]
+	109 -> 120
+	121 [label=stmt]
+	109 -> 121
+	122 [label=else_clause]
+	109 -> 122
+	123 [label=expr]
+	112 -> 123
+	124 [label=expression]
+	115 -> 124
+	125 [label="NAME : sum"]
+	117 -> 125
+	126 [label=ASSIGN]
+	117 -> 126
+	127 [label=expression]
+	117 -> 127
+	128 [label=expression]
+	119 -> 128
+	129 [label="EQUAL : ="]
+	119 -> 129
+	130 [label=expr]
+	119 -> 130
+	131 [label=non_label_stmt]
+	121 -> 131
+	132 [label=ELSE]
+	122 -> 132
+	133 [label=stmt]
+	122 -> 133
+	134 [label=term]
+	123 -> 134
+	135 [label=expr]
+	124 -> 135
+	136 [label=expr]
+	127 -> 136
+	137 [label=expr]
+	128 -> 137
+	138 [label=term]
+	130 -> 138
+	139 [label=assign_stmt]
+	131 -> 139
+	140 [label=non_label_stmt]
+	133 -> 140
+	141 [label=factor]
+	134 -> 141
+	142 [label=term]
+	135 -> 142
+	143 [label=term]
+	136 -> 143
+	144 [label=term]
+	137 -> 144
+	145 [label=factor]
+	138 -> 145
+	146 [label="NAME : f"]
+	139 -> 146
+	147 [label=ASSIGN]
+	139 -> 147
+	148 [label=expression]
+	139 -> 148
+	149 [label=compound_stmt]
+	140 -> 149
+	150 [label=const_value]
+	141 -> 150
+	151 [label=factor]
+	142 -> 151
+	152 [label=factor]
+	143 -> 152
+	153 [label=factor]
+	144 -> 153
+	154 [label=const_value]
+	145 -> 154
+	155 [label=expr]
+	148 -> 155
+	156 [label=BEGIN]
+	149 -> 156
+	157 [label=stmt_list]
+	149 -> 157
+	158 [label=END]
+	149 -> 158
+	159 [label="INTEGER : 5"]
+	150 -> 159
+	160 [label=const_value]
+	151 -> 160
+	161 [label=const_value]
+	152 -> 161
+	162 [label="NAME : a"]
+	153 -> 162
+	163 [label="INTEGER : 0"]
+	154 -> 163
+	164 [label=term]
+	155 -> 164
+	165 [label=stmt_list]
+	157 -> 165
+	166 [label=stmt]
+	157 -> 166
+	167 [label=SEMI]
+	157 -> 167
+	168 [label="INTEGER : 0"]
+	160 -> 168
+	169 [label="INTEGER : 0"]
+	161 -> 169
+	170 [label=factor]
+	164 -> 170
+	171 [label=stmt_list]
+	165 -> 171
+	172 [label=stmt]
+	165 -> 172
+	173 [label=SEMI]
+	165 -> 173
+	174 [label=non_label_stmt]
+	166 -> 174
+	175 [label=const_value]
+	170 -> 175
+	176 [label=epsilon]
+	171 -> 176
+	177 [label=non_label_stmt]
+	172 -> 177
+	178 [label=assign_stmt]
+	174 -> 178
+	179 [label="INTEGER : 1"]
+	175 -> 179
+	180 [label=if_stmt]
+	177 -> 180
+	181 [label="NAME : f"]
+	178 -> 181
+	182 [label=ASSIGN]
+	178 -> 182
+	183 [label=expression]
+	178 -> 183
+	184 [label=IF]
+	180 -> 184
+	185 [label=expression]
+	180 -> 185
+	186 [label=THEN]
+	180 -> 186
+	187 [label=stmt]
+	180 -> 187
+	188 [label=else_clause]
+	180 -> 188
+	189 [label=expr]
+	183 -> 189
+	190 [label=expression]
+	185 -> 190
+	191 [label="EQUAL : ="]
+	185 -> 191
+	192 [label=expr]
+	185 -> 192
+	193 [label=non_label_stmt]
+	187 -> 193
+	194 [label=ELSE]
+	188 -> 194
+	195 [label=stmt]
+	188 -> 195
+	196 [label=term]
+	189 -> 196
+	197 [label=expr]
+	190 -> 197
+	198 [label=term]
+	192 -> 198
+	199 [label=assign_stmt]
+	193 -> 199
+	200 [label=non_label_stmt]
+	195 -> 200
+	201 [label=factor]
+	196 -> 201
+	202 [label=term]
+	197 -> 202
+	203 [label=factor]
+	198 -> 203
+	204 [label="NAME : f"]
+	199 -> 204
+	205 [label=ASSIGN]
+	199 -> 205
+	206 [label=expression]
+	199 -> 206
+	207 [label=compound_stmt]
+	200 -> 207
+	208 [label=const_value]
+	201 -> 208
+	209 [label=factor]
+	202 -> 209
+	210 [label=const_value]
+	203 -> 210
+	211 [label=expr]
+	206 -> 211
+	212 [label=BEGIN]
+	207 -> 212
+	213 [label=stmt_list]
+	207 -> 213
+	214 [label=END]
+	207 -> 214
+	215 [label="INTEGER : 4"]
+	208 -> 215
+	216 [label="NAME : a"]
+	209 -> 216
+	217 [label="INTEGER : 1"]
+	210 -> 217
+	218 [label=term]
+	211 -> 218
+	219 [label=stmt_list]
+	213 -> 219
+	220 [label=stmt]
+	213 -> 220
+	221 [label=SEMI]
+	213 -> 221
+	222 [label=factor]
+	218 -> 222
+	223 [label=epsilon]
+	219 -> 223
+	224 [label=non_label_stmt]
+	220 -> 224
+	225 [label=const_value]
+	222 -> 225
+	226 [label=assign_stmt]
+	224 -> 226
+	227 [label="INTEGER : 2"]
+	225 -> 227
+	228 [label="NAME : f"]
+	226 -> 228
+	229 [label=ASSIGN]
+	226 -> 229
+	230 [label=expression]
+	226 -> 230
+	231 [label=expr]
+	230 -> 231
+	232 [label=term]
+	231 -> 232
+	233 [label=factor]
+	232 -> 233
+	234 [label=const_value]
+	233 -> 234
+	235 [label="INTEGER : 3"]
+	234 -> 235
+}

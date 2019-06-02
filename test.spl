@@ -20,11 +20,7 @@ begin
 end
 ;
 begin
-case y of
-5 : x := f(0);
-6 : x := f(1);
-9 : x := f(2);
-end;
+  x := 1;
     
 end
 .

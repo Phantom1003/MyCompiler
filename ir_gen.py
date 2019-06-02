@@ -1,9 +1,10 @@
 from llvmlite import ir
 from ctypes import CFUNCTYPE, c_int64
-from symbol_table import SymTab
-from CompilerError import *
 from random import randint
 import llvmlite.binding as llvm
+from ctypes import CFUNCTYPE, c_double, c_int32
+from symbol_table import SymTab
+from CompilerError import *
 
 type_t = {
     "INTEGER": ir.IntType(32),
@@ -26,8 +27,23 @@ class Codegen:
         self.debug = debug
         self.symbol_table = SymTab()
         self.module = ir.Module(root.children[0].children[1].name)
+        self.caselist = []
 
     def codegen(self):
+        try:
+            self._codegen(self.root)
+            llvm_ir = self.module.__repr__()
+            llvm.initialize()
+            llvm.initialize_native_target()
+            llvm.initialize_native_asmprinter()
+            self.mod = llvm.parse_assembly(llvm_ir)
+            # mod.verify()
+            target = llvm.Target.from_default_triple()
+            target_machine = target.create_target_machine()
+            asm = target_machine.emit_assembly(self.mod)
+            return asm
+        except BaseException as e:
+            raise e
         self._codegen(self.root)
         llvm_ir = self.module.__repr__()
         llvm.initialize()
@@ -40,9 +56,25 @@ class Codegen:
         asm = target_machine.emit_assembly(mod)
         return asm
 
+    def crun(self, func, args, ctype=c_int32):
+        # addr = self.symbol_table.find(func)["entry"]
+        target = llvm.Target.from_default_triple()
+        target_machine = target.create_target_machine()
+        # And an execution engine with an empty backing module
+        backing_mod = llvm.parse_assembly("")
+        engine = llvm.create_mcjit_compiler(backing_mod, target_machine)
+        engine.add_module(self.mod)
+        engine.finalize_object()
+        engine.run_static_constructors()
+        func_ptr = engine.get_function_address(func)
+        cfunc = CFUNCTYPE(ctype)(func_ptr)
+        res = cfunc(*args)
+        return res
+
     def _codegen(self, node):
         method = node.type
         return getattr(self, method)(node)
+
 
     def info(self, node):
         print("Debug: Node { %s, %s, %s}" % (node.type, node.name, node.children))
@@ -53,9 +85,7 @@ class Codegen:
         self.main_func = ir.Function(self.module, self.main_type, name=node.children[0].children[1].name)
         self.block = self.main_func.append_basic_block('main')
         self.builder = ir.IRBuilder(self.block)
-        self.builder.position_at_start(self.block)
         self._codegen(node.children[1])
-        self.symbol_table.pop()
         self.builder.ret_void()
 
     def routine(self, node):
@@ -100,11 +130,6 @@ class Codegen:
             value = bytes(value.strip('"'), encoding='utf-8').decode('unicode-escape')
             value += '\0'
             c_str = ir.Constant(ir.ArrayType(ir.IntType(8), len(value)), bytearray(value.encode("utf8")))
-            # from random import randint
-            # const_v = ir.GlobalVariable(self.module, c_str.type, name="str_"+str(randint(0, 0x7FFFFFFF)))
-            # const_v.linkage = 'internal'
-            # const_v.global_constant = True
-            # const_v.initializer = c_str
             return c_str
 
     def type_part(self, node):
@@ -259,6 +284,35 @@ class Codegen:
     def repeat_stmt(self, node):
         pass
 
+    def case_stmt(self, node):
+        ran = str(randint(0, 0x7FFFFFFF))
+        expr = self._codegen(node.children[1])
+        default = self.builder.append_basic_block('default_'+ran)
+        b = ir.IRBuilder(default)
+        b.add(ir.IntType(1)(0), ir.IntType(1)(0))
+        othercase = self._codegen(node.children[3])
+        case_part = self.builder.switch(expr, default)
+        for val, block in othercase:
+            case_part.add_case(val, block)
+
+    def case_expr_list(self, node):
+        if len(node.children) > 1:
+            return self._codegen(node.children[0]) + [self._codegen(node.children[1])]
+        else:
+            return [self._codegen(node.children[0])]
+
+    def case_expr(self, node):
+        ran = str(randint(0, 0x7FFFFFFF))
+        val = self._codegen(node.children[0])
+        block = self.builder.append_basic_block('case_'+ran)
+        stored_builder = self.builder
+        self.builder = ir.IRBuilder(block)
+        self._codegen(node.children[2])
+        self.builder = stored_builder
+        return val, block
+
+
+
     def while_stmt(self, node):
         ran = str(randint(0, 0x7FFFFFFF))
 
@@ -314,6 +368,8 @@ class Codegen:
             inc_dec = stmt_builder.add(init_value, one)
         elif direct == "DOWNTO":
             inc_dec = stmt_builder.sub(init_value, one)
+        else:
+            raise NotDefinedError([direct])
         stmt_builder.store(inc_dec, addr)
         stmt_builder.branch(forblock)
         self.builder.position_at_end(jumpout)

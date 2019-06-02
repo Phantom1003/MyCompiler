@@ -224,250 +224,234 @@ digraph AST {
 	104 -> 111
 	112 [label=expression]
 	104 -> 112
-	113 [label="NAME : f"]
+	113 [label=const_value]
 	105 -> 113
-	114 [label=LP]
-	105 -> 114
-	115 [label=args_list]
-	105 -> 115
-	116 [label=RP]
-	105 -> 116
-	117 [label=assign_stmt]
-	108 -> 117
-	118 [label=IF]
+	114 [label=assign_stmt]
+	108 -> 114
+	115 [label=IF]
+	109 -> 115
+	116 [label=expression]
+	109 -> 116
+	117 [label=THEN]
+	109 -> 117
+	118 [label=stmt]
 	109 -> 118
-	119 [label=expression]
+	119 [label=else_clause]
 	109 -> 119
-	120 [label=THEN]
-	109 -> 120
-	121 [label=stmt]
-	109 -> 121
-	122 [label=else_clause]
-	109 -> 122
-	123 [label=expr]
-	112 -> 123
+	120 [label=expr]
+	112 -> 120
+	121 [label="INTEGER : 1"]
+	113 -> 121
+	122 [label="NAME : sum"]
+	114 -> 122
+	123 [label=ASSIGN]
+	114 -> 123
 	124 [label=expression]
-	115 -> 124
-	125 [label="NAME : sum"]
-	117 -> 125
-	126 [label=ASSIGN]
-	117 -> 126
-	127 [label=expression]
-	117 -> 127
-	128 [label=expression]
-	119 -> 128
-	129 [label="EQUAL : ="]
+	114 -> 124
+	125 [label=expression]
+	116 -> 125
+	126 [label="EQUAL : ="]
+	116 -> 126
+	127 [label=expr]
+	116 -> 127
+	128 [label=non_label_stmt]
+	118 -> 128
+	129 [label=ELSE]
 	119 -> 129
-	130 [label=expr]
+	130 [label=stmt]
 	119 -> 130
-	131 [label=non_label_stmt]
-	121 -> 131
-	132 [label=ELSE]
-	122 -> 132
-	133 [label=stmt]
-	122 -> 133
+	131 [label=term]
+	120 -> 131
+	132 [label=expr]
+	124 -> 132
+	133 [label=expr]
+	125 -> 133
 	134 [label=term]
-	123 -> 134
-	135 [label=expr]
-	124 -> 135
-	136 [label=expr]
-	127 -> 136
-	137 [label=expr]
-	128 -> 137
+	127 -> 134
+	135 [label=assign_stmt]
+	128 -> 135
+	136 [label=non_label_stmt]
+	130 -> 136
+	137 [label=factor]
+	131 -> 137
 	138 [label=term]
-	130 -> 138
-	139 [label=assign_stmt]
-	131 -> 139
-	140 [label=non_label_stmt]
-	133 -> 140
-	141 [label=factor]
-	134 -> 141
-	142 [label=term]
+	132 -> 138
+	139 [label=term]
+	133 -> 139
+	140 [label=factor]
+	134 -> 140
+	141 [label="NAME : f"]
+	135 -> 141
+	142 [label=ASSIGN]
 	135 -> 142
-	143 [label=term]
-	136 -> 143
-	144 [label=term]
-	137 -> 144
-	145 [label=factor]
-	138 -> 145
-	146 [label="NAME : f"]
-	139 -> 146
-	147 [label=ASSIGN]
+	143 [label=expression]
+	135 -> 143
+	144 [label=compound_stmt]
+	136 -> 144
+	145 [label=const_value]
+	137 -> 145
+	146 [label=factor]
+	138 -> 146
+	147 [label=factor]
 	139 -> 147
-	148 [label=expression]
-	139 -> 148
-	149 [label=compound_stmt]
-	140 -> 149
-	150 [label=const_value]
-	141 -> 150
-	151 [label=factor]
-	142 -> 151
-	152 [label=factor]
-	143 -> 152
-	153 [label=factor]
-	144 -> 153
+	148 [label=const_value]
+	140 -> 148
+	149 [label=expr]
+	143 -> 149
+	150 [label=BEGIN]
+	144 -> 150
+	151 [label=stmt_list]
+	144 -> 151
+	152 [label=END]
+	144 -> 152
+	153 [label="INTEGER : 5"]
+	145 -> 153
 	154 [label=const_value]
-	145 -> 154
-	155 [label=expr]
-	148 -> 155
-	156 [label=BEGIN]
-	149 -> 156
-	157 [label=stmt_list]
+	146 -> 154
+	155 [label="NAME : a"]
+	147 -> 155
+	156 [label="INTEGER : 0"]
+	148 -> 156
+	157 [label=term]
 	149 -> 157
-	158 [label=END]
-	149 -> 158
-	159 [label="INTEGER : 5"]
-	150 -> 159
-	160 [label=const_value]
+	158 [label=stmt_list]
+	151 -> 158
+	159 [label=stmt]
+	151 -> 159
+	160 [label=SEMI]
 	151 -> 160
-	161 [label=const_value]
-	152 -> 161
-	162 [label="NAME : a"]
-	153 -> 162
-	163 [label="INTEGER : 0"]
-	154 -> 163
-	164 [label=term]
-	155 -> 164
-	165 [label=stmt_list]
-	157 -> 165
-	166 [label=stmt]
-	157 -> 166
-	167 [label=SEMI]
-	157 -> 167
-	168 [label="INTEGER : 0"]
-	160 -> 168
-	169 [label="INTEGER : 0"]
-	161 -> 169
-	170 [label=factor]
-	164 -> 170
-	171 [label=stmt_list]
-	165 -> 171
-	172 [label=stmt]
-	165 -> 172
-	173 [label=SEMI]
-	165 -> 173
-	174 [label=non_label_stmt]
-	166 -> 174
-	175 [label=const_value]
+	161 [label="INTEGER : 0"]
+	154 -> 161
+	162 [label=factor]
+	157 -> 162
+	163 [label=stmt_list]
+	158 -> 163
+	164 [label=stmt]
+	158 -> 164
+	165 [label=SEMI]
+	158 -> 165
+	166 [label=non_label_stmt]
+	159 -> 166
+	167 [label=const_value]
+	162 -> 167
+	168 [label=epsilon]
+	163 -> 168
+	169 [label=non_label_stmt]
+	164 -> 169
+	170 [label=assign_stmt]
+	166 -> 170
+	171 [label="INTEGER : 1"]
+	167 -> 171
+	172 [label=if_stmt]
+	169 -> 172
+	173 [label="NAME : f"]
+	170 -> 173
+	174 [label=ASSIGN]
+	170 -> 174
+	175 [label=expression]
 	170 -> 175
-	176 [label=epsilon]
-	171 -> 176
-	177 [label=non_label_stmt]
+	176 [label=IF]
+	172 -> 176
+	177 [label=expression]
 	172 -> 177
-	178 [label=assign_stmt]
-	174 -> 178
-	179 [label="INTEGER : 1"]
-	175 -> 179
-	180 [label=if_stmt]
-	177 -> 180
-	181 [label="NAME : f"]
-	178 -> 181
-	182 [label=ASSIGN]
-	178 -> 182
-	183 [label=expression]
-	178 -> 183
-	184 [label=IF]
-	180 -> 184
-	185 [label=expression]
-	180 -> 185
-	186 [label=THEN]
+	178 [label=THEN]
+	172 -> 178
+	179 [label=stmt]
+	172 -> 179
+	180 [label=else_clause]
+	172 -> 180
+	181 [label=expr]
+	175 -> 181
+	182 [label=expression]
+	177 -> 182
+	183 [label="EQUAL : ="]
+	177 -> 183
+	184 [label=expr]
+	177 -> 184
+	185 [label=non_label_stmt]
+	179 -> 185
+	186 [label=ELSE]
 	180 -> 186
 	187 [label=stmt]
 	180 -> 187
-	188 [label=else_clause]
-	180 -> 188
+	188 [label=term]
+	181 -> 188
 	189 [label=expr]
-	183 -> 189
-	190 [label=expression]
-	185 -> 190
-	191 [label="EQUAL : ="]
+	182 -> 189
+	190 [label=term]
+	184 -> 190
+	191 [label=assign_stmt]
 	185 -> 191
-	192 [label=expr]
-	185 -> 192
-	193 [label=non_label_stmt]
-	187 -> 193
-	194 [label=ELSE]
-	188 -> 194
-	195 [label=stmt]
-	188 -> 195
-	196 [label=term]
-	189 -> 196
-	197 [label=expr]
-	190 -> 197
-	198 [label=term]
-	192 -> 198
-	199 [label=assign_stmt]
-	193 -> 199
-	200 [label=non_label_stmt]
-	195 -> 200
+	192 [label=non_label_stmt]
+	187 -> 192
+	193 [label=factor]
+	188 -> 193
+	194 [label=term]
+	189 -> 194
+	195 [label=factor]
+	190 -> 195
+	196 [label="NAME : f"]
+	191 -> 196
+	197 [label=ASSIGN]
+	191 -> 197
+	198 [label=expression]
+	191 -> 198
+	199 [label=compound_stmt]
+	192 -> 199
+	200 [label=const_value]
+	193 -> 200
 	201 [label=factor]
-	196 -> 201
-	202 [label=term]
-	197 -> 202
-	203 [label=factor]
+	194 -> 201
+	202 [label=const_value]
+	195 -> 202
+	203 [label=expr]
 	198 -> 203
-	204 [label="NAME : f"]
+	204 [label=BEGIN]
 	199 -> 204
-	205 [label=ASSIGN]
+	205 [label=stmt_list]
 	199 -> 205
-	206 [label=expression]
+	206 [label=END]
 	199 -> 206
-	207 [label=compound_stmt]
+	207 [label="INTEGER : 4"]
 	200 -> 207
-	208 [label=const_value]
+	208 [label="NAME : a"]
 	201 -> 208
-	209 [label=factor]
+	209 [label="INTEGER : 1"]
 	202 -> 209
-	210 [label=const_value]
+	210 [label=term]
 	203 -> 210
-	211 [label=expr]
-	206 -> 211
-	212 [label=BEGIN]
-	207 -> 212
-	213 [label=stmt_list]
-	207 -> 213
-	214 [label=END]
-	207 -> 214
-	215 [label="INTEGER : 4"]
-	208 -> 215
-	216 [label="NAME : a"]
-	209 -> 216
-	217 [label="INTEGER : 1"]
-	210 -> 217
-	218 [label=term]
-	211 -> 218
-	219 [label=stmt_list]
-	213 -> 219
-	220 [label=stmt]
-	213 -> 220
-	221 [label=SEMI]
-	213 -> 221
-	222 [label=factor]
+	211 [label=stmt_list]
+	205 -> 211
+	212 [label=stmt]
+	205 -> 212
+	213 [label=SEMI]
+	205 -> 213
+	214 [label=factor]
+	210 -> 214
+	215 [label=epsilon]
+	211 -> 215
+	216 [label=non_label_stmt]
+	212 -> 216
+	217 [label=const_value]
+	214 -> 217
+	218 [label=assign_stmt]
+	216 -> 218
+	219 [label="INTEGER : 2"]
+	217 -> 219
+	220 [label="NAME : f"]
+	218 -> 220
+	221 [label=ASSIGN]
+	218 -> 221
+	222 [label=expression]
 	218 -> 222
-	223 [label=epsilon]
-	219 -> 223
-	224 [label=non_label_stmt]
-	220 -> 224
-	225 [label=const_value]
-	222 -> 225
-	226 [label=assign_stmt]
-	224 -> 226
-	227 [label="INTEGER : 2"]
-	225 -> 227
-	228 [label="NAME : f"]
-	226 -> 228
-	229 [label=ASSIGN]
-	226 -> 229
-	230 [label=expression]
-	226 -> 230
-	231 [label=expr]
-	230 -> 231
-	232 [label=term]
-	231 -> 232
-	233 [label=factor]
-	232 -> 233
-	234 [label=const_value]
-	233 -> 234
-	235 [label="INTEGER : 3"]
-	234 -> 235
+	223 [label=expr]
+	222 -> 223
+	224 [label=term]
+	223 -> 224
+	225 [label=factor]
+	224 -> 225
+	226 [label=const_value]
+	225 -> 226
+	227 [label="INTEGER : 3"]
+	226 -> 227
 }

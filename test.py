@@ -26,7 +26,12 @@ begin
 end
 ;
 begin
-    x := f(0);
+case y of
+5 : x := f(0);
+6 : x := f(1);
+9 : x := f(2);
+end;
+    
 end
 .
 """
@@ -36,4 +41,4 @@ root = parser.parse(TEST)
 # v.png()
 
 c = Codegen(root)
-c._codegen(root)
+c.codegen()

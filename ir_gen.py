@@ -28,36 +28,22 @@ class Codegen:
         self.symbol_table = SymTab()
         self.module = ir.Module(root.children[0].children[1].name)
         self.caselist = []
+        self.default = None
 
     def codegen(self):
-        try:
-            self._codegen(self.root)
-            llvm_ir = self.module.__repr__()
-            llvm.initialize()
-            llvm.initialize_native_target()
-            llvm.initialize_native_asmprinter()
-            self.mod = llvm.parse_assembly(llvm_ir)
-            # mod.verify()
-            target = llvm.Target.from_default_triple()
-            target_machine = target.create_target_machine()
-            asm = target_machine.emit_assembly(self.mod)
-            return asm
-        except BaseException as e:
-            raise e
         self._codegen(self.root)
         llvm_ir = self.module.__repr__()
         llvm.initialize()
         llvm.initialize_native_target()
         llvm.initialize_native_asmprinter()
-        mod = llvm.parse_assembly(llvm_ir)
+        self.mod = llvm.parse_assembly(llvm_ir)
         # mod.verify()
         target = llvm.Target.from_default_triple()
         target_machine = target.create_target_machine()
-        asm = target_machine.emit_assembly(mod)
+        asm = target_machine.emit_assembly(self.mod)
         return asm
 
     def crun(self, func, args, ctype=c_int32):
-        # addr = self.symbol_table.find(func)["entry"]
         target = llvm.Target.from_default_triple()
         target_machine = target.create_target_machine()
         # And an execution engine with an empty backing module
@@ -87,6 +73,7 @@ class Codegen:
         self.builder = ir.IRBuilder(self.block)
         self._codegen(node.children[1])
         self.builder.ret_void()
+        print(self.module)
 
     def routine(self, node):
         for n in node.children:
@@ -146,7 +133,9 @@ class Codegen:
         namelist = self.name_list(node.children[0])
         ir_type = self.type_decl(node.children[2])
         for name in namelist:
-            addr = self.builder.alloca(ir_type)
+            # addr = self.builder.alloca(ir_type)
+            addr = ir.GlobalVariable(self.module, ir_type, node.children[0].children[0].name)
+            addr.initializer = ir.Constant(ir.IntType(32), 0)
             self.symbol_table.insert([name, addr])
 
     def name_list(self, node):
@@ -173,10 +162,21 @@ class Codegen:
 
     def function_decl(self, node):
         name, paralist, ret = self.function_head(node.children[0])
-        paralist = [(name, ir_type) for namelist, ir_type in paralist for name in namelist]
-        namelist = [i[0] for i in paralist]
-        ir_type_list = [i[1] for i in paralist]
+        namelist = []
+        ir_type_list = []
+        for t in paralist:
+            if t[0][0] == "var":
+                for i in range(1, len(t[0])):
+                    ir_type_list.append(t[1])
+                    namelist.append(("var", t[0][i]))
+            else:
+                for i in range(1, len(t[0])):
+                    ir_type_list.append(t[1])
+                    namelist.append(("val", t[0][i]))
+
+
         ret_ir_type = type_t[node.children[0].children[-1].children[0].name.upper()]
+
         func_type = ir.FunctionType(ret_ir_type, ir_type_list)
         func = ir.Function(self.module, func_type, name=name)
         self.symbol_table.insert([name, func])
@@ -188,9 +188,13 @@ class Codegen:
 
         func_args = func.args
         for i in range(len(func_args)):
-            addr = self.builder.alloca(ir_type_list[i])
-            self.builder.store(func_args[i], addr)
-            self.symbol_table.insert([namelist[i], addr])
+            if namelist[i][0] == "val":
+                addr = self.builder.alloca(ir_type_list[i])
+                self.builder.store(func_args[i], addr)
+                self.symbol_table.insert([namelist[i][1], addr])
+            if namelist[i][0] == "var":
+                addr = self.symbol_table.find(namelist[i][1])['entry']
+                self.symbol_table.insert([namelist[i][1], addr])
 
         self.subroutine(node.children[2])
 
@@ -217,10 +221,17 @@ class Codegen:
     def para_type_list(self, node):  # (paraname_list, ir_type)
         paraname_list = self._codegen(node.children[0])  # val_para_list only [str, ..]
         ir_type = self._codegen(node.children[-1])
+        if node.children[0].type == "var_para_list":
+            paraname_list.insert(0, "var")
+        else:
+            paraname_list.insert(0, "val")
         return paraname_list, ir_type
 
     def val_para_list(self, node):
         return self._codegen(node.children[0])
+
+    def var_para_list(self, node):
+        return self._codegen(node.children[1])
 
     def routine_body(self, node):
         self.compound_stmt(node.children[0])
@@ -287,13 +298,16 @@ class Codegen:
     def case_stmt(self, node):
         ran = str(randint(0, 0x7FFFFFFF))
         expr = self._codegen(node.children[1])
-        default = self.builder.append_basic_block('default_'+ran)
-        b = ir.IRBuilder(default)
-        b.add(ir.IntType(1)(0), ir.IntType(1)(0))
         othercase = self._codegen(node.children[3])
+        default = self.builder.append_basic_block('default_'+ran)
+        self.default = default
         case_part = self.builder.switch(expr, default)
         for val, block in othercase:
             case_part.add_case(val, block)
+            builder = ir.IRBuilder(block)
+            builder.position_at_end(block)
+            builder.branch(self.default)
+        self.builder.position_at_end(default)
 
     def case_expr_list(self, node):
         if len(node.children) > 1:

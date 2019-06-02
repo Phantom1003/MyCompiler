@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
-from PIL import Image
 from SPL_parser import parser
 from visualize import Viz
 from ir_gen import Codegen

@@ -3,7 +3,7 @@ from random import randint
 
 class Viz:
     def __init__(self, root=None):
-        self.dot = Digraph("AST")
+        self.dot = Digraph("ParseTree")
         self.count = 0
         if root:
             self.build(root)
@@ -26,4 +26,4 @@ class Viz:
 
     def png(self):
         self.dot.format = 'png'
-        self.dot.render('AST', view=True)
+        self.dot.render('Parsing Tree', view=True)

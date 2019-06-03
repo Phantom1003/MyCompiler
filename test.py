@@ -9,20 +9,30 @@ const
     y = 1;
 var
 	a : integer;
+
 function f(a:integer) : integer;
-type
-    b = record aa, bb: integer; cc : real; end;
 var
+    b : array [1..5] of integer;
     sum : integer;
 begin
-   b.aa := a;
-   f:=b.aa;
+case a of
+5 : a := 1;
+6 : a := 2;
+9 : a := 3;
+end;
+b[1] := 1;
+b[2] := 2;
+b[3] := 3;
+b[4] := 4;
+b[5] := 5;
+f:= b[a];
 end
 ;
 begin
 f(5);
 end
 .
+
 """
 
 root = parser.parse(TEST)

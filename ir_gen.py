@@ -135,12 +135,39 @@ class Codegen:
 
     def var_decl(self, node):
         namelist = self.name_list(node.children[0])
-        ir_type = self.type_decl(node.children[2])
-        for name in namelist:
-            # addr = self.builder.alloca(ir_type)
-            addr = ir.GlobalVariable(self.module, ir_type, node.children[0].children[0].name)
-            addr.initializer = ir.Constant(ir.IntType(32), 0)
-            self.symbol_table.insert([name, addr])
+        if (node.children[2].children[0].type == "simple_type_decl"):
+            ir_type = self.type_decl(node.children[2])
+            for name in namelist:
+                # addr = self.builder.alloca(ir_type)
+                # # addr = ir.GlobalVariable(self.module, ir_type, node.children[0].children[0].name)
+                # # addr.initializer = ir.Constant(ir.IntType(32), 0)
+                # self.symbol_table.insert([name, addr])
+                if len(self.symbol_table.tables) > 1:
+                    addr = self.builder.alloca(ir_type)
+                else:
+                    addr = ir.GlobalVariable(self.module, ir_type, node.children[0].children[0].name)
+                    addr.initializer = ir.Constant(ir.IntType(32), 0)
+                self.symbol_table.insert([name, addr])
+        elif (node.children[2].children[0].type == "array_type_decl"):
+            array_list = self.type_decl(node.children[2])
+            array_type = ir.ArrayType(array_list[1], int(array_list[2]) + 1)  # x integers of element
+            for name in namelist:
+                addr = self.builder.alloca(array_type)  # pointer to array
+                self.symbol_table.insert([name, addr])
+        elif (node.children[2].children[0].type == "record_type_decl"):
+            field_list = self.type_decl(node.children[2])
+            i32 = ir.IntType(32)
+            for name in namelist:
+                field_body = [i32]
+                count = 1
+                for f in field_list[1]:
+                    field_body += [f[1]]
+                    index = ir.Constant(i32, count)
+                    self.symbol_table.insert([name + "." + f[0], index])
+                    count += 1
+                str_list = ir.LiteralStructType(field_body)
+                addr = self.builder.alloca(str_list)  # pointer to array
+                self.symbol_table.insert([name, addr])
 
     def type_definition(self, node):
         name = node.children[0].name

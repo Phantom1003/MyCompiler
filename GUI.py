@@ -61,6 +61,18 @@ def showresult():
         if (cmmd == "tree"):
             showtree()
             return
+        if (cmmd == "info"):
+            information =   '2019 SPRING&SUMMER  Compiler Principle Project:    Mini SPL  Compiler \n' \
+                            'Surpport: \n' \
+	                        '>> Pascal Language, generate assembly code \n' \
+                            '>> Visual syntax tree \n' \
+                            '>> Interactive command line Terminal \n' \
+                            '>> Load code from file \n' \
+                            '>> Executable function \n' \
+                            'Author: Xu Jinyan/Xiang Liming/Peng Dishuo © ZJU'
+
+            terminal_text.insert(END, information + " \nMySPL Compiler > ")
+            return
         func_list = cmmd.split("(")
         func_name = func_list[0]
         #terminal_text.insert(END, func_name + " ")
@@ -68,9 +80,10 @@ def showresult():
         arg_list = arg_string[0].split(",")
         arg_list_done = []
         for i in arg_list:
-            for j in i.split(" "):
-                if (j != ""):
-                    arg_list_done += [j]
+             for j in i.split(" "):
+                 if (j != ""):
+                     arg_list_done += [j]
+
         func_arg = []
         for arg in arg_list_done:
             func_arg += [int(arg)]
@@ -79,19 +92,20 @@ def showresult():
         ircodegen = Codegen(astroot)
         ircodegen.codegen()
         result = ircodegen.crun(func_name, func_arg)
-        terminal_text.insert(END, "Result of "+ cmmd + ": " + str(result) + " \n")
+        terminal_text.insert(END, "Result of "+ cmmd + ": " + str(result) + " \nMySPL Compiler > ")
 
 
     def main_terminal(ev = None):
         src_command = terminal_text.get(0.0, END)
         command_list = src_command[:-2].split("\n")
-        terminal_run(command_list[-1])
+        terminal_run(command_list[-1][17:])
 
     terminal = Toplevel(root)
     terminal.geometry("700x400")
     terminal.title("Terminal")
     terminal_text = Text(terminal, font=('Yu Gothic UI',12))
     terminal_text.place(relx=0, rely=0, relheight=1, relwidth=1)
+    terminal_text.insert(END, "MySPL Compiler > ")
     terminal.bind('<Return>', main_terminal)
 
 

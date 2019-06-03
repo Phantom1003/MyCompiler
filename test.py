@@ -10,15 +10,13 @@ const
 var
 	a : integer;
 function f(a:integer) : integer;
+type
+    b = record aa, bb: integer; cc : real; end;
 var
     sum : integer;
 begin
-case a of
-5 : a := 1;
-6 : a := 2;
-9 : a := 3;
-end;
-f:= a;
+   b.aa := a;
+   f:=b.aa;
 end
 ;
 begin

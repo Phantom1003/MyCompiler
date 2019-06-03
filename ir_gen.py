@@ -120,12 +120,16 @@ class Codegen:
             return c_str
 
     def type_part(self, node):
-        pass
+        self._codegen(node.children[-1])
 
     def var_part(self, node):
         self._codegen(node.children[-1])
 
     def var_decl_list(self, node):
+        for n in node.children:
+            self._codegen(n)
+
+    def type_decl_list(self, node):
         for n in node.children:
             self._codegen(n)
 
@@ -138,6 +142,28 @@ class Codegen:
             addr.initializer = ir.Constant(ir.IntType(32), 0)
             self.symbol_table.insert([name, addr])
 
+    def type_definition(self, node):
+        name = node.children[0].name
+        if (node.children[2].children[0].type == "array_type_decl"):
+            array_list = self.type_decl(node.children[2])
+            array_type = ir.ArrayType(array_list[1], int(array_list[2])+1)    # x integers of element
+            addr = self.builder.alloca(array_type)                          # pointer to array
+            self.symbol_table.insert([name, addr])
+        elif (node.children[2].children[0].type == "record_type_decl"):
+            field_list = self.type_decl(node.children[2])
+            i32 = ir.IntType(32)
+            field_body = [i32]
+            count = 1
+            for f in field_list[1]:
+                field_body += [f[1]]
+                index = ir.Constant(i32, count)
+                self.symbol_table.insert([name + "." + f[0], index])
+                count += 1
+            str_list = ir.LiteralStructType(field_body)
+            addr = self.builder.alloca(str_list)  # pointer to array
+            self.symbol_table.insert([name, addr])
+
+
     def name_list(self, node):
         if len(node.children) > 1:
             namelist = self.name_list(node.children[0])
@@ -149,12 +175,41 @@ class Codegen:
     def type_decl(self, node):
         if node.children[0].type == "simple_type_decl":
             return self.simple_type_decl(node.children[0])
+        elif node.children[0].type == "array_type_decl":
+            return self.array_type_decl(node.children[0])
+        elif node.children[0].type == "record_type_decl":
+            return self.record_type_decl(node.children[0])
 
     def simple_type_decl(self, node):
         if node.children[0].type == "SYS_TYPE":
             spl_type = node.children[0].name.upper()
             ir_type = type_t[spl_type]
             return ir_type
+
+    def array_type_decl(self, node):
+        if node.children[2].children[0].children[0].name == "1":
+            spl_type = node.children[5].children[0].children[0].name.upper()
+            ir_type = type_t[spl_type]
+            return ["array", ir_type, node.children[2].children[2].children[0].name]
+        else:
+            raise SplTypeError(["Cannot create array"])
+
+    def record_type_decl(self, node):
+        return ["record", self._codegen(node.children[1])]
+
+    def field_decl_list(self, node):
+        field_list = []
+        for n in node.children:
+            field_list +=self._codegen(n)
+        return field_list
+
+    def field_decl(self, node):
+        namelist = self.name_list(node.children[0])
+        ir_type = self.type_decl(node.children[2])
+        field_list = []
+        for name in namelist:
+            field_list += [[name, ir_type]]
+        return field_list
 
     def routine_part(self, node):
         for n in node.children:
@@ -253,16 +308,40 @@ class Codegen:
         self._codegen(node.children[0])
 
     def assign_stmt(self, node):
-        name = node.children[0].name
-        lhs = self.symbol_table.find(name)['entry']
-        rhs = self.expression(node.children[2])
+        if node.children[1].type == "ASSIGN":
+            name = node.children[0].name
+            lhs = self.symbol_table.find(name)['entry']
+            rhs = self.expression(node.children[2])
 
-        if type(lhs) == ir.Function:
-            self.builder.ret(rhs)
-        else:
-            if str(lhs.type)[:-1] != str(rhs.type):
-                raise SplTypeError(["Cannot assign %s to %s" % (str(rhs.type), str(lhs.type)[:-1])])
-            self.builder.store(rhs, lhs)
+            if type(lhs) == ir.Function:
+                self.builder.ret(rhs)
+            else:
+                if str(lhs.type)[:-1] != str(rhs.type):
+                    raise SplTypeError(["Cannot assign %s to %s" % (str(rhs.type), str(lhs.type)[:-1])])
+                self.builder.store(rhs, lhs)
+        elif node.children[1].type == "LB":
+            name = node.children[0].name
+            lhs = self.symbol_table.find(name)['entry']
+            rhs = self.expression(node.children[5])
+            index = self.expression(node.children[2])
+            i32 = ir.IntType(32)
+            i32_0 = ir.Constant(i32, 0)
+            pointer_to_index = self.builder.gep(lhs, [i32_0, index])  # gets address of array[0]
+            if str(pointer_to_index.type)[:-1] != str(rhs.type):
+                raise SplTypeError(["Cannot assign %s to %s" % (str(rhs.type), str(pointer_to_index.type)[:-1])])
+            self.builder.store(rhs, pointer_to_index)
+        elif node.children[1].type == "DOT":
+            name = node.children[0].name
+            lhs = self.symbol_table.find(name)['entry']
+            rhs = self.expression(node.children[4])
+            index = node.children[2].name
+            offset = self.symbol_table.find(name + "." + index)["entry"]
+            i32 = ir.IntType(32)
+            i32_0 = ir.Constant(i32, 0)
+            pointer_to_index = self.builder.gep(lhs, [i32_0, offset])  # gets address of array[0]
+            if str(pointer_to_index.type)[:-1] != str(rhs.type):
+                raise SplTypeError(["Cannot assign %s to %s" % (str(rhs.type), str(pointer_to_index.type)[:-1])])
+            self.builder.store(rhs, pointer_to_index)
 
     def proc_stmt(self, node):
         args = self.args_list(node.children[2])
@@ -407,13 +486,13 @@ class Codegen:
                 elif lhs.type == ir.DoubleType():
                     return self.builder.fcmp_ordered(op, lhs, rhs)
                 else:
-                    raise SplTypeError([""])
+                    raise SplTypeError(["None type %s" % (lhs.type)])
             else:
-                raise SplTypeError([""])
+                raise SplTypeError(["types not equal %s ≠ %s" % (lhs.type, rhs.type)])
         elif len(node.children) == 1:
             return self.expr(node.children[-1])
         else:
-            raise ExpressionError([""])
+            raise ExpressionError(["Expression error Num %d" % (len(node.children))])
 
     def expr(self, node):
         if len(node.children) > 1:
@@ -421,7 +500,7 @@ class Codegen:
             rhs = self._codegen(node.children[2])
             op = node.children[1].type
             if lhs.type != rhs.type:
-                raise SplTypeError([""])
+                raise SplTypeError(["types not equal %s ≠ %s" % (lhs.type, rhs.type)])
             if lhs.type == ir_type_t["INTEGER"]:
                 if op == "PLUS":
                     return self.builder.add(lhs, rhs)
@@ -439,10 +518,12 @@ class Codegen:
             elif lhs.type == ir_type_t["BOOLEAN"]:
                 if op == "OR":
                     return self.builder.or_(lhs, rhs)
+                elif op == "AND":
+                    return self.builder.and_(lhs, rhs)
                 else:
-                    raise SplTypeError([""])
+                    raise OpError(["Error Operation %s" % (op)])
             else:
-                raise SplTypeError([""])
+                raise SplTypeError(["None type %s" % (lhs.type)])
         else:
             return self._codegen(node.children[0])
 
@@ -472,7 +553,7 @@ class Codegen:
                 else:
                     raise OpError(["Undefined op %s" % op])
             else:
-                raise OpError([""])
+                raise OpError(["Error Operation %s" % (op)])
         else:
             return self._codegen(node.children[0])
 
@@ -480,13 +561,32 @@ class Codegen:
         if len(node.children) == 1:
             return self._codegen(node.children[0])
         elif len(node.children) == 3:
-            return self._codegen(node.children[1])
+            if node.children[1].type == "DOT":
+                name = node.children[0].name
+                lhs = self.symbol_table.find(name)['entry']
+                index = node.children[2].name
+                offset = self.symbol_table.find(name + "." + index)["entry"]
+                i32 = ir.IntType(32)
+                i32_0 = ir.Constant(i32, 0)
+                pointer_to_index = self.builder.gep(lhs, [i32_0, offset])  # gets address of array[0]
+                return self.builder.load(pointer_to_index)
+            else:
+                return self._codegen(node.children[1])
         elif len(node.children) == 4:
             if node.children[1].type == "LP":
                 args = self.args_list(node.children[2])
                 func = self.symbol_table.find(node.children[0].name)["entry"]
                 ret = self.builder.call(func, args)
                 return ret
+            elif node.children[1].type == "LB":
+                name = node.children[0].name
+                lhs = self.symbol_table.find(name)['entry']
+                index = self.expression(node.children[2])
+                i32 = ir.IntType(32)
+                i32_0 = ir.Constant(i32, 0)
+                pointer_to_index = self.builder.gep(lhs, [i32_0, index])  # gets address of array[0]
+                return self.builder.load(pointer_to_index)
+
 
     def args_list(self, node):
         if len(node.children) > 1:

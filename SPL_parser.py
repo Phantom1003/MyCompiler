@@ -238,7 +238,7 @@ def p_array_type_decl(p):
 
 def p_record_type_decl(p):
     'record_type_decl : RECORD field_decl_list END'
-    p[0] = Node([Node([], "RECORD"), p[2], Node([], "END")], "recorde_type_decl")
+    p[0] = Node([Node([], "RECORD"), p[2], Node([], "END")], "record_type_decl")
 
 
 def p_field_decl_list_1(p):
@@ -700,7 +700,7 @@ def p_factor_9(p):
 
 def p_factor_10(p):
     'factor : NAME DOT NAME '
-    p[0] = Node([Node([], "Name", p[1]), Node([], "NAME"), Node([], "NAME", p[3])], "factor")
+    p[0] = Node([Node([], "NAME", p[1]), Node([], "DOT"), Node([], "NAME", p[3])], "factor")
 
 
 def p_args_list_1(p):

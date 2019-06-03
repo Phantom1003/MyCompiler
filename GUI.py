@@ -27,7 +27,15 @@ def printass():
         ircodegen = Codegen(astroot)
         dst.insert(END, ircodegen.codegen())
     except CompilerError.SplTypeError as error:
-        messagebox.showerror("Error", error.args[0])
+        messagebox.showerror("Type Error", error.args[0])
+    except CompilerError.MultiDefinedError as error:
+        messagebox.showerror("Conflict declaration Error", error.args[0])
+    except CompilerError.NotDefinedError as error:
+        messagebox.showerror("Implicit declaration Error", error.args[0])
+    except CompilerError.OpError as error:
+        messagebox.showerror("Operation Error", error.args[0])
+    except CompilerError.ExpressionError as error:
+        messagebox.showerror("Expression Error", error.args[0])
 
 def showtree():
     astroot = parser.parse(src.get(0.0, END))
@@ -44,6 +52,15 @@ def showresult():
         if (cmmd == "exit"):
             terminal.destroy()
             return
+        if (cmmd == "translate"):
+            printass()
+            return
+        if (cmmd == "open"):
+            openfile()
+            return
+        if (cmmd == "tree"):
+            showtree()
+            return
         func_list = cmmd.split("(")
         func_name = func_list[0]
         #terminal_text.insert(END, func_name + " ")
@@ -53,7 +70,7 @@ def showresult():
         for i in arg_list:
             for j in i.split(" "):
                 if (j != ""):
-                    arg_list_done += j
+                    arg_list_done += [j]
         func_arg = []
         for arg in arg_list_done:
             func_arg += [int(arg)]
@@ -68,11 +85,7 @@ def showresult():
     def main_terminal(ev = None):
         src_command = terminal_text.get(0.0, END)
         command_list = src_command[:-2].split("\n")
-
         terminal_run(command_list[-1])
-
-
-
 
     terminal = Toplevel(root)
     terminal.geometry("700x400")
@@ -98,13 +111,16 @@ dstlb.place(relx=0.55, rely=0.015)
 dst.place(relx=0.55, rely=0.07, relheight=0.78, relwidth=0.4)
 
 openbt = Button(root, font=('Yu Gothic UI',15), text='Open', command=openfile)
-openbt.place(relx=0.2, rely=0.9)
+openbt.place(relx=0.15, rely=0.9)
 tranbt = Button(root, font=('Yu Gothic UI',15), text='Translate', command=printass)
-tranbt.place(relx=0.4, rely=0.9)
+tranbt.place(relx=0.35, rely=0.9)
 treebt = Button(root, font=('Yu Gothic UI',15), text='Tree', command=showtree)
-treebt.place(relx=0.6, rely=0.9)
-runbt = Button(root, font=('Yu Gothic UI',15), text='Run', command=showresult)
-runbt.place(relx=0.8, rely=0.9)
+treebt.place(relx=0.55, rely=0.9)
+runbt = Button(root, font=('Yu Gothic UI',15), text='Terminal', command=showresult)
+runbt.place(relx=0.75, rely=0.9)
 
+root.resizable(width=False, height=False)
+auth = Label(root,text='Author: Xiang Liming/Xu Jinyan/Peng Dishuo © ZJU Compiler Principle 2019 SPRING&SUMMER', font=('Yu Gothic UI',10))
+auth.place(relx=0, rely=0.97)
 
 root.mainloop()

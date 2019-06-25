@@ -1,0 +1,431 @@
+digraph ParseTree {
+	0 [label=program]
+	1 [label=program_head]
+	0 -> 1
+	2 [label=routine]
+	0 -> 2
+	3 [label=DOT]
+	0 -> 3
+	4 [label=PROGRAM]
+	1 -> 4
+	5 [label="NAME : hello"]
+	1 -> 5
+	6 [label=SEMI]
+	1 -> 6
+	7 [label=routine_head]
+	2 -> 7
+	8 [label=routine_body]
+	2 -> 8
+	9 [label=label_part]
+	7 -> 9
+	10 [label=const_part]
+	7 -> 10
+	11 [label=type_part]
+	7 -> 11
+	12 [label=var_part]
+	7 -> 12
+	13 [label=routine_part]
+	7 -> 13
+	14 [label=compound_stmt]
+	8 -> 14
+	15 [label=epsilon]
+	9 -> 15
+	16 [label=epsilon]
+	10 -> 16
+	17 [label=epsilon]
+	11 -> 17
+	18 [label=VAR]
+	12 -> 18
+	19 [label=var_decl_list]
+	12 -> 19
+	20 [label=function_decl]
+	13 -> 20
+	21 [label=BEGIN]
+	14 -> 21
+	22 [label=stmt_list]
+	14 -> 22
+	23 [label=END]
+	14 -> 23
+	24 [label=var_decl]
+	19 -> 24
+	25 [label=function_head]
+	20 -> 25
+	26 [label=SEMI]
+	20 -> 26
+	27 [label=subroutine]
+	20 -> 27
+	28 [label=SEMI]
+	20 -> 28
+	29 [label=stmt_list]
+	22 -> 29
+	30 [label=stmt]
+	22 -> 30
+	31 [label=SEMI]
+	22 -> 31
+	32 [label=name_list]
+	24 -> 32
+	33 [label=COLON]
+	24 -> 33
+	34 [label=type_decl]
+	24 -> 34
+	35 [label=SEMI]
+	24 -> 35
+	36 [label=FUNCTION]
+	25 -> 36
+	37 [label="NAME : gcd"]
+	25 -> 37
+	38 [label=parameters]
+	25 -> 38
+	39 [label=COLON]
+	25 -> 39
+	40 [label=simple_type_decl]
+	25 -> 40
+	41 [label=routine_head]
+	27 -> 41
+	42 [label=routine_body]
+	27 -> 42
+	43 [label=stmt_list]
+	29 -> 43
+	44 [label=stmt]
+	29 -> 44
+	45 [label=SEMI]
+	29 -> 45
+	46 [label=non_label_stmt]
+	30 -> 46
+	47 [label="NAME : ans"]
+	32 -> 47
+	48 [label=simple_type_decl]
+	34 -> 48
+	49 [label=LP]
+	38 -> 49
+	50 [label=para_decl_list]
+	38 -> 50
+	51 [label=RP]
+	38 -> 51
+	52 [label="SYS_TYPE : integer"]
+	40 -> 52
+	53 [label=label_part]
+	41 -> 53
+	54 [label=const_part]
+	41 -> 54
+	55 [label=type_part]
+	41 -> 55
+	56 [label=var_part]
+	41 -> 56
+	57 [label=routine_part]
+	41 -> 57
+	58 [label=compound_stmt]
+	42 -> 58
+	59 [label=epsilon]
+	43 -> 59
+	60 [label=non_label_stmt]
+	44 -> 60
+	61 [label=proc_stmt]
+	46 -> 61
+	62 [label="SYS_TYPE : integer"]
+	48 -> 62
+	63 [label=para_type_list]
+	50 -> 63
+	64 [label=epsilon]
+	53 -> 64
+	65 [label=epsilon]
+	54 -> 65
+	66 [label=epsilon]
+	55 -> 66
+	67 [label=epsilon]
+	56 -> 67
+	68 [label=epsilon]
+	57 -> 68
+	69 [label=BEGIN]
+	58 -> 69
+	70 [label=stmt_list]
+	58 -> 70
+	71 [label=END]
+	58 -> 71
+	72 [label=assign_stmt]
+	60 -> 72
+	73 [label="SYS_PROC : writeln"]
+	61 -> 73
+	74 [label=LP]
+	61 -> 74
+	75 [label=expression_list]
+	61 -> 75
+	76 [label=RP]
+	61 -> 76
+	77 [label=val_para_list]
+	63 -> 77
+	78 [label=COLON]
+	63 -> 78
+	79 [label=simple_type_decl]
+	63 -> 79
+	80 [label=stmt_list]
+	70 -> 80
+	81 [label=stmt]
+	70 -> 81
+	82 [label=SEMI]
+	70 -> 82
+	83 [label="NAME : ans"]
+	72 -> 83
+	84 [label=ASSIGN]
+	72 -> 84
+	85 [label=expression]
+	72 -> 85
+	86 [label=expression]
+	75 -> 86
+	87 [label=name_list]
+	77 -> 87
+	88 [label="SYS_TYPE : integer"]
+	79 -> 88
+	89 [label=epsilon]
+	80 -> 89
+	90 [label=non_label_stmt]
+	81 -> 90
+	91 [label=expr]
+	85 -> 91
+	92 [label=expr]
+	86 -> 92
+	93 [label=name_list]
+	87 -> 93
+	94 [label=COMMA]
+	87 -> 94
+	95 [label="NAME : b"]
+	87 -> 95
+	96 [label=if_stmt]
+	90 -> 96
+	97 [label=term]
+	91 -> 97
+	98 [label=term]
+	92 -> 98
+	99 [label="NAME : a"]
+	93 -> 99
+	100 [label=IF]
+	96 -> 100
+	101 [label=expression]
+	96 -> 101
+	102 [label=THEN]
+	96 -> 102
+	103 [label=stmt]
+	96 -> 103
+	104 [label=else_clause]
+	96 -> 104
+	105 [label=term]
+	97 -> 105
+	106 [label="MUL : *"]
+	97 -> 106
+	107 [label=factor]
+	97 -> 107
+	108 [label=factor]
+	98 -> 108
+	109 [label=expression]
+	101 -> 109
+	110 [label="EQUAL : ="]
+	101 -> 110
+	111 [label=expr]
+	101 -> 111
+	112 [label=non_label_stmt]
+	103 -> 112
+	113 [label=ELSE]
+	104 -> 113
+	114 [label=stmt]
+	104 -> 114
+	115 [label=factor]
+	105 -> 115
+	116 [label="NAME : gcd"]
+	107 -> 116
+	117 [label=LP]
+	107 -> 117
+	118 [label=args_list]
+	107 -> 118
+	119 [label=RP]
+	107 -> 119
+	120 [label="NAME : ans"]
+	108 -> 120
+	121 [label=expr]
+	109 -> 121
+	122 [label=term]
+	111 -> 122
+	123 [label=compound_stmt]
+	112 -> 123
+	124 [label=non_label_stmt]
+	114 -> 124
+	125 [label="NAME : gcd"]
+	115 -> 125
+	126 [label=LP]
+	115 -> 126
+	127 [label=args_list]
+	115 -> 127
+	128 [label=RP]
+	115 -> 128
+	129 [label=args_list]
+	118 -> 129
+	130 [label=COMMA]
+	118 -> 130
+	131 [label=expression]
+	118 -> 131
+	132 [label=term]
+	121 -> 132
+	133 [label=factor]
+	122 -> 133
+	134 [label=BEGIN]
+	123 -> 134
+	135 [label=stmt_list]
+	123 -> 135
+	136 [label=END]
+	123 -> 136
+	137 [label=compound_stmt]
+	124 -> 137
+	138 [label=args_list]
+	127 -> 138
+	139 [label=COMMA]
+	127 -> 139
+	140 [label=expression]
+	127 -> 140
+	141 [label=expression]
+	129 -> 141
+	142 [label=expr]
+	131 -> 142
+	143 [label=factor]
+	132 -> 143
+	144 [label=const_value]
+	133 -> 144
+	145 [label=stmt_list]
+	135 -> 145
+	146 [label=stmt]
+	135 -> 146
+	147 [label=SEMI]
+	135 -> 147
+	148 [label=BEGIN]
+	137 -> 148
+	149 [label=stmt_list]
+	137 -> 149
+	150 [label=END]
+	137 -> 150
+	151 [label=expression]
+	138 -> 151
+	152 [label=expr]
+	140 -> 152
+	153 [label=expr]
+	141 -> 153
+	154 [label=term]
+	142 -> 154
+	155 [label="NAME : b"]
+	143 -> 155
+	156 [label="INTEGER : 0"]
+	144 -> 156
+	157 [label=epsilon]
+	145 -> 157
+	158 [label=non_label_stmt]
+	146 -> 158
+	159 [label=stmt_list]
+	149 -> 159
+	160 [label=stmt]
+	149 -> 160
+	161 [label=SEMI]
+	149 -> 161
+	162 [label=expr]
+	151 -> 162
+	163 [label=term]
+	152 -> 163
+	164 [label=term]
+	153 -> 164
+	165 [label=factor]
+	154 -> 165
+	166 [label=assign_stmt]
+	158 -> 166
+	167 [label=epsilon]
+	159 -> 167
+	168 [label=non_label_stmt]
+	160 -> 168
+	169 [label=term]
+	162 -> 169
+	170 [label=factor]
+	163 -> 170
+	171 [label=factor]
+	164 -> 171
+	172 [label=const_value]
+	165 -> 172
+	173 [label="NAME : gcd"]
+	166 -> 173
+	174 [label=ASSIGN]
+	166 -> 174
+	175 [label=expression]
+	166 -> 175
+	176 [label=assign_stmt]
+	168 -> 176
+	177 [label=factor]
+	169 -> 177
+	178 [label=const_value]
+	170 -> 178
+	179 [label=const_value]
+	171 -> 179
+	180 [label="INTEGER : 6"]
+	172 -> 180
+	181 [label=expr]
+	175 -> 181
+	182 [label="NAME : gcd"]
+	176 -> 182
+	183 [label=ASSIGN]
+	176 -> 183
+	184 [label=expression]
+	176 -> 184
+	185 [label=const_value]
+	177 -> 185
+	186 [label="INTEGER : 36"]
+	178 -> 186
+	187 [label="INTEGER : 3"]
+	179 -> 187
+	188 [label=term]
+	181 -> 188
+	189 [label=expr]
+	184 -> 189
+	190 [label="INTEGER : 9"]
+	185 -> 190
+	191 [label=factor]
+	188 -> 191
+	192 [label=term]
+	189 -> 192
+	193 [label="NAME : a"]
+	191 -> 193
+	194 [label=factor]
+	192 -> 194
+	195 [label="NAME : gcd"]
+	194 -> 195
+	196 [label=LP]
+	194 -> 196
+	197 [label=args_list]
+	194 -> 197
+	198 [label=RP]
+	194 -> 198
+	199 [label=args_list]
+	197 -> 199
+	200 [label=COMMA]
+	197 -> 200
+	201 [label=expression]
+	197 -> 201
+	202 [label=expression]
+	199 -> 202
+	203 [label=expr]
+	201 -> 203
+	204 [label=expr]
+	202 -> 204
+	205 [label=term]
+	203 -> 205
+	206 [label=term]
+	204 -> 206
+	207 [label=term]
+	205 -> 207
+	208 [label="MOD : MOD"]
+	205 -> 208
+	209 [label=factor]
+	205 -> 209
+	210 [label=factor]
+	206 -> 210
+	211 [label=factor]
+	207 -> 211
+	212 [label="NAME : b"]
+	209 -> 212
+	213 [label="NAME : b"]
+	210 -> 213
+	214 [label="NAME : a"]
+	211 -> 214
+}

@@ -1,0 +1,23 @@
+program test;
+const
+    y = 1;
+var
+    x : integer;
+
+function test_if(b : integer): integer;
+var
+    x : integer;
+begin
+    if b = 1 then test_if := 1
+    else begin
+         if b = 1 then test_if := 2
+         else begin
+	test_if := test_if(b - 1);
+        end;
+   end;
+end;
+
+begin
+    x := test_if (3);
+end.
+

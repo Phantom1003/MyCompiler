@@ -1,0 +1,17 @@
+program hello;
+var
+     const_x : integer;
+function test(a : integer): integer;
+var 
+    x : integer;
+begin
+    x := 1 + 2;
+    x := 2 + 3;
+    x := 3 + 4;
+    test := x + a;
+end;
+
+begin
+    const_x  := test( 3 );
+end.
+

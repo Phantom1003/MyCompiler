@@ -1,0 +1,22 @@
+program test;
+var
+    x : integer;
+
+function test_case(b : integer): integer;
+var
+    a : array [1..4] of integer;
+begin
+    for i := 1 to 4 do
+        a[i] := 10 + i;
+
+    case b of
+        1: test_case := a[1];
+        2: test_case := a[2];
+        3: test_case := a[3];
+        4: test_case := a[4];
+    end;
+end;
+
+begin
+    x := test_case (3);
+end.

@@ -1,0 +1,25 @@
+program test;
+const
+    y = 1;
+var
+    x : integer;
+
+function test_if(b : integer): integer;
+var
+    test_record : record num1,num2,num3 : integer; end;
+begin
+    test_record.num1 := 1;
+    test_record.num2 := 2;
+    test_record.num3 := 3;
+    if b = 1 then test_if := test_record.num1
+    else begin
+        if b = 2 then test_if := test_record.num2
+        else begin
+            test_if := test_record.num3;
+        end;
+    end;
+end;
+
+begin
+    x := test_if (3);
+end.

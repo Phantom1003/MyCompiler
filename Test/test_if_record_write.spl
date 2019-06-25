@@ -1,0 +1,23 @@
+program test;
+const
+    y = 1;
+var
+    x : integer;
+
+function test_if(b : integer): integer;
+var
+    test_record : record num1,num2 : integer; num3, num4 : real; end;
+begin
+    test_record.num1 := 1;
+    test_record.num2 := 2;
+    test_record.num3 := 3.3;
+    test_record.num4 := 4.4;
+    writeln(test_record.num1);
+    write(test_record.num2);
+    writeln(test_record.num3);
+    write(test_record.num4);
+end;
+
+begin
+    x := test_if (3);
+end.

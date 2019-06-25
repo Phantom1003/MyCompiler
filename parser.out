@@ -1,0 +1,264 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    IN
+    PACKED
+    SET
+    WITH
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> program_head routine DOT
+Rule 2     program_head -> PROGRAM NAME SEMI
+Rule 3     routine -> routine_head routine_body
+Rule 4     sub_routine -> routine_head routine_body
+Rule 5     routine_head -> label_part const_part type_part var_part routine_part
+Rule 6     label_part -> epsilon
+Rule 7     const_part -> CONST const_expr_list
+Rule 8     const_part -> epsilon
+Rule 9     const_expr_list -> const_expr_list NAME EQUAL const_value SEMI
+Rule 10    const_expr_list -> NAME EQUAL const_value SEMI
+Rule 11    const_value -> INTEGER
+Rule 12    const_value -> REAL
+Rule 13    const_value -> CHAR
+Rule 14    const_value -> STRING
+Rule 15    const_value -> SYS_CON
+Rule 16    type_part -> TYPE type_decl_list
+Rule 17    type_part -> epsilon
+Rule 18    type_decl_list -> type_decl_list type_definition
+Rule 19    type_decl_list -> type_definition
+Rule 20    type_definition -> NAME EQUAL type_decl SEMI
+Rule 21    type_decl -> simple_type_decl
+Rule 22    type_decl -> array_type_decl
+Rule 23    type_decl -> record_type_decl
+Rule 24    simple_type_decl -> SYS_TYPE
+Rule 25    simple_type_decl -> NAME
+Rule 26    simple_type_decl -> LP name_list RP
+Rule 27    simple_type_decl -> const_value DOTDOT const_value
+Rule 28    simple_type_decl -> MINUS const_value DOTDOT const_value
+Rule 29    simple_type_decl -> MINUS const_value DOTDOT MINUS const_value
+Rule 30    simple_type_decl -> NAME DOTDOT NAME
+Rule 31    array_type_decl -> ARRAY LB simple_type_decl RB OF type_decl
+Rule 32    record_type_decl -> RECORD field_decl_list END
+Rule 33    field_decl_list -> field_decl_list field_decl
+Rule 34    field_decl_list -> field_decl
+Rule 35    field_decl -> name_list COLON type_decl SEMI
+Rule 36    name_list -> name_list COMMA NAME
+Rule 37    name_list -> NAME
+Rule 38    var_part -> VAR var_decl_list
+Rule 39    var_part -> epsilon
+Rule 40    var_decl_list -> var_decl_list var_decl
+Rule 41    var_decl_list -> var_decl
+Rule 42    var_decl -> name_list COLON type_decl SEMI
+Rule 43    routine_part -> routine_part function_decl
+Rule 44    routine_part -> routine_part procedure_decl
+Rule 45    routine_part -> function_decl
+Rule 46    routine_part -> procedure_decl
+Rule 47    routine_part -> epsilon
+Rule 48    function_decl -> function_head SEMI sub_routine SEMI
+Rule 49    function_head -> FUNCTION NAME parameters COLON simple_type_decl
+Rule 50    procedure_decl -> procedure_head SEMI sub_routine SEMI
+Rule 51    procedure_head -> PROCEDURE NAME parameters
+Rule 52    parameters -> LP para_decl_list RP
+Rule 53    parameters -> epsilon
+Rule 54    para_decl_list -> para_decl_list SEMI para_type_list
+Rule 55    para_decl_list -> para_type_list
+Rule 56    para_type_list -> var_para_list COLON simple_type_decl
+Rule 57    para_type_list -> val_para_list COLON simple_type_decl
+Rule 58    var_para_list -> VAR name_list
+Rule 59    val_para_list -> name_list
+Rule 60    routine_body -> compound_stmt
+Rule 61    compound_stmt -> BEGIN stmt_list END
+Rule 62    stmt_list -> stmt_list stmt SEMI
+Rule 63    stmt_list -> epsilon
+Rule 64    stmt -> INTEGER COLON non_label_stmt
+Rule 65    stmt -> non_label_stmt
+Rule 66    non_label_stmt -> assign_stmt
+Rule 67    non_label_stmt -> proc_stmt
+Rule 68    non_label_stmt -> compound_stmt
+Rule 69    non_label_stmt -> if_stmt
+Rule 70    non_label_stmt -> repeat_stmt
+Rule 71    non_label_stmt -> while_stmt
+Rule 72    non_label_stmt -> for_stmt
+Rule 73    non_label_stmt -> case_stmt
+Rule 74    non_label_stmt -> goto_stmt
+Rule 75    assign_stmt -> NAME ASSIGN expression
+Rule 76    assign_stmt -> NAME LB expression RB ASSIGN expression
+Rule 77    assign_stmt -> NAME DOT NAME ASSIGN expression
+Rule 78    proc_stmt -> NAME
+Rule 79    proc_stmt -> NAME LP args_list RP
+Rule 80    proc_stmt -> SYS_PROC
+Rule 81    proc_stmt -> SYS_PROC LP expression_list RP
+Rule 82    proc_stmt -> READ LP factor RP
+Rule 83    if_stmt -> IF expression THEN stmt else_clause
+Rule 84    else_clause -> ELSE stmt
+Rule 85    else_clause -> epsilon
+Rule 86    repeat_stmt -> REPEAT stmt_list UNTIL expression
+Rule 87    while_stmt -> WHILE expression DO stmt
+Rule 88    for_stmt -> FOR NAME ASSIGN expression direction expression DO stmt
+Rule 89    direction -> TO
+Rule 90    direction -> DOWNTO
+Rule 91    case_stmt -> CASE expression OF case_expr_list END
+Rule 92    case_expr_list -> case_expr_list case_expr
+Rule 93    case_expr_list -> case_expr
+Rule 94    case_expr -> const_value COLON stmt SEMI
+Rule 95    case_expr -> NAME COLON stmt SEMI
+Rule 96    goto_stmt -> GOTO INTEGER
+Rule 97    expression_list -> expression_list COMMA expression
+Rule 98    expression_list -> expression
+Rule 99    expression -> expression GE expr
+Rule 100   expression -> expression GT expr
+Rule 101   expression -> expression LE expr
+Rule 102   expression -> expression LT expr
+Rule 103   expression -> expression EQUAL expr
+Rule 104   expression -> expression UNEQUAL expr
+Rule 105   expression -> expr
+Rule 106   expr -> expr PLUS term
+Rule 107   expr -> expr MINUS term
+Rule 108   expr -> expr OR term
+Rule 109   expr -> term
+Rule 110   term -> term MUL factor
+Rule 111   term -> term DIV factor
+Rule 112   term -> term MOD factor
+Rule 113   term -> term AND factor
+Rule 114   term -> factor
+Rule 115   factor -> NAME
+Rule 116   factor -> NAME LP args_list RP
+Rule 117   factor -> SYS_FUNCT
+Rule 118   factor -> SYS_FUNCT LP args_list RP
+Rule 119   factor -> const_value
+Rule 120   factor -> LP expression RP
+Rule 121   factor -> NOT factor
+Rule 122   factor -> MINUS factor
+Rule 123   factor -> NAME LB expression RB
+Rule 124   factor -> NAME DOT NAME
+Rule 125   args_list -> args_list COMMA expression
+Rule 126   args_list -> expression
+Rule 127   epsilon -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 113
+ARRAY                : 31
+ASSIGN               : 75 76 77 88
+BEGIN                : 61
+CASE                 : 91
+CHAR                 : 13
+COLON                : 35 42 49 56 57 64 94 95
+COMMA                : 36 97 125
+CONST                : 7
+DIV                  : 111
+DO                   : 87 88
+DOT                  : 1 77 124
+DOTDOT               : 27 28 29 30
+DOWNTO               : 90
+ELSE                 : 84
+END                  : 32 61 91
+EQUAL                : 9 10 20 103
+FOR                  : 88
+FUNCTION             : 49
+GE                   : 99
+GOTO                 : 96
+GT                   : 100
+IF                   : 83
+IN                   : 
+INTEGER              : 11 64 96
+LB                   : 31 76 123
+LE                   : 101
+LP                   : 26 52 79 81 82 116 118 120
+LT                   : 102
+MINUS                : 28 29 29 107 122
+MOD                  : 112
+MUL                  : 110
+NAME                 : 2 9 10 20 25 30 30 36 37 49 51 75 76 77 77 78 79 88 95 115 116 123 124 124
+NOT                  : 121
+OF                   : 31 91
+PACKED               : 
+PLUS                 : 106
+PROCEDURE            : 51
+PROGRAM              : 2
+RB                   : 31 76 123
+READ                 : 82
+REAL                 : 12
+RECORD               : 32
+REPEAT               : 86
+RP                   : 26 52 79 81 82 116 118 120
+SEMI                 : 2 9 10 20 35 42 48 48 50 50 54 62 94 95
+SET                  : 
+STRING               : 14
+SYS_CON              : 15
+SYS_FUNCT            : 117 118
+SYS_PROC             : 80 81
+SYS_TYPE             : 24
+THEN                 : 83
+TO                   : 89
+TYPE                 : 16
+UNEQUAL              : 104
+UNTIL                : 86
+VAR                  : 38 58
+WHILE                : 87
+WITH                 : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+OR                   : 108
+args_list            : 79 116 118 125
+array_type_decl      : 22
+assign_stmt          : 66
+case_expr            : 92 93
+case_expr_list       : 91 92
+case_stmt            : 73
+compound_stmt        : 60 68
+const_expr_list      : 7 9
+const_part           : 5
+const_value          : 9 10 27 27 28 28 29 29 94 119
+direction            : 88
+else_clause          : 83
+epsilon              : 6 8 17 39 47 53 63 85
+expr                 : 99 100 101 102 103 104 105 106 107 108
+expression           : 75 76 76 77 83 86 87 88 88 91 97 98 99 100 101 102 103 104 120 123 125 126
+expression_list      : 81 97
+factor               : 82 110 111 112 113 114 121 122
+field_decl           : 33 34
+field_decl_list      : 32 33
+for_stmt             : 72
+function_decl        : 43 45
+function_head        : 48
+goto_stmt            : 74
+if_stmt              : 69
+label_part           : 5
+name_list            : 26 35 36 42 58 59
+non_label_stmt       : 64 65
+para_decl_list       : 52 54
+para_type_list       : 54 55
+parameters           : 49 51
+proc_stmt            : 67
+procedure_decl       : 44 46
+procedure_head       : 50
+program              : 0
+program_head         : 1
+record_type_decl     : 23
+repeat_stmt          : 70
+routine              : 1
+routine_body         : 3 4
+routine_head         : 3 4
+routine_part         : 5 43 44
+simple_type_decl     : 21 31 49 56 57
+stmt                 : 62 83 84 87 88 94 95
+stmt_list            : 61 62 86
+sub_routine          : 48 50
+term                 : 106 107 108 109 110 111 112 113
+type_decl            : 20 31 35 42
+type_decl_list       : 16 18
+type_definition      : 18 19
+type_part            : 5
+val_para_list        : 57
+var_decl             : 40 41
+var_decl_list        : 38 40
+var_para_list        : 56
+var_part             : 5
+while_stmt           : 71
+

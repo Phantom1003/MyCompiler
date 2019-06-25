@@ -1,0 +1,17 @@
+program test;
+var
+    x : integer;
+
+function test_case(b : integer): integer;
+begin
+    case b of
+        1: test_case := 11;
+        2: test_case := 12;
+        3: test_case := 13;
+        4: test_case := 14;
+    end;
+end;
+
+begin
+    x := test_case (3);
+end.

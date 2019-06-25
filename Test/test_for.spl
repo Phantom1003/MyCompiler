@@ -1,0 +1,18 @@
+program test;
+var
+    x : integer;
+
+function test_for(b : integer): integer;
+var
+    integer_x : integer;
+begin
+    x := 0;
+    integer_x := x;
+    for i := 0 to b do
+        integer_x := integer_x + i;
+    test_for := integer_x ;
+end;
+
+begin
+    x := test_for (3);
+end.
